@@ -13,10 +13,10 @@ namespace NETime_WF_EF6
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class userContainer : DbContext
+    public partial class netimeContainer : DbContext
     {
-        public userContainer()
-            : base("name=userContainer")
+        public netimeContainer()
+            : base("name=netimeContainer")
         {
         }
     

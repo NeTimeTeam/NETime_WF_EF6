@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/16/2021 00:20:37
+-- Date Created: 11/20/2021 21:26:59
 -- Generated from EDMX file: S:\OneDrive\UOC\DAM\ICB0_P6_Técnicas_de_persistencia_de_datos_con_.NET\code\NETime_WF_EF6\netime.edmx
 -- --------------------------------------------------
 
