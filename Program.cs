@@ -14,6 +14,7 @@ namespace NETime_WF_EF6
         [STAThread]
         static void Main()
         {
+            /*
             var context = new netimeContainer();
             var ususario = new user()
             {
@@ -26,7 +27,7 @@ namespace NETime_WF_EF6
             };
             context.userSet.Add(ususario);
             context.SaveChanges();
-
+            */
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
