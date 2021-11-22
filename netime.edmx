@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="netime.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="netimeStoreContainer">
+    <EntitySet Name="userSet" EntityType="netime.Store.userSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="categoriesSet" EntityType="netime.Store.categoriesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="selected_activitiesSet" EntityType="netime.Store.selected_activitiesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="balanceSet" EntityType="netime.Store.balanceSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="activitiesSet" EntityType="netime.Store.activitiesSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="userselected_activities" Association="netime.Store.userselected_activities">
+      <End Role="user" EntitySet="userSet" />
+      <End Role="selected_activities" EntitySet="selected_activitiesSet" />
+    </AssociationSet>
+    <AssociationSet Name="balanceuser" Association="netime.Store.balanceuser">
+      <End Role="balance" EntitySet="balanceSet" />
+      <End Role="user" EntitySet="userSet" />
+    </AssociationSet>
+    <AssociationSet Name="useractivities" Association="netime.Store.useractivities">
+      <End Role="user" EntitySet="userSet" />
+      <End Role="activities" EntitySet="activitiesSet" />
+    </AssociationSet>
+    <AssociationSet Name="categoriesactivities" Association="netime.Store.categoriesactivities">
+      <End Role="categories" EntitySet="categoriesSet" />
+      <End Role="activities" EntitySet="activitiesSet" />
+    </AssociationSet>
+    <AssociationSet Name="activitiesselected_activities" Association="netime.Store.activitiesselected_activities">
+      <End Role="activities" EntitySet="activitiesSet" />
+      <End Role="selected_activities" EntitySet="selected_activitiesSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="userSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="categoriesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="family" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="selected_activitiesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="activitiesId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="balanceSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="activity_name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="datetime" Type="datetime" Nullable="false" />
+    <Property Name="qtty" Type="int" Nullable="false" />
+    <Property Name="sing" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="activitiesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="categoriesId" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="userselected_activities">
+    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
+    <End Role="selected_activities" Type="netime.Store.selected_activitiesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="selected_activities">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="balanceuser">
+    <End Role="balance" Type="netime.Store.balanceSet" Multiplicity="*" />
+    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="balance">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="useractivities">
+    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
+    <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="activities">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="categoriesactivities">
+    <End Role="categories" Type="netime.Store.categoriesSet" Multiplicity="1" />
+    <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="activities">
+        <PropertyRef Name="categoriesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="activitiesselected_activities">
+    <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="1" />
+    <End Role="selected_activities" Type="netime.Store.selected_activitiesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="activities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="selected_activities">
+        <PropertyRef Name="activitiesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="netime" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="netimeContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="userSet" EntityType="netime.user" />
+          <EntitySet Name="categoriesSet" EntityType="netime.categories" />
+          <EntitySet Name="selected_activitiesSet" EntityType="netime.selected_activities" />
+          <AssociationSet Name="userselected_activities" Association="netime.userselected_activities">
+            <End Role="user" EntitySet="userSet" />
+            <End Role="selected_activities" EntitySet="selected_activitiesSet" />
+          </AssociationSet>
+          <EntitySet Name="balanceSet" EntityType="netime.balance" />
+          <AssociationSet Name="balanceuser" Association="netime.balanceuser">
+            <End Role="balance" EntitySet="balanceSet" />
+            <End Role="user" EntitySet="userSet" />
+          </AssociationSet>
+          <EntitySet Name="activitiesSet" EntityType="netime.activities" />
+          <AssociationSet Name="useractivities" Association="netime.useractivities">
+            <End Role="user" EntitySet="userSet" />
+            <End Role="activities" EntitySet="activitiesSet" />
+          </AssociationSet>
+          <AssociationSet Name="categoriesactivities" Association="netime.categoriesactivities">
+            <End Role="categories" EntitySet="categoriesSet" />
+            <End Role="activities" EntitySet="activitiesSet" />
+          </AssociationSet>
+          <AssociationSet Name="activitiesselected_activities" Association="netime.activitiesselected_activities">
+            <End Role="activities" EntitySet="activitiesSet" />
+            <End Role="selected_activities" EntitySet="selected_activitiesSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="surname" Type="String" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" />
+          <Property Name="phone" Type="String" Nullable="false" />
+          <Property Name="address" Type="String" Nullable="false" />
+          <Property Name="password" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="family" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="selected_activities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="activitiesId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="userselected_activities">
+          <End Type="netime.user" Role="user" Multiplicity="1" />
+          <End Type="netime.selected_activities" Role="selected_activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="selected_activities">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="balance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="activity_name" Type="String" Nullable="false" />
+          <Property Name="user_name" Type="String" Nullable="false" />
+          <Property Name="datetime" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="qtty" Type="Int32" Nullable="false" />
+          <Property Name="sing" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="balanceuser">
+          <End Type="netime.balance" Role="balance" Multiplicity="*" />
+          <End Type="netime.user" Role="user" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="balance">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="activities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="categoriesId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="useractivities">
+          <End Type="netime.user" Role="user" Multiplicity="1" />
+          <End Type="netime.activities" Role="activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="activities">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="categoriesactivities">
+          <End Type="netime.categories" Role="categories" Multiplicity="1" />
+          <End Type="netime.activities" Role="activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="activities">
+              <PropertyRef Name="categoriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="activitiesselected_activities">
+          <End Type="netime.activities" Role="activities" Multiplicity="1" />
+          <End Type="netime.selected_activities" Role="selected_activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="selected_activities">
+              <PropertyRef Name="activitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="netimeStoreContainer" CdmEntityContainer="netimeContainer">
+    <EntitySetMapping Name="userSet">
+      <EntityTypeMapping TypeName="IsTypeOf(netime.user)">
+        <MappingFragment StoreEntitySet="userSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categoriesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(netime.categories)">
+        <MappingFragment StoreEntitySet="categoriesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="family" ColumnName="family" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="selected_activitiesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(netime.selected_activities)">
+        <MappingFragment StoreEntitySet="selected_activitiesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="activitiesId" ColumnName="activitiesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="balanceSet">
+      <EntityTypeMapping TypeName="IsTypeOf(netime.balance)">
+        <MappingFragment StoreEntitySet="balanceSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="activity_name" ColumnName="activity_name" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="datetime" ColumnName="datetime" />
+          <ScalarProperty Name="qtty" ColumnName="qtty" />
+          <ScalarProperty Name="sing" ColumnName="sing" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="activitiesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(netime.activities)">
+        <MappingFragment StoreEntitySet="activitiesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="categoriesId" ColumnName="categoriesId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

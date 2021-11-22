@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d74cbb1e4c744b2c81e85525df438229" Name="Diagram1" >
+        <EntityTypeShape EntityType="netime.user" Width="1.5" PointX="1" PointY="0.75" />
+        <EntityTypeShape EntityType="netime.categories" Width="2" PointX="5.625" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="netime.selected_activities" PointX="3.875" PointY="1" Width="2.125" />
+        <AssociationConnector Association="netime.userselected_activities" />
+        <EntityTypeShape EntityType="netime.balance" Width="1.5" PointX="5.5" PointY="3.625" />
+        <AssociationConnector Association="netime.balanceuser" />
+        <EntityTypeShape EntityType="netime.activities" Width="1.5" PointX="0.875" PointY="5.875" />
+        <AssociationConnector Association="netime.useractivities" />
+        <AssociationConnector Association="netime.categoriesactivities" />
+        <AssociationConnector Association="netime.activitiesselected_activities" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
