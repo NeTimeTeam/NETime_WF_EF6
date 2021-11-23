@@ -67,7 +67,7 @@
     <Compile Include="categories.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
-    <Compile Include="XmlManager.cs" />
+    <Compile Include="Class\XmlManager.cs" />
     <Compile Include="Class\utilities.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
