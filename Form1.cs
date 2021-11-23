@@ -48,21 +48,22 @@ namespace NETime_WF_EF6
 
         private void button_addUser_Click(object sender, EventArgs e)
         {
-            //Creamos el usuario
+            //Creamos un objeto usuario con los datos del formulario
             user usuario = new user()
             {
                 name = textBox_userName.Text,
                 email = textBox_userEmail.Text,
                 password = textBox_userPass.Text,
                 surname = textBox_userSurname.Text,
-                phone = "none",
-                address ="none"
+                phone = textBox_userPhone.Text,
+                //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
+                address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
             };
 
             //Creamos la conexión ORM
             netimeContainer context = new netimeContainer();
             context.userSet.Add(usuario);
-            context.SaveChanges();
+            context.SaveChanges();            
         }
 
         //Eventos RadioButton
@@ -95,23 +96,78 @@ namespace NETime_WF_EF6
 
         //Validación del campo nombre usuario al salir del textbox.
         private void userName_Validating(object sender, CancelEventArgs e)
-        {            
-            Regex rx = new Regex(@"^[A-Za-z]{3,16}"); //Solo letras y mín 3 - máx 16.
-            if (rx.IsMatch(textBox_userName.Text)){
-                textBox_userName.ValidateText();
-                e.Cancel = false;
-            }
-            else
-            {
-                textBox_userName.ForeColor = Color.Red;
-            }
-            
+        {   
             /*
             if (userName.Text != "something")
                 e.Cancel = true;
             */
         }
 
+        private void textBox_userEmail_TextChanged(object sender, EventArgs e)
+        {
+            if (utilites.emailValidation(textBox_userEmail.Text))
+            {
+                textBox_userEmail.ForeColor = Color.Black;
+                textBox_userEmail.CausesValidation = true;
+            }
+            else
+            {
+                textBox_userEmail.ForeColor = Color.Red;
+                textBox_userEmail.CausesValidation = false;
+            }
+        }
+        //Verifica el formato del texto introducido y cambia de color si no es valido.
+        private void textBox_userName_TextChanged(object sender, EventArgs e)
+        {
+            if (utilites.nameValidation(textBox_userName.Text))
+            {
+                textBox_userName.ForeColor = Color.Black;
+                textBox_userName.CausesValidation = true;
+            }
+            else
+            {
+                textBox_userName.ForeColor = Color.Red;
+                textBox_userName.CausesValidation = false;
+            }
+            if (utilites.nameValidation(textBox_userSurname.Text))
+            {
+                textBox_userSurname.ForeColor = Color.Black;
+                textBox_userSurname.CausesValidation = true;
+            }
+            else
+            {
+                textBox_userSurname.ForeColor = Color.Red;
+                textBox_userSurname.CausesValidation = false;
+            }
+        }
+        //Verifica el formato del texto introducido y cambia de color si no es valido.
+        private void textBox_userPhone_TextChanged(object sender, EventArgs e)
+        {
+            if(utilites.phoneValidation(textBox_userPhone.Text))
+            {
+                textBox_userPhone.ForeColor = Color.Black;
+                textBox_userPhone.CausesValidation = true;
+            }
+            else
+            {
+                textBox_userPhone.ForeColor = Color.Red;
+                textBox_userPhone.CausesValidation = false;
+            }
+        }
+        //Cada vez q el estado de validación cambia Llama a la función verificar textbox user validados para activar/desactivar el botón create.
+        private void textBox_user_CausesValidationChanged(object sender, EventArgs e)
+        {            
+            checkUserTextboxStatus();
+        }
+        
+        //Verifica si los campos de texto para el usuario son validos y activa el botón crear.
+        private void checkUserTextboxStatus()
+        {
+            button_addUser.Enabled = (textBox_userAddress.CausesValidation & textBox_userEmail.CausesValidation & textBox_userName.CausesValidation & textBox_userPass.CausesValidation &
+                    textBox_userPhone.CausesValidation & textBox_userSurname.CausesValidation);            
+        }
+
+        //Muestra el formulario para el usuario.
         private void userFormShow()
         {
             //show textboxes

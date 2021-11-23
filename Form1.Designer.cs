@@ -43,6 +43,10 @@ namespace NETime_WF_EF6
             this.label_userPass = new System.Windows.Forms.Label();
             this.textBox_userPass = new System.Windows.Forms.TextBox();
             this.button_addUser = new System.Windows.Forms.Button();
+            this.textBox_userPhone = new System.Windows.Forms.TextBox();
+            this.textBox_userAddress = new System.Windows.Forms.TextBox();
+            this.label_userPhone = new System.Windows.Forms.Label();
+            this.label_userAddress = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,12 +55,12 @@ namespace NETime_WF_EF6
             this.dtg1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtg1.Location = new System.Drawing.Point(283, 12);
             this.dtg1.Name = "dtg1";
-            this.dtg1.Size = new System.Drawing.Size(505, 253);
+            this.dtg1.Size = new System.Drawing.Size(505, 311);
             this.dtg1.TabIndex = 0;
             // 
             // getUsers
             // 
-            this.getUsers.Location = new System.Drawing.Point(660, 356);
+            this.getUsers.Location = new System.Drawing.Point(492, 342);
             this.getUsers.Name = "getUsers";
             this.getUsers.Size = new System.Drawing.Size(97, 47);
             this.getUsers.TabIndex = 1;
@@ -103,12 +107,15 @@ namespace NETime_WF_EF6
             // textBox_userName
             // 
             this.textBox_userName.AccessibleDescription = "Nombre de usuario";
+            this.textBox_userName.CausesValidation = false;
             this.textBox_userName.Location = new System.Drawing.Point(49, 161);
             this.textBox_userName.Name = "textBox_userName";
             this.textBox_userName.Size = new System.Drawing.Size(184, 20);
             this.textBox_userName.TabIndex = 5;
             this.textBox_userName.Tag = "Nombre";
             this.textBox_userName.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.userName_MaskInputRejected);
+            this.textBox_userName.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userName.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);
             this.textBox_userName.Validating += new System.ComponentModel.CancelEventHandler(this.userName_Validating);
             // 
             // textBox_userSurname
@@ -117,6 +124,8 @@ namespace NETime_WF_EF6
             this.textBox_userSurname.Name = "textBox_userSurname";
             this.textBox_userSurname.Size = new System.Drawing.Size(184, 20);
             this.textBox_userSurname.TabIndex = 6;
+            this.textBox_userSurname.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userSurname.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);
             // 
             // label_userName
             // 
@@ -125,16 +134,16 @@ namespace NETime_WF_EF6
             this.label_userName.Name = "label_userName";
             this.label_userName.Size = new System.Drawing.Size(44, 13);
             this.label_userName.TabIndex = 7;
-            this.label_userName.Text = "Nombre";            
+            this.label_userName.Text = "Nombre";
             // 
             // label_userEmail
             // 
             this.label_userEmail.AutoSize = true;
             this.label_userEmail.Location = new System.Drawing.Point(46, 223);
             this.label_userEmail.Name = "label_userEmail";
-            this.label_userEmail.Size = new System.Drawing.Size(32, 13);
+            this.label_userEmail.Size = new System.Drawing.Size(75, 13);
             this.label_userEmail.TabIndex = 8;
-            this.label_userEmail.Text = "Email";
+            this.label_userEmail.Text = "Email (Unique)";
             // 
             // textBox_userEmail
             // 
@@ -143,6 +152,8 @@ namespace NETime_WF_EF6
             this.textBox_userEmail.Name = "textBox_userEmail";
             this.textBox_userEmail.Size = new System.Drawing.Size(184, 20);
             this.textBox_userEmail.TabIndex = 9;
+            this.textBox_userEmail.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userEmail.TextChanged += new System.EventHandler(this.textBox_userEmail_TextChanged);
             // 
             // label_userSurname
             // 
@@ -174,7 +185,8 @@ namespace NETime_WF_EF6
             // 
             // button_addUser
             // 
-            this.button_addUser.Location = new System.Drawing.Point(49, 324);
+            this.button_addUser.Enabled = false;
+            this.button_addUser.Location = new System.Drawing.Point(49, 398);
             this.button_addUser.Name = "button_addUser";
             this.button_addUser.Size = new System.Drawing.Size(75, 23);
             this.button_addUser.TabIndex = 13;
@@ -182,11 +194,50 @@ namespace NETime_WF_EF6
             this.button_addUser.UseVisualStyleBackColor = true;
             this.button_addUser.Click += new System.EventHandler(this.button_addUser_Click);
             // 
+            // textBox_userPhone
+            // 
+            this.textBox_userPhone.CausesValidation = false;
+            this.textBox_userPhone.Location = new System.Drawing.Point(49, 316);
+            this.textBox_userPhone.Name = "textBox_userPhone";
+            this.textBox_userPhone.Size = new System.Drawing.Size(184, 20);
+            this.textBox_userPhone.TabIndex = 14;
+            this.textBox_userPhone.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userPhone.TextChanged += new System.EventHandler(this.textBox_userPhone_TextChanged);
+            // 
+            // textBox_userAddress
+            // 
+            this.textBox_userAddress.Location = new System.Drawing.Point(49, 356);
+            this.textBox_userAddress.Name = "textBox_userAddress";
+            this.textBox_userAddress.Size = new System.Drawing.Size(184, 20);
+            this.textBox_userAddress.TabIndex = 15;
+            // 
+            // label_userPhone
+            // 
+            this.label_userPhone.AutoSize = true;
+            this.label_userPhone.Location = new System.Drawing.Point(46, 301);
+            this.label_userPhone.Name = "label_userPhone";
+            this.label_userPhone.Size = new System.Drawing.Size(49, 13);
+            this.label_userPhone.TabIndex = 16;
+            this.label_userPhone.Text = "Teléfono";
+            // 
+            // label_userAddress
+            // 
+            this.label_userAddress.AutoSize = true;
+            this.label_userAddress.Location = new System.Drawing.Point(46, 342);
+            this.label_userAddress.Name = "label_userAddress";
+            this.label_userAddress.Size = new System.Drawing.Size(52, 13);
+            this.label_userAddress.TabIndex = 17;
+            this.label_userAddress.Text = "Dirección";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label_userAddress);
+            this.Controls.Add(this.label_userPhone);
+            this.Controls.Add(this.textBox_userAddress);
+            this.Controls.Add(this.textBox_userPhone);
             this.Controls.Add(this.button_addUser);
             this.Controls.Add(this.textBox_userPass);
             this.Controls.Add(this.label_userPass);
@@ -202,13 +253,12 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.getUsers);
             this.Controls.Add(this.dtg1);
             this.Name = "Form1";
-            this.Text = "CRUD";
+            this.Text = "Interfaz CRUD";
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.DataGridView dtg1;
@@ -225,6 +275,10 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Label label_userPass;
         private System.Windows.Forms.TextBox textBox_userPass;
         private System.Windows.Forms.Button button_addUser;
+        private System.Windows.Forms.TextBox textBox_userPhone;
+        private System.Windows.Forms.TextBox textBox_userAddress;
+        private System.Windows.Forms.Label label_userPhone;
+        private System.Windows.Forms.Label label_userAddress;
     }
 }
 
