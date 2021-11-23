@@ -97,6 +97,7 @@
     <Compile Include="user.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
+    <Compile Include="Class\XmlManager.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
