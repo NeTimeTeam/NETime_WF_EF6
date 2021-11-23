@@ -42,7 +42,8 @@ namespace NETime_WF_EF6
                 {
                     var sel_activities = context.selected_activitiesSet; //Analogo a usuarios.
                     dtg1.DataSource = sel_activities.ToList<selected_activities>();
-                }                
+                }
+                context.Dispose();
             }
         }
 
@@ -62,10 +63,13 @@ namespace NETime_WF_EF6
 
             //Creamos la conexión ORM
             netimeContainer context = new netimeContainer();
-            context.userSet.Add(usuario);
-            context.SaveChanges();            
-        }
+            context.userSet.Add(usuario); //Le pasamos el objeto al context.
+            context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
 
+            clean_userTextBoxes();
+            update_userGrid();            
+        }
+        
         //Eventos RadioButton
         private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
         {
@@ -159,7 +163,26 @@ namespace NETime_WF_EF6
         {            
             checkUserTextboxStatus();
         }
-        
+        //Vacia el texto de los bloques de texto del formulario user.
+        private void clean_userTextBoxes()
+        {
+            textBox_userAddress.Text = "";
+            textBox_userEmail.Text = "";
+            textBox_userName.Text = "";
+            textBox_userPass.Text = "";
+            textBox_userPhone.Text = "";
+            textBox_userSurname.Text = "";
+        }
+        //Actualiza el GridTable de los usuarios.
+        private void update_userGrid()
+        {
+            //Creamos la conexión ORM
+            netimeContainer context = new netimeContainer();
+            var users = context.userSet; //Obtener todos los usuarios.
+            dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+            context.Dispose();
+        }
+
         //Verifica si los campos de texto para el usuario son validos y activa el botón crear.
         private void checkUserTextboxStatus()
         {
