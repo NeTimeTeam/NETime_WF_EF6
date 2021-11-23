@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace NETime_WF_EF6
 {
@@ -14,6 +15,8 @@ namespace NETime_WF_EF6
         [STAThread]
         static void Main()
         {
+            var xmlmanager = new XmlManager("NetimeXmlDoc.xml");
+
             var context = new netimeContainer();
             var ususario = new user()
             {
@@ -31,6 +34,7 @@ namespace NETime_WF_EF6
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
-            
+
+        
     }
 }
