@@ -20,6 +20,10 @@ namespace NETime_WF_EF6
             radioButtonUsers.Checked = true;
         }
 
+        //Variable para almacenar el valor inicial de la celda q se va a editar.
+        private string cellValue_before_edit = null;
+
+        //Evento click en botón getUsers
         private void getUsers_Click(object sender, EventArgs e)
         {
             using (netimeContainer context = new netimeContainer())
@@ -224,6 +228,74 @@ namespace NETime_WF_EF6
             label_userEmail.Hide();
             label_userSurname.Hide();
             label_userPass.Hide();
-        }        
+        }
+
+        private void dtg1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var context = new netimeContainer();                    //Conexión            
+            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
+            var user = context.userSet.Find(dtg1[0, e.RowIndex].Value);   //Obtenemos la entidad usuario por el ID
+            bool valid = false;                                         //Variable de control.
+
+            switch (e.ColumnIndex)  //Determinamos que la opración en función de la columna seleccionada.
+            {
+                case 1:
+                    if (utilites.nameValidation(new_value))
+                    {
+                        user.name = new_value;
+                        valid = true;
+                    }
+                    break;                    
+                case 2:
+                    if (utilites.nameValidation(new_value))
+                    {
+                        user.surname = new_value;
+                        valid = true;
+                    }
+                    break;
+                case 3:
+                    if (utilites.emailValidation(new_value))
+                    {
+                        user.email = new_value;
+                        valid = true;
+                    }                    
+                    break;
+                case 4:
+                    if (utilites.phoneValidation(new_value))
+                    {
+                        user.phone = new_value;
+                        valid = true;
+                    }                    
+                    break;
+                case 5:
+                    //TODO: password data control
+                    //user.address = new_value;
+                    break;
+                case 6:
+                    //TODO: address data control
+                    //user.password = new_value;
+                    break;
+                default:
+                    break;
+            }
+
+            if (valid)
+            {
+                context.Entry(user).CurrentValues.SetValues(user);
+                context.SaveChanges();
+            }
+            else
+            {
+                //TODO: Valorar alternativa al cambio de color
+                dtg1.CurrentCell.Style.ForeColor = Color.Red;
+                dtg1.CurrentCell.Value = this.cellValue_before_edit;
+            }
+        }
+        
+        
+        private void dtg1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            this.cellValue_before_edit = dtg1.CurrentCell.Value.ToString();            
+        }
     }
 }

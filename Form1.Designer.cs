@@ -29,6 +29,7 @@ namespace NETime_WF_EF6
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dtg1 = new System.Windows.Forms.DataGridView();
             this.getUsers = new System.Windows.Forms.Button();
             this.radioButtonUsers = new System.Windows.Forms.RadioButton();
@@ -47,16 +48,25 @@ namespace NETime_WF_EF6
             this.textBox_userAddress = new System.Windows.Forms.TextBox();
             this.label_userPhone = new System.Windows.Forms.Label();
             this.label_userAddress = new System.Windows.Forms.Label();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dtg1
             // 
             this.dtg1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtg1.Location = new System.Drawing.Point(283, 12);
+            this.dtg1.MultiSelect = false;
             this.dtg1.Name = "dtg1";
-            this.dtg1.Size = new System.Drawing.Size(505, 311);
+            this.dtg1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtg1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dtg1.Size = new System.Drawing.Size(664, 311);
             this.dtg1.TabIndex = 0;
+            this.dtg1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dtg1_CellBeginEdit);
+            this.dtg1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_CellValueChanged);
             // 
             // getUsers
             // 
@@ -229,11 +239,19 @@ namespace NETime_WF_EF6
             this.label_userAddress.TabIndex = 17;
             this.label_userAddress.Text = "Dirección";
             // 
+            // userBindingSource
+            // 
+            this.userBindingSource.DataSource = typeof(NETime_WF_EF6.user);
+            // 
+            // userBindingSource1
+            // 
+            this.userBindingSource1.DataSource = typeof(NETime_WF_EF6.user);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(959, 452);
             this.Controls.Add(this.label_userAddress);
             this.Controls.Add(this.label_userPhone);
             this.Controls.Add(this.textBox_userAddress);
@@ -255,6 +273,8 @@ namespace NETime_WF_EF6
             this.Name = "Form1";
             this.Text = "Interfaz CRUD";
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,6 +299,8 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.TextBox textBox_userAddress;
         private System.Windows.Forms.Label label_userPhone;
         private System.Windows.Forms.Label label_userAddress;
+        private System.Windows.Forms.BindingSource userBindingSource;
+        private System.Windows.Forms.BindingSource userBindingSource1;
     }
 }
 
