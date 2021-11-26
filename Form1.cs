@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+
 
 namespace NETime_WF_EF6
 {
@@ -20,9 +20,7 @@ namespace NETime_WF_EF6
             radioButtonUsers.Checked = true;
         }
 
-        //Variable para almacenar el valor inicial de la celda q se va a editar.
-        private string cellValue_before_edit = null;
-
+        #region GET USERS METHODS
         //Evento click en botón getUsers
         private void getUsers_Click(object sender, EventArgs e)
         {
@@ -50,30 +48,20 @@ namespace NETime_WF_EF6
                 context.Dispose();
             }
         }
+        #endregion
 
-        private void button_addUser_Click(object sender, EventArgs e)
+
+        //Actualiza el GridTable de los usuarios.
+        private void update_userGrid()
         {
-            //Creamos un objeto usuario con los datos del formulario
-            user usuario = new user()
-            {
-                name = textBox_userName.Text,
-                email = textBox_userEmail.Text,
-                password = textBox_userPass.Text,
-                surname = textBox_userSurname.Text,
-                phone = textBox_userPhone.Text,
-                //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
-                address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
-            };
-
             //Creamos la conexión ORM
             netimeContainer context = new netimeContainer();
-            context.userSet.Add(usuario); //Le pasamos el objeto al context.
-            context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
-
-            clean_userTextBoxes();
-            update_userGrid();            
+            var users = context.userSet; //Obtener todos los usuarios.
+            dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+            context.Dispose();
         }
-        
+
+        #region EVENTOS RADIOBUTTONS
         //Eventos RadioButton
         private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
         {
@@ -95,22 +83,31 @@ namespace NETime_WF_EF6
             userFormHide();
             dtg1.DataSource = "";
         }
+        #endregion
 
-        //Eventos formularios
-        private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        #region CREATE USER
+        private void button_addUser_Click(object sender, EventArgs e)
         {
-        
-        }
+            //Creamos un objeto usuario con los datos del formulario
+            user usuario = new user()
+            {
+                name = textBox_userName.Text,
+                email = textBox_userEmail.Text,
+                password = textBox_userPass.Text,
+                surname = textBox_userSurname.Text,
+                phone = textBox_userPhone.Text,
+                //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
+                address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
+            };
 
-        //Validación del campo nombre usuario al salir del textbox.
-        private void userName_Validating(object sender, CancelEventArgs e)
-        {   
-            /*
-            if (userName.Text != "something")
-                e.Cancel = true;
-            */
-        }
+            //Creamos la conexión ORM
+            netimeContainer context = new netimeContainer();
+            context.userSet.Add(usuario); //Le pasamos el objeto al context.
+            context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
 
+            clean_userTextBoxes();
+            update_userGrid();
+        }
         private void textBox_userEmail_TextChanged(object sender, EventArgs e)
         {
             if (utilites.emailValidation(textBox_userEmail.Text))
@@ -162,7 +159,7 @@ namespace NETime_WF_EF6
                 textBox_userPhone.CausesValidation = false;
             }
         }
-        //Cada vez q el estado de validación cambia Llama a la función verificar textbox user validados para activar/desactivar el botón create.
+        //Cada vez q el estado de validación cambia, llama a la función verificar textbox user validados para activar/desactivar el botón create.
         private void textBox_user_CausesValidationChanged(object sender, EventArgs e)
         {            
             checkUserTextboxStatus();
@@ -177,15 +174,6 @@ namespace NETime_WF_EF6
             textBox_userPhone.Text = "";
             textBox_userSurname.Text = "";
         }
-        //Actualiza el GridTable de los usuarios.
-        private void update_userGrid()
-        {
-            //Creamos la conexión ORM
-            netimeContainer context = new netimeContainer();
-            var users = context.userSet; //Obtener todos los usuarios.
-            dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
-            context.Dispose();
-        }
 
         //Verifica si los campos de texto para el usuario son validos y activa el botón crear.
         private void checkUserTextboxStatus()
@@ -193,7 +181,9 @@ namespace NETime_WF_EF6
             button_addUser.Enabled = (textBox_userAddress.CausesValidation & textBox_userEmail.CausesValidation & textBox_userName.CausesValidation & textBox_userPass.CausesValidation &
                     textBox_userPhone.CausesValidation & textBox_userSurname.CausesValidation);            
         }
+        #endregion
 
+        #region SHOW / HIDE USER FROM
         //Muestra el formulario para el usuario.
         private void userFormShow()
         {
@@ -202,6 +192,8 @@ namespace NETime_WF_EF6
             textBox_userEmail.Show();
             textBox_userSurname.Show();
             textBox_userPass.Show();
+            textBox_userAddress.Show();
+            textBox_userPhone.Show();
 
             //Button show
             button_addUser.Show();
@@ -211,6 +203,8 @@ namespace NETime_WF_EF6
             label_userEmail.Show();
             label_userSurname.Show();
             label_userPass.Show();
+            label_userAddress.Show();
+            label_userPhone.Show();
         }
         private void userFormHide()
         {
@@ -219,6 +213,8 @@ namespace NETime_WF_EF6
             textBox_userEmail.Hide();
             textBox_userSurname.Hide();
             textBox_userPass.Hide();
+            textBox_userAddress.Hide();
+            textBox_userPhone.Hide();
 
             //Button hide
             button_addUser.Hide();
@@ -228,8 +224,17 @@ namespace NETime_WF_EF6
             label_userEmail.Hide();
             label_userSurname.Hide();
             label_userPass.Hide();
-        }
+            label_userAddress.Hide();
+            label_userPhone.Hide();
 
+        }
+        #endregion
+
+        #region UPDATE USER
+        //Variable para almacenar el valor inicial de la celda q se va a editar.
+        private string cellValue_before_edit = null;
+
+        //Evento editar. Modifica el contenido en la base de datos.
         private void dtg1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             var context = new netimeContainer();                    //Conexión            
@@ -282,7 +287,7 @@ namespace NETime_WF_EF6
             if (valid)
             {
                 context.Entry(user).CurrentValues.SetValues(user);
-                context.SaveChanges();
+                context.SaveChanges();                
             }
             else
             {
@@ -290,12 +295,60 @@ namespace NETime_WF_EF6
                 dtg1.CurrentCell.Style.ForeColor = Color.Red;
                 dtg1.CurrentCell.Value = this.cellValue_before_edit;
             }
+            context.Dispose();
         }
         
-        
+        //Detecta el comienzo de edición de una celda y guarda su valor original.
         private void dtg1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             this.cellValue_before_edit = dtg1.CurrentCell.Value.ToString();            
         }
+        #endregion
+
+        #region DELETE USER
+        //Habilitar el botón borrar cuando se selecciona una celda.
+        private int selected_row = -1; //almacenará el valor de fila seleccionada.
+        private void dtg1_RowSelect(object sender, DataGridViewCellEventArgs e)
+        {
+            if(int.TryParse(dtg1[0, e.RowIndex].Value.ToString(), out selected_row))
+            {
+                button_del.Enabled = true;
+            }
+        }
+        private void button_del_Click(object sender, EventArgs e)
+        {
+            netimeContainer context = new netimeContainer();
+            user userToDelete = context.userSet.Find(selected_row);
+            context.userSet.Remove(userToDelete);
+            context.SaveChanges();
+            context.Dispose();
+
+            update_userGrid();
+            selected_row = -1;
+            button_del.Enabled = false;
+            //MessageBox.Show(selected_row.ToString());
+            
+        }
+
+        #endregion
+
+        #region DEPRECTEd METHODS AND VARIABLES
+        //Eventos formularios
+        private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        //Validación del campo nombre usuario al salir del textbox.
+        private void userName_Validating(object sender, CancelEventArgs e)
+        {
+            /*
+            if (userName.Text != "something")
+                e.Cancel = true;
+            */
+        }
+        #endregion
+
+        
     }
 }

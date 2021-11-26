@@ -48,6 +48,7 @@ namespace NETime_WF_EF6
             this.textBox_userAddress = new System.Windows.Forms.TextBox();
             this.label_userPhone = new System.Windows.Forms.Label();
             this.label_userAddress = new System.Windows.Forms.Label();
+            this.button_del = new System.Windows.Forms.Button();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
@@ -66,6 +67,7 @@ namespace NETime_WF_EF6
             this.dtg1.Size = new System.Drawing.Size(664, 311);
             this.dtg1.TabIndex = 0;
             this.dtg1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dtg1_CellBeginEdit);
+            this.dtg1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_RowSelect);
             this.dtg1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_CellValueChanged);
             // 
             // getUsers
@@ -74,7 +76,7 @@ namespace NETime_WF_EF6
             this.getUsers.Name = "getUsers";
             this.getUsers.Size = new System.Drawing.Size(97, 47);
             this.getUsers.TabIndex = 1;
-            this.getUsers.Text = "Obtener usuarios";
+            this.getUsers.Text = "Actualizar";
             this.getUsers.UseVisualStyleBackColor = true;
             this.getUsers.Click += new System.EventHandler(this.getUsers_Click);
             // 
@@ -239,6 +241,19 @@ namespace NETime_WF_EF6
             this.label_userAddress.TabIndex = 17;
             this.label_userAddress.Text = "Dirección";
             // 
+            // button_del
+            // 
+            this.button_del.Enabled = false;
+            this.button_del.Location = new System.Drawing.Point(872, 366);
+            this.button_del.Name = "button_del";
+            this.button_del.Size = new System.Drawing.Size(75, 23);
+            this.button_del.TabIndex = 18;
+            this.button_del.Text = "Borrar";
+            this.button_del.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button_del.UseMnemonic = false;
+            this.button_del.UseVisualStyleBackColor = true;
+            this.button_del.Click += new System.EventHandler(this.button_del_Click);
+            // 
             // userBindingSource
             // 
             this.userBindingSource.DataSource = typeof(NETime_WF_EF6.user);
@@ -252,6 +267,7 @@ namespace NETime_WF_EF6
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 452);
+            this.Controls.Add(this.button_del);
             this.Controls.Add(this.label_userAddress);
             this.Controls.Add(this.label_userPhone);
             this.Controls.Add(this.textBox_userAddress);
@@ -301,6 +317,7 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Label label_userAddress;
         private System.Windows.Forms.BindingSource userBindingSource;
         private System.Windows.Forms.BindingSource userBindingSource1;
+        private System.Windows.Forms.Button button_del;
     }
 }
 
