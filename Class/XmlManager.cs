@@ -45,9 +45,11 @@ namespace NETime_WF_EF6
             attribute.Value = usuario.phone;
             usuarioNode.Attributes.Append(attribute);
 
+            /*
             attribute = doc.CreateAttribute("password");
             attribute.Value = usuario.password;
             usuarioNode.Attributes.Append(attribute);
+            */
 
             usuarioNode.InnerText = usuario.name;
             rootNode.AppendChild(usuarioNode);

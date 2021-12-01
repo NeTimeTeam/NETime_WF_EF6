@@ -32,8 +32,7 @@ namespace NETime_WF_EF6
                 //Usuarios
                 if (radioButtonUsers.Checked)//¿RB Ususarios activo?
                 {
-                    var users = context.userSet; //Obtener todos los usuarios.
-                    dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+                    update_userGrid(this.context);
                 }
 
                 //Actividades
@@ -58,16 +57,15 @@ namespace NETime_WF_EF6
         {
             using (this.context = new netimeContainer())
             {
-                var users = context.userSet; //Obtener todos los usuarios.
-                dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+                update_userGrid(this.context);
             }
         }
         private void update_userGrid(netimeContainer context)
         {
             using (context)
             {
-                var users = context.userSet; //Obtener todos los usuarios.
-                dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+                var users = context.userSet.Select(u => new { u.Id, u.email, u.name, u.surname, u.phone, u.address}); //Obtener todos los usuarios.
+                dtg1.DataSource = users.ToList();//Enviar Lista<USUARIOS> a DataGridTable1
             }
         }
 
@@ -79,7 +77,7 @@ namespace NETime_WF_EF6
             {
                 //Implementar cambio Form1 a formulario Sel_activities
                 userFormShow();
-                dtg1.DataSource = this.context.userSet.ToList<user>();
+                update_userGrid(this.context);
             }
 
         }
@@ -108,12 +106,16 @@ namespace NETime_WF_EF6
         {
             using(this.context = new netimeContainer())
             {
+                //Obtenemos el byte[] del password y el salt[] antes de almacenarlo en el DB.
+                PasswordHash passGen = new PasswordHash(textBox_userPass.Text);
+
                 //Creamos un objeto usuario con los datos del formulario
                 user usuario = new user()
                 {
                     name = textBox_userName.Text,
                     email = textBox_userEmail.Text,
-                    password = textBox_userPass.Text,
+                    password = passGen.GenerateSaltedHash(),
+                    salt = passGen.Salt(),
                     surname = textBox_userSurname.Text,
                     phone = textBox_userPhone.Text,
                     //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación

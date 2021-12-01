@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/01/2021 01:07:04
+-- Date Created: 12/01/2021 15:11:08
 -- Generated from EDMX file: S:\OneDrive\UOC\DAM\ICB0_P6_Técnicas_de_persistencia_de_datos_con_.NET\code\NETime_WF_EF6\netime.edmx
 -- --------------------------------------------------
 
@@ -68,7 +68,8 @@ CREATE TABLE [dbo].[userSet] (
     [email] nvarchar(450)  NOT NULL,
     [phone] nvarchar(max)  NOT NULL,
     [address] nvarchar(max)  NOT NULL,
-    [password] nvarchar(max)  NOT NULL
+    [password] varbinary(max)  NOT NULL,
+    [salt] varbinary(max)  NOT NULL
 );
 GO
 

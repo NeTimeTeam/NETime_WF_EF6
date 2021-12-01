@@ -46,7 +46,8 @@
     <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="450" />
     <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
     <Property Name="address" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="varbinary(max)" Nullable="false" />
+    <Property Name="salt" Type="varbinary(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="categoriesSet">
     <Key>
@@ -202,7 +203,8 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="450" annotation:StoreGeneratedPattern="None" />
           <Property Name="phone" Type="String" Nullable="false" />
           <Property Name="address" Type="String" Nullable="false" />
-          <Property Name="password" Type="String" Nullable="false" />
+          <Property Name="password" Type="Binary" Nullable="false" />
+          <Property Name="salt" Type="Binary" Nullable="false" />
         </EntityType>
         <EntityType Name="categories">
           <Key>
@@ -329,6 +331,7 @@
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="salt" ColumnName="salt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

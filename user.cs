@@ -20,6 +20,7 @@ namespace NETime_WF_EF6
         public string email { get; set; }
         public string phone { get; set; }
         public string address { get; set; }
-        public string password { get; set; }
+        public byte[] password { get; set; }
+        public byte[] salt { get; set; }
     }
 }
