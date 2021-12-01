@@ -65,7 +65,7 @@ namespace NETime_WF_EF6
             this.dtg1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dtg1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dtg1.Size = new System.Drawing.Size(664, 311);
-            this.dtg1.TabIndex = 0;
+            this.dtg1.TabIndex = 0;            
             this.dtg1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dtg1_CellBeginEdit);
             this.dtg1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_RowSelect);
             this.dtg1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_CellValueChanged);

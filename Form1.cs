@@ -61,11 +61,19 @@ namespace NETime_WF_EF6
             }
         }
         private void update_userGrid(netimeContainer context)
-        {
+        {            
             using (context)
             {
-                var users = context.userSet.Select(u => new { u.Id, u.email, u.name, u.surname, u.phone, u.address}); //Obtener todos los usuarios.
-                dtg1.DataSource = users.ToList();//Enviar Lista<USUARIOS> a DataGridTable1
+                //Obtenemos solo los datos del usuario q nos interesan                
+                //var users = context.userSet.Select(u => new Usuario(u.Id, u.email, u.name, u.surname, u.phone, u.address, Convert.ToBase64String(u.password), Convert.ToBase64String(u.salt))).ToList<Usuario>(); //Obtener todos los usuarios.                
+                List<Usuario> usuarioList = new List<Usuario>();
+                var users = context.userSet;
+                foreach(user u in users)
+                {                    
+                    usuarioList.Add(new Usuario(u));
+                }
+                //dtg1.DataSource = users.ToArray<Usuario>();//Enviar Lista<USUARIOS> a DataGridTable1
+                dtg1.DataSource = usuarioList;
             }
         }
 
@@ -79,7 +87,7 @@ namespace NETime_WF_EF6
                 userFormShow();
                 update_userGrid(this.context);
             }
-
+            DoColumnsReadOnly();
         }
         private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
         {
@@ -277,26 +285,27 @@ namespace NETime_WF_EF6
             using (this.context = new netimeContainer())                    //Conexión
             {
                 var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
-                var user = context.userSet.Find(dtg1[0, e.RowIndex].Value);   //Obtenemos la entidad usuario por el ID
+                var user = context.userSet.Find(Int32.Parse(dtg1[0, e.RowIndex].Value.ToString()));   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
                 bool valid = false;                                         //Variable de control.
-
-                switch (e.ColumnIndex)  //Determinamos que opración en función de la columna seleccionada.
-                {
-                    case 1:
+                string propertyName = dtg1.Columns[e.ColumnIndex].HeaderText;
+                
+                switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
+                {                    
+                    case "name":
                         if (utilites.nameValidation(new_value))
                         {
                             user.name = new_value;
                             valid = true;
                         }
                         break;
-                    case 2:
+                    case "surname":
                         if (utilites.nameValidation(new_value))
                         {
                             user.surname = new_value;
                             valid = true;
                         }
                         break;
-                    case 3:
+                    case "email":
                         if (utilites.emailValidation(new_value))
                         {
                             user.email = new_value;
@@ -311,18 +320,18 @@ namespace NETime_WF_EF6
                             }                             
                         }
                         break;
-                    case 4:
+                    case "phone":
                         if (utilites.phoneValidation(new_value))
                         {
                             user.phone = new_value;
                             valid = true;
                         }
                         break;
-                    case 5:
+                    case "password":
                         //TODO: password data control
                         //user.address = new_value;
                         break;
-                    case 6:
+                    case "salt":
                         //TODO: address data control
                         //user.password = new_value;
                         break;
@@ -342,20 +351,36 @@ namespace NETime_WF_EF6
                     {
                         MessageBox.Show(err.InnerException.InnerException.Message);
                     }
-                    update_userGrid(this.context);
+                    update_userGrid();
                 }
                 else
                 {
                     //TODO: Valorar alternativa al cambio de color
-                    dtg1.CurrentCell.Style.ForeColor = Color.Red;
-                    dtg1.CurrentCell.Value = this.cellValue_before_edit;
+                    update_userGrid();
+                    dtg1[e.ColumnIndex, e.RowIndex].Style.ForeColor = Color.Red;
+                    //dtg1.CurrentCell.Value = this.cellValue_before_edit;                    
                 }
             }
         }
         
+        //Bloquear la edición de ciertas columnas
+        private void DoColumnsReadOnly()
+        {            
+            for (int i=0; i < dtg1.Columns.Count; i++)
+            {
+                switch (dtg1.Columns[i].HeaderText)
+                {
+                    case "Id":
+                    case "salt":
+                        dtg1.Columns[i].ReadOnly = true;
+                        break;
+                }
+            }
+        }
+
         //Detecta el comienzo de edición de una celda y guarda su valor original.
         private void dtg1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
+        {            
             this.cellValue_before_edit = dtg1.CurrentCell.Value.ToString();            
         }
         #endregion
@@ -365,10 +390,13 @@ namespace NETime_WF_EF6
         private int selected_row = -1; //almacenará el valor de fila seleccionada.
         private void dtg1_RowSelect(object sender, DataGridViewCellEventArgs e)
         {
-            if(int.TryParse(dtg1[0, e.RowIndex].Value.ToString(), out selected_row))
+            if(e.RowIndex >= 0)
             {
-                button_del.Enabled = true;
-            }
+                if (int.TryParse(dtg1[0, e.RowIndex].Value.ToString(), out selected_row))
+                {                    
+                    button_del.Enabled = true;
+                }
+            }            
         }
         private void button_del_Click(object sender, EventArgs e)
         {

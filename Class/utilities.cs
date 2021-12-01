@@ -156,4 +156,39 @@ namespace NETime_WF_EF6
             return CompareByteArrays(GenerateSaltedHash(), storedPass);
         }
     }
+
+    class Usuario
+    {
+        public Usuario(user user) {
+            this.Id = user.Id.ToString();
+            this.email = user.email;
+            this.name = user.name;
+            this.surname = user.surname;
+            this.phone = user.phone;
+            this.address = user.address;
+            this.password = Convert.ToBase64String(user.password);
+            this.salt = Convert.ToBase64String(user.salt);
+        }
+        public Usuario(string Id, string email, string name, string surname, string phone, string address, string password, string salt)
+        {
+            this.Id = Id;
+            this.email = email;
+            this.name = name;
+            this.surname = surname;
+            this.phone = phone;
+            this.address = address;
+            this.password = password;
+            this.salt = salt;
+        }
+
+        public string Id { get; set; }
+        public string email { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string phone { get; set; }
+        public string address { get; set; }
+        public string password { get; set; }
+        public string salt { get; set; }
+
+    }
 }
