@@ -15,9 +15,9 @@ namespace NETime_WF_EF6
     public partial class activities
     {
         public int Id { get; set; }
-        public int userId { get; set; }
-        public int categoriesId { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public int categoriesId { get; set; }
+        public int userId { get; set; }
     }
 }

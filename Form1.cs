@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Entity.Infrastructure;
 
 
 namespace NETime_WF_EF6
@@ -17,14 +18,16 @@ namespace NETime_WF_EF6
         public Form1()
         {
             InitializeComponent();
-            radioButtonUsers.Checked = true;
+            radioButtonUsers.Checked = true;           
         }
 
-        #region GET USERS METHODS
+        private netimeContainer context;
+
+        #region GET METHODS
         //Evento click en botón getUsers
         private void getUsers_Click(object sender, EventArgs e)
         {
-            using (netimeContainer context = new netimeContainer())
+            using (this.context = new netimeContainer())
             {
                 //Usuarios
                 if (radioButtonUsers.Checked)//¿RB Ususarios activo?
@@ -36,8 +39,8 @@ namespace NETime_WF_EF6
                 //Actividades
                 if (radioButtonActivities.Checked) //RB Activities activo¿?
                 {                    
-                    var activities = context.activitiesSet; //Analogo a usuarios.
-                    dtg1.DataSource = activities.ToList<activities>();
+                    var stored_activities = context.activitiesSet; //Analogo a usuarios.
+                    dtg1.DataSource = stored_activities.ToList<activities>();
                 }
                 //Actividades seleccionadas
                 if (radioButtonSel_Activities.Checked) //RB Sel_activities activo¿?
@@ -45,7 +48,6 @@ namespace NETime_WF_EF6
                     var sel_activities = context.selected_activitiesSet; //Analogo a usuarios.
                     dtg1.DataSource = sel_activities.ToList<selected_activities>();
                 }
-                context.Dispose();
             }
         }
         #endregion
@@ -54,59 +56,92 @@ namespace NETime_WF_EF6
         //Actualiza el GridTable de los usuarios.
         private void update_userGrid()
         {
-            //Creamos la conexión ORM
-            netimeContainer context = new netimeContainer();
-            var users = context.userSet; //Obtener todos los usuarios.
-            dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
-            context.Dispose();
+            using (this.context = new netimeContainer())
+            {
+                var users = context.userSet; //Obtener todos los usuarios.
+                dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+            }
+        }
+        private void update_userGrid(netimeContainer context)
+        {
+            using (context)
+            {
+                var users = context.userSet; //Obtener todos los usuarios.
+                dtg1.DataSource = users.ToList<user>();//Enviar Lista<USUARIOS> a DataGridTable1
+            }
         }
 
         #region EVENTOS RADIOBUTTONS
         //Eventos RadioButton
-        private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
-        {
-            //Implementar cambio Form1 a formulario Sel_activities
-            userFormHide();
-            dtg1.DataSource = "";
-        }
-
         private void radioButtonUsers_CheckedChanged(object sender, EventArgs e)
         {
-            //Implementar cambio Form1 a formulario Sel_activities
-            userFormShow();
-            dtg1.DataSource = "";
-        }
+            using (this.context = new netimeContainer())
+            {
+                //Implementar cambio Form1 a formulario Sel_activities
+                userFormShow();
+                dtg1.DataSource = this.context.userSet.ToList<user>();
+            }
 
+        }
+        private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
+        {
+            using (this.context = new netimeContainer())
+            {
+                userFormHide();
+                dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
+            }
+        }
         private void radioButtonActivities_CheckedChanged(object sender, EventArgs e)
         {
-            //Implementar cambio Form1 a formulario Sel_activities
-            userFormHide();
-            dtg1.DataSource = "";
+            using(this.context = new netimeContainer())
+            {
+                //Implementar cambio Form1 a formulario Sel_activities
+                userFormHide();
+                dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
+            }
+            
         }
         #endregion
 
         #region CREATE USER
         private void button_addUser_Click(object sender, EventArgs e)
         {
-            //Creamos un objeto usuario con los datos del formulario
-            user usuario = new user()
+            using(this.context = new netimeContainer())
             {
-                name = textBox_userName.Text,
-                email = textBox_userEmail.Text,
-                password = textBox_userPass.Text,
-                surname = textBox_userSurname.Text,
-                phone = textBox_userPhone.Text,
-                //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
-                address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
-            };
+                //Creamos un objeto usuario con los datos del formulario
+                user usuario = new user()
+                {
+                    name = textBox_userName.Text,
+                    email = textBox_userEmail.Text,
+                    password = textBox_userPass.Text,
+                    surname = textBox_userSurname.Text,
+                    phone = textBox_userPhone.Text,
+                    //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
+                    address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
+                };
+                try
+                {
 
-            //Creamos la conexión ORM
-            netimeContainer context = new netimeContainer();
-            context.userSet.Add(usuario); //Le pasamos el objeto al context.
-            context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
-
-            clean_userTextBoxes();
-            update_userGrid();
+                    int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
+                    if (userExist > 0)
+                    {
+                        MessageBox.Show("El usuario ya existe");
+                        textBox_userEmail.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        context.userSet.Add(usuario); //Le pasamos el objeto al context.            
+                        context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
+                        clean_userTextBoxes();
+                    }
+                }
+                catch (DbUpdateException err)
+                {
+                    string errMsg = err.InnerException.InnerException.Message;
+                    MessageBox.Show(errMsg);
+                }
+                update_userGrid(context);
+            }            
         }
         private void textBox_userEmail_TextChanged(object sender, EventArgs e)
         {
@@ -237,65 +272,83 @@ namespace NETime_WF_EF6
         //Evento editar. Modifica el contenido en la base de datos.
         private void dtg1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            var context = new netimeContainer();                    //Conexión            
-            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
-            var user = context.userSet.Find(dtg1[0, e.RowIndex].Value);   //Obtenemos la entidad usuario por el ID
-            bool valid = false;                                         //Variable de control.
+            using (this.context = new netimeContainer())                    //Conexión
+            {
+                var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
+                var user = context.userSet.Find(dtg1[0, e.RowIndex].Value);   //Obtenemos la entidad usuario por el ID
+                bool valid = false;                                         //Variable de control.
 
-            switch (e.ColumnIndex)  //Determinamos que la opración en función de la columna seleccionada.
-            {
-                case 1:
-                    if (utilites.nameValidation(new_value))
-                    {
-                        user.name = new_value;
-                        valid = true;
-                    }
-                    break;                    
-                case 2:
-                    if (utilites.nameValidation(new_value))
-                    {
-                        user.surname = new_value;
-                        valid = true;
-                    }
-                    break;
-                case 3:
-                    if (utilites.emailValidation(new_value))
-                    {
-                        user.email = new_value;
-                        valid = true;
-                    }                    
-                    break;
-                case 4:
-                    if (utilites.phoneValidation(new_value))
-                    {
-                        user.phone = new_value;
-                        valid = true;
-                    }                    
-                    break;
-                case 5:
-                    //TODO: password data control
-                    //user.address = new_value;
-                    break;
-                case 6:
-                    //TODO: address data control
-                    //user.password = new_value;
-                    break;
-                default:
-                    break;
-            }
+                switch (e.ColumnIndex)  //Determinamos que opración en función de la columna seleccionada.
+                {
+                    case 1:
+                        if (utilites.nameValidation(new_value))
+                        {
+                            user.name = new_value;
+                            valid = true;
+                        }
+                        break;
+                    case 2:
+                        if (utilites.nameValidation(new_value))
+                        {
+                            user.surname = new_value;
+                            valid = true;
+                        }
+                        break;
+                    case 3:
+                        if (utilites.emailValidation(new_value))
+                        {
+                            user.email = new_value;
+                            try
+                            {
+                                valid = (from u in this.context.userSet where u.email.Equals(new_value) select u).Count() < 1;
+                            }
+                            catch
+                            {
+                                valid = false;
+                                MessageBox.Show("El email ya existe en la DB");
+                            }                             
+                        }
+                        break;
+                    case 4:
+                        if (utilites.phoneValidation(new_value))
+                        {
+                            user.phone = new_value;
+                            valid = true;
+                        }
+                        break;
+                    case 5:
+                        //TODO: password data control
+                        //user.address = new_value;
+                        break;
+                    case 6:
+                        //TODO: address data control
+                        //user.password = new_value;
+                        break;
+                    default:
+                        break;
+                }
 
-            if (valid)
-            {
-                context.Entry(user).CurrentValues.SetValues(user);
-                context.SaveChanges();                
+                if (valid)
+                {
+                    context.Entry(user).CurrentValues.SetValues(user);
+                    try
+                    {
+                        context.SaveChanges();
+
+                    }
+                    catch (DbUpdateException err)
+                    {
+                        MessageBox.Show(err.InnerException.InnerException.Message);
+                    }
+                    update_userGrid(this.context);
+                }
+                else
+                {
+                    //TODO: Valorar alternativa al cambio de color
+                    dtg1.CurrentCell.Style.ForeColor = Color.Red;
+                    dtg1.CurrentCell.Value = this.cellValue_before_edit;
+                }
             }
-            else
-            {
-                //TODO: Valorar alternativa al cambio de color
-                dtg1.CurrentCell.Style.ForeColor = Color.Red;
-                dtg1.CurrentCell.Value = this.cellValue_before_edit;
-            }
-            context.Dispose();
         }
         
         //Detecta el comienzo de edición de una celda y guarda su valor original.
@@ -317,13 +370,20 @@ namespace NETime_WF_EF6
         }
         private void button_del_Click(object sender, EventArgs e)
         {
-            netimeContainer context = new netimeContainer();
-            user userToDelete = context.userSet.Find(selected_row);
-            context.userSet.Remove(userToDelete);
-            context.SaveChanges();
-            context.Dispose();
-
-            update_userGrid();
+            using(this.context = new netimeContainer())
+            {
+                user userToDelete = context.userSet.Find(selected_row);
+                context.userSet.Remove(userToDelete);
+                try
+                {
+                    context.SaveChanges();
+                }catch(DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
+                }                
+                update_userGrid(this.context);
+            }
+            
             selected_row = -1;
             button_del.Enabled = false;
             //MessageBox.Show(selected_row.ToString());

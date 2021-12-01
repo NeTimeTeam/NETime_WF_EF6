@@ -15,21 +15,25 @@
       <End Role="user" EntitySet="userSet" />
       <End Role="selected_activities" EntitySet="selected_activitiesSet" />
     </AssociationSet>
-    <AssociationSet Name="balanceuser" Association="netime.Store.balanceuser">
-      <End Role="balance" EntitySet="balanceSet" />
-      <End Role="user" EntitySet="userSet" />
+    <AssociationSet Name="categoriesactivities" Association="netime.Store.categoriesactivities">
+      <End Role="categories" EntitySet="categoriesSet" />
+      <End Role="activities" EntitySet="activitiesSet" />
     </AssociationSet>
     <AssociationSet Name="useractivities" Association="netime.Store.useractivities">
       <End Role="user" EntitySet="userSet" />
       <End Role="activities" EntitySet="activitiesSet" />
     </AssociationSet>
-    <AssociationSet Name="categoriesactivities" Association="netime.Store.categoriesactivities">
-      <End Role="categories" EntitySet="categoriesSet" />
-      <End Role="activities" EntitySet="activitiesSet" />
-    </AssociationSet>
     <AssociationSet Name="activitiesselected_activities" Association="netime.Store.activitiesselected_activities">
       <End Role="activities" EntitySet="activitiesSet" />
       <End Role="selected_activities" EntitySet="selected_activitiesSet" />
+    </AssociationSet>
+    <AssociationSet Name="userbalance" Association="netime.Store.userbalance">
+      <End Role="user" EntitySet="userSet" />
+      <End Role="balance" EntitySet="balanceSet" />
+    </AssociationSet>
+    <AssociationSet Name="activitiesbalance" Association="netime.Store.activitiesbalance">
+      <End Role="activities" EntitySet="activitiesSet" />
+      <End Role="balance" EntitySet="balanceSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="userSet">
@@ -39,7 +43,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="surname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="450" />
     <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
     <Property Name="address" Type="nvarchar(max)" Nullable="false" />
     <Property Name="password" Type="nvarchar(max)" Nullable="false" />
@@ -65,22 +69,21 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="userId" Type="int" Nullable="false" />
-    <Property Name="activity_name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="user_name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="datetime" Type="datetime" Nullable="false" />
     <Property Name="qtty" Type="int" Nullable="false" />
     <Property Name="sing" Type="bit" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="activitiesId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="activitiesSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="userId" Type="int" Nullable="false" />
-    <Property Name="categoriesId" Type="int" Nullable="false" />
     <Property Name="name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="categoriesId" Type="int" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="userselected_activities">
     <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
@@ -90,30 +93,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="selected_activities">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="balanceuser">
-    <End Role="balance" Type="netime.Store.balanceSet" Multiplicity="*" />
-    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="balance">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="useractivities">
-    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
-    <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="activities">
         <PropertyRef Name="userId" />
       </Dependent>
     </ReferentialConstraint>
@@ -130,6 +109,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="useractivities">
+    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
+    <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="activities">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="activitiesselected_activities">
     <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="1" />
     <End Role="selected_activities" Type="netime.Store.selected_activitiesSet" Multiplicity="*" />
@@ -142,6 +133,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="userbalance">
+    <End Role="user" Type="netime.Store.userSet" Multiplicity="1" />
+    <End Role="balance" Type="netime.Store.balanceSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="balance">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="activitiesbalance">
+    <End Role="activities" Type="netime.Store.activitiesSet" Multiplicity="1" />
+    <End Role="balance" Type="netime.Store.balanceSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="activities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="balance">
+        <PropertyRef Name="activitiesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -150,27 +165,31 @@
           <EntitySet Name="userSet" EntityType="netime.user" />
           <EntitySet Name="categoriesSet" EntityType="netime.categories" />
           <EntitySet Name="selected_activitiesSet" EntityType="netime.selected_activities" />
+          <EntitySet Name="balanceSet" EntityType="netime.balance" />
+          <EntitySet Name="activitiesSet" EntityType="netime.activities" />
           <AssociationSet Name="userselected_activities" Association="netime.userselected_activities">
             <End Role="user" EntitySet="userSet" />
             <End Role="selected_activities" EntitySet="selected_activitiesSet" />
-          </AssociationSet>
-          <EntitySet Name="balanceSet" EntityType="netime.balance" />
-          <AssociationSet Name="balanceuser" Association="netime.balanceuser">
-            <End Role="balance" EntitySet="balanceSet" />
-            <End Role="user" EntitySet="userSet" />
-          </AssociationSet>
-          <EntitySet Name="activitiesSet" EntityType="netime.activities" />
-          <AssociationSet Name="useractivities" Association="netime.useractivities">
-            <End Role="user" EntitySet="userSet" />
-            <End Role="activities" EntitySet="activitiesSet" />
           </AssociationSet>
           <AssociationSet Name="categoriesactivities" Association="netime.categoriesactivities">
             <End Role="categories" EntitySet="categoriesSet" />
             <End Role="activities" EntitySet="activitiesSet" />
           </AssociationSet>
+          <AssociationSet Name="useractivities" Association="netime.useractivities">
+            <End Role="user" EntitySet="userSet" />
+            <End Role="activities" EntitySet="activitiesSet" />
+          </AssociationSet>
           <AssociationSet Name="activitiesselected_activities" Association="netime.activitiesselected_activities">
             <End Role="activities" EntitySet="activitiesSet" />
             <End Role="selected_activities" EntitySet="selected_activitiesSet" />
+          </AssociationSet>
+          <AssociationSet Name="userbalance" Association="netime.userbalance">
+            <End Role="user" EntitySet="userSet" />
+            <End Role="balance" EntitySet="balanceSet" />
+          </AssociationSet>
+          <AssociationSet Name="activitiesbalance" Association="netime.activitiesbalance">
+            <End Role="activities" EntitySet="activitiesSet" />
+            <End Role="balance" EntitySet="balanceSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="user">
@@ -180,7 +199,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" />
           <Property Name="surname" Type="String" Nullable="false" />
-          <Property Name="email" Type="String" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="450" annotation:StoreGeneratedPattern="None" />
           <Property Name="phone" Type="String" Nullable="false" />
           <Property Name="address" Type="String" Nullable="false" />
           <Property Name="password" Type="String" Nullable="false" />
@@ -201,6 +220,27 @@
           <Property Name="userId" Type="Int32" Nullable="false" />
           <Property Name="activitiesId" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="balance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datetime" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="qtty" Type="Int32" Nullable="false" />
+          <Property Name="sing" Type="Boolean" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="activitiesId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="activities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" />
+          <Property Name="categoriesId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+        </EntityType>
         <Association Name="userselected_activities">
           <End Type="netime.user" Role="user" Multiplicity="1" />
           <End Type="netime.selected_activities" Role="selected_activities" Multiplicity="*" />
@@ -209,52 +249,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="selected_activities">
-              <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="balance">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userId" Type="Int32" Nullable="false" />
-          <Property Name="activity_name" Type="String" Nullable="false" />
-          <Property Name="user_name" Type="String" Nullable="false" />
-          <Property Name="datetime" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="qtty" Type="Int32" Nullable="false" />
-          <Property Name="sing" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <Association Name="balanceuser">
-          <End Type="netime.balance" Role="balance" Multiplicity="*" />
-          <End Type="netime.user" Role="user" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="balance">
-              <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="activities">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userId" Type="Int32" Nullable="false" />
-          <Property Name="categoriesId" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" />
-          <Property Name="description" Type="String" Nullable="false" />
-        </EntityType>
-        <Association Name="useractivities">
-          <End Type="netime.user" Role="user" Multiplicity="1" />
-          <End Type="netime.activities" Role="activities" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="activities">
               <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
@@ -271,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="useractivities">
+          <End Type="netime.user" Role="user" Multiplicity="1" />
+          <End Type="netime.activities" Role="activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="activities">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="activitiesselected_activities">
           <End Type="netime.activities" Role="activities" Multiplicity="1" />
           <End Type="netime.selected_activities" Role="selected_activities" Multiplicity="*" />
@@ -279,6 +285,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="selected_activities">
+              <PropertyRef Name="activitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userbalance">
+          <End Type="netime.user" Role="user" Multiplicity="1" />
+          <End Type="netime.balance" Role="balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="balance">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="activitiesbalance">
+          <End Type="netime.activities" Role="activities" Multiplicity="1" />
+          <End Type="netime.balance" Role="balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="balance">
               <PropertyRef Name="activitiesId" />
             </Dependent>
           </ReferentialConstraint>
@@ -324,12 +354,11 @@
       <EntityTypeMapping TypeName="IsTypeOf(netime.balance)">
         <MappingFragment StoreEntitySet="balanceSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="activity_name" ColumnName="activity_name" />
-          <ScalarProperty Name="user_name" ColumnName="user_name" />
           <ScalarProperty Name="datetime" ColumnName="datetime" />
           <ScalarProperty Name="qtty" ColumnName="qtty" />
           <ScalarProperty Name="sing" ColumnName="sing" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="activitiesId" ColumnName="activitiesId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -337,10 +366,10 @@
       <EntityTypeMapping TypeName="IsTypeOf(netime.activities)">
         <MappingFragment StoreEntitySet="activitiesSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="categoriesId" ColumnName="categoriesId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="categoriesId" ColumnName="categoriesId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -6,15 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d74cbb1e4c744b2c81e85525df438229" Name="Diagram1" >
         <EntityTypeShape EntityType="netime.user" Width="1.5" PointX="1" PointY="0.75" />
-        <EntityTypeShape EntityType="netime.categories" Width="2" PointX="5.625" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="netime.selected_activities" PointX="3.875" PointY="1" Width="2.125" />
+        <EntityTypeShape EntityType="netime.categories" Width="2" PointX="9.125" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="netime.selected_activities" PointX="6" PointY="1.125" Width="2.125" />
+        <EntityTypeShape EntityType="netime.balance" Width="1.5" PointX="4.625" PointY="3.125" />
+        <EntityTypeShape EntityType="netime.activities" Width="1.5" PointX="0.75" PointY="4.375" />
         <AssociationConnector Association="netime.userselected_activities" />
-        <EntityTypeShape EntityType="netime.balance" Width="1.5" PointX="5.5" PointY="3.625" />
-        <AssociationConnector Association="netime.balanceuser" />
-        <EntityTypeShape EntityType="netime.activities" Width="1.5" PointX="0.875" PointY="5.875" />
-        <AssociationConnector Association="netime.useractivities" />
         <AssociationConnector Association="netime.categoriesactivities" />
+        <AssociationConnector Association="netime.useractivities" />
         <AssociationConnector Association="netime.activitiesselected_activities" />
+        <AssociationConnector Association="netime.userbalance" />
+        <AssociationConnector Association="netime.activitiesbalance" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
