@@ -46,10 +46,18 @@ namespace NETime_WF_EF6
             usuarioNode.Attributes.Append(attribute);
 
             /*
-            attribute = doc.CreateAttribute("password");
-            attribute.Value = usuario.password;
-            usuarioNode.Attributes.Append(attribute);
+             * SALT & PASSOWRD type is byte[]. It is mandatory to use 
+             * Convert.ToBase64String() function to get
+             * a representable string.
             */
+
+            attribute = doc.CreateAttribute("password");
+            attribute.Value = Convert.ToBase64String(usuario.password);
+            usuarioNode.Attributes.Append(attribute);
+
+            attribute = doc.CreateAttribute("salt");
+            attribute.Value = Convert.ToBase64String(usuario.salt);
+            usuarioNode.Attributes.Append(attribute);
 
             usuarioNode.InnerText = usuario.name;
             rootNode.AppendChild(usuarioNode);
