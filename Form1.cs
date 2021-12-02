@@ -111,6 +111,7 @@ namespace NETime_WF_EF6
             using(this.context = new netimeContainer())
             {
                 update_SelActCombo(this.context);
+                dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
             }
         }
         private void update_SelActCombo(netimeContainer context)
@@ -133,7 +134,7 @@ namespace NETime_WF_EF6
             using (this.context = new netimeContainer())
             {
                 //Implementar cambio Form1 a formulario Sel_activities
-                userFormShow();
+                userFormSet();
                 update_userGrid(this.context);
             }
             DoColumnsReadOnly();
@@ -142,11 +143,9 @@ namespace NETime_WF_EF6
         {
             using (this.context = new netimeContainer())
             {
-                userFormHide();
-                //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
-                update_SelActCombo(this.context);
-                activitiesFormSet();
-                dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
+                selActivitiesFormSet();
+                //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();               
+                update_SelActCombo(this.context);                               
             }
         }
         private void radioButtonActivities_CheckedChanged(object sender, EventArgs e)
@@ -283,7 +282,7 @@ namespace NETime_WF_EF6
 
         #region SHOW / HIDE FROMS
         //Muestra el formulario para el usuario.
-        private void userFormShow()
+        private void userFormSet()
         {  
             Control.ControlCollection controlList = this.Controls;
             foreach (Control ctrl in this.Controls)
@@ -314,6 +313,10 @@ namespace NETime_WF_EF6
                     case "textBox_userPass":
                     case "textBox_userAddress":
                     case "textBox_userPhone":
+                    case "button_addUser":
+                    case "getUsers":
+                    case "button_del":
+                    case "dtg1":
                         ctrl.Show();
                         break;
                     default:
@@ -323,6 +326,8 @@ namespace NETime_WF_EF6
                             case "MaskedTextBox":
                             case "Label":
                             case "ComboBox":
+                            case "DataGridView":
+                            case "Button":
                                 ctrl.Hide();
                                 break;
                         }
@@ -354,6 +359,10 @@ namespace NETime_WF_EF6
                     case "textBox_Activities_Nombre":
                     case "comboBox_Activities_Categories":
                     case "comboBox_Activities_User":
+                    case "button_addUser":
+                    case "getUsers":
+                    case "button_del":
+                    case "dtg1":
                         ctrl.Show();
                         break;
                     default:
@@ -362,12 +371,45 @@ namespace NETime_WF_EF6
                             case "MaskedTextBox":
                             case "Label":
                             case "ComboBox":
+                            case "DataGridView":
+                            case "Button":
                                 ctrl.Hide();
                                 break;
                         }
                             break;
                 }
                 button_addUser.Show();
+            }
+        }
+        private void selActivitiesFormSet()
+        {
+            Control.ControlCollection controlList = this.Controls;
+            foreach (Control ctrl in this.Controls)
+            {
+                switch (ctrl.Name)
+                {
+                    case "label_SelAct_Sel":
+                    case "label_SelAct_Act":
+                    case "comboBox_SelAct_users":                    
+                    case "dtg_SelAct_Selct":                        
+                    case "dtg_SelAct_Act":
+                        ctrl.Show();
+                        break;
+                    default:
+                        switch (ctrl.GetType().Name)
+                        {
+                            case "TextBox":
+                            case "MaskedTextBox":
+                            case "Label":
+                            case "ComboBox":
+                            case "DataGridView":
+                            case "Button":
+                                ctrl.Hide();
+                                break;
+                        }
+                        break;
+                }
+                button_addUser.Hide();
             }
         }
         #endregion
@@ -531,8 +573,7 @@ namespace NETime_WF_EF6
         {
             MessageBox.Show(comboBox_SelAct_users.Text + " " + comboBox_SelAct_users.SelectedValue + " " + comboBox_SelAct_users.SelectedText);
         }
-
-        #region DEPRECTEd METHODS AND VARIABLES
+        
         #region DEPRECTED METHODS AND VARIABLES
         //Eventos formularios
         private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -548,19 +589,6 @@ namespace NETime_WF_EF6
                 e.Cancel = true;
             */
         }
-
-
-
         #endregion
-
-        private void userBindingSource_BindingComplete(object sender, BindingCompleteEventArgs e)
-        {
-
-        }
-
-        private void userBindingSource2_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
