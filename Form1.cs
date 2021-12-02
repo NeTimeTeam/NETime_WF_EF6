@@ -374,8 +374,7 @@ namespace NETime_WF_EF6
                                 break;
                         }
                         break;
-                }
-                button_addUser.Show();
+                }                
             }
         }
         private void activitiesFormSet()
@@ -401,7 +400,7 @@ namespace NETime_WF_EF6
                     case "textBox_Activities_Nombre":
                     case "comboBox_Activities_Categories":
                     case "comboBox_Activities_User":
-                    case "button_addUser":
+                    case "button_Act_create":
                     case "getUsers":
                     case "button_del":
                     case "dtg1":
@@ -419,8 +418,7 @@ namespace NETime_WF_EF6
                                 break;
                         }
                             break;
-                }
-                button_addUser.Show();
+                }                
             }
         }
         private void selActivitiesFormSet()
@@ -451,8 +449,7 @@ namespace NETime_WF_EF6
                                 break;
                         }
                         break;
-                }
-                button_addUser.Hide();
+                }                
             }
         }
         #endregion
@@ -621,24 +618,6 @@ namespace NETime_WF_EF6
                 update_SelActGrids();
             }
         }
-        
-        #region DEPRECTED METHODS AND VARIABLES
-        //Eventos formularios
-        private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
-        //Validación del campo nombre usuario al salir del textbox.
-        private void userName_Validating(object sender, CancelEventArgs e)
-        {
-            /*
-            if (userName.Text != "something")
-                e.Cancel = true;
-            */
-        }
-        #endregion
-
         private void button_SelAct_SelectDismiss_Click(object sender, EventArgs e)
         {
             //TODO: Acción cuando se presiona el botón.
