@@ -258,7 +258,7 @@ namespace NETime_WF_EF6
         }
         #endregion
 
-        #region SHOW / HIDE USER FROM
+        #region SHOW / HIDE FROMS
         //Muestra el formulario para el usuario.
         private void userFormShow()
         {  
@@ -344,7 +344,7 @@ namespace NETime_WF_EF6
                         }
                             break;
                 }
-                button_addUser.Hide();
+                button_addUser.Show();
             }
         }
         #endregion
@@ -353,87 +353,94 @@ namespace NETime_WF_EF6
         //Variable para almacenar el valor inicial de la celda q se va a editar.
         private string cellValue_before_edit = null;
 
+        //Función editar usuario
+        private void updateUserAttribute(int col, int row)
+        {
+            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
+            var user = context.userSet.Find(Int32.Parse(dtg1[0, row].Value.ToString()));   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
+            bool valid = false;                                         //Variable de control.
+            string propertyName = dtg1.Columns[col].HeaderText;
+
+            switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
+            {
+                case "name":
+                    if (Utilites.nameValidation(new_value))
+                    {
+                        user.name = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "surname":
+                    if (Utilites.nameValidation(new_value))
+                    {
+                        user.surname = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "email":
+                    if (Utilites.emailValidation(new_value))
+                    {
+                        user.email = new_value;
+                        try
+                        {
+                            valid = (from u in this.context.userSet where u.email.Equals(new_value) select u).Count() < 1;
+                        }
+                        catch
+                        {
+                            valid = false;
+                            MessageBox.Show("El email ya existe en la DB");
+                        }
+                    }
+                    break;
+                case "phone":
+                    if (Utilites.phoneValidation(new_value))
+                    {
+                        user.phone = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "password":
+                    //TODO: password data control
+                    //user.address = new_value;
+                    break;
+                case "salt":
+                    //TODO: address data control
+                    //user.password = new_value;
+                    break;
+                default:
+                    break;
+            }
+
+            if (valid)
+            {
+                context.Entry(user).CurrentValues.SetValues(user);
+                try
+                {
+                    context.SaveChanges();
+
+                }
+                catch (DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
+                }
+                update_userGrid();
+            }
+            else
+            {
+                //TODO: Valorar alternativa al cambio de color
+                update_userGrid();
+                dtg1[col, row].Style.ForeColor = Color.Red;
+                //dtg1.CurrentCell.Value = this.cellValue_before_edit;                    
+            }
+        }
         //Evento editar. Modifica el contenido en la base de datos.
         private void dtg1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             using (this.context = new netimeContainer())                    //Conexión
             {
-                var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
-                var user = context.userSet.Find(Int32.Parse(dtg1[0, e.RowIndex].Value.ToString()));   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
-                bool valid = false;                                         //Variable de control.
-                string propertyName = dtg1.Columns[e.ColumnIndex].HeaderText;
-                
-                switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
-                {                    
-                    case "name":
-                        if (Utilites.nameValidation(new_value))
-                        {
-                            user.name = new_value;
-                            valid = true;
-                        }
-                        break;
-                    case "surname":
-                        if (Utilites.nameValidation(new_value))
-                        {
-                            user.surname = new_value;
-                            valid = true;
-                        }
-                        break;
-                    case "email":
-                        if (Utilites.emailValidation(new_value))
-                        {
-                            user.email = new_value;
-                            try
-                            {
-                                valid = (from u in this.context.userSet where u.email.Equals(new_value) select u).Count() < 1;
-                            }
-                            catch
-                            {
-                                valid = false;
-                                MessageBox.Show("El email ya existe en la DB");
-                            }                             
-                        }
-                        break;
-                    case "phone":
-                        if (Utilites.phoneValidation(new_value))
-                        {
-                            user.phone = new_value;
-                            valid = true;
-                        }
-                        break;
-                    case "password":
-                        //TODO: password data control
-                        //user.address = new_value;
-                        break;
-                    case "salt":
-                        //TODO: address data control
-                        //user.password = new_value;
-                        break;
-                    default:
-                        break;
-                }
-
-                if (valid)
-                {
-                    context.Entry(user).CurrentValues.SetValues(user);
-                    try
-                    {
-                        context.SaveChanges();
-
-                    }
-                    catch (DbUpdateException err)
-                    {
-                        MessageBox.Show(err.InnerException.InnerException.Message);
-                    }
-                    update_userGrid();
-                }
-                else
-                {
-                    //TODO: Valorar alternativa al cambio de color
-                    update_userGrid();
-                    dtg1[e.ColumnIndex, e.RowIndex].Style.ForeColor = Color.Red;
-                    //dtg1.CurrentCell.Value = this.cellValue_before_edit;                    
-                }
+                if (radioButtonUsers.Checked) { updateUserAttribute(e.ColumnIndex, e.RowIndex); }
+                if (radioButtonActivities.Checked) { }
+                if (radioButtonSel_Activities.Checked) { }
             }
         }
         
@@ -446,6 +453,7 @@ namespace NETime_WF_EF6
                 {
                     case "Id":
                     case "salt":
+                    case "userId":
                         dtg1.Columns[i].ReadOnly = true;
                         break;
                 }
@@ -496,7 +504,7 @@ namespace NETime_WF_EF6
 
         #endregion
 
-        #region DEPRECTEd METHODS AND VARIABLES
+        #region DEPRECTED METHODS AND VARIABLES
         //Eventos formularios
         private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
