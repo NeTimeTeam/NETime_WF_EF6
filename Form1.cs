@@ -135,17 +135,31 @@ namespace NETime_WF_EF6
         {
             using (context)
             {
-                int currentUser = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());
-                dtg_SelAct_Act.DataSource = context.activitiesSet.Where(A => A.userId != currentUser).ToList<activities>();
-
+                /*
+                * https://www.entityframeworktutorial.net/EntityFramework4.3/raw-sql-query-in-entity-framework.aspx
+                */
                 try
                 {
-                    /*
-                    * https://www.entityframeworktutorial.net/EntityFramework4.3/raw-sql-query-in-entity-framework.aspx
-                    */
-                    var query = context.Database.SqlQuery<activities>("Select A.Id, A.name, A.description, A.userId, A.categoriesId from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId where S.userId = @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<activities>();
-                    dtg_SelAct_Selct.DataSource = query;
-                    //TODO: crear una clase actividades para recoger estos datos.
+                     //int currentUser = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());
+                    //dtg_SelAct_Act.DataSource = context.activitiesSet.Where(A => A.userId != currentUser).ToList<activities>();
+                    
+                    //Esta consulta devuelve las actividades que no son del usuario.
+                    dtg_SelAct_Act.DataSource = context.Database.SqlQuery<Actividades>(
+                            "Select A.Id, A.name, A.description, U.email, C.name from activitiesSet as A " +
+                            "inner join userSet as U on U.Id = A.userId " +
+                            "inner join categoriesSet as C on C.Id = A.categoriesId " +
+                            "where A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
+                    
+
+                    //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
+                    var selectedActivitiesList = context.Database.SqlQuery<Actividades>(
+                        "Select S.Id, A.name, A.description, U.email, C.name from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
+                        "inner join userSet as U on U.Id = A.userId " +
+                        "inner join categoriesSet as C on C.Id = A.categoriesId " +
+                        "where S.userId = @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
+
+                    dtg_SelAct_Selct.DataSource = selectedActivitiesList;
+                    
                 }
                 catch (Exception e)
                 {
