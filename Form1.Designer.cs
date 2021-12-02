@@ -256,7 +256,7 @@ namespace NETime_WF_EF6
             // comboBox_Activities_User
             // 
             this.comboBox_Activities_User.FormattingEnabled = true;
-            this.comboBox_Activities_User.Location = new System.Drawing.Point(49, 200);
+            this.comboBox_Activities_User.Location = new System.Drawing.Point(49, 160);
             this.comboBox_Activities_User.Name = "comboBox_Activities_User";
             this.comboBox_Activities_User.Size = new System.Drawing.Size(174, 21);
             this.comboBox_Activities_User.TabIndex = 19;
@@ -265,7 +265,7 @@ namespace NETime_WF_EF6
             // comboBox_Activities_Categories
             // 
             this.comboBox_Activities_Categories.FormattingEnabled = true;
-            this.comboBox_Activities_Categories.Location = new System.Drawing.Point(49, 160);
+            this.comboBox_Activities_Categories.Location = new System.Drawing.Point(49, 199);
             this.comboBox_Activities_Categories.Name = "comboBox_Activities_Categories";
             this.comboBox_Activities_Categories.Size = new System.Drawing.Size(174, 21);
             this.comboBox_Activities_Categories.TabIndex = 20;
