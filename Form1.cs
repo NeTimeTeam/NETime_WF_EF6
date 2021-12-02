@@ -19,6 +19,10 @@ namespace NETime_WF_EF6
         {
             InitializeComponent();
             radioButtonUsers.Checked = true;           
+            foreach(Control i in this.Controls)
+            {
+                Console.WriteLine(i.GetType().Name);
+            }
         }
 
         private netimeContainer context;
@@ -37,9 +41,8 @@ namespace NETime_WF_EF6
 
                 //Actividades
                 if (radioButtonActivities.Checked) //RB Activities activo¿?
-                {                    
-                    var stored_activities = context.activitiesSet; //Analogo a usuarios.
-                    dtg1.DataSource = stored_activities.ToList<activities>();
+                {
+                    update_ActivitiesData(this.context);
                 }
                 //Actividades seleccionadas
                 if (radioButtonSel_Activities.Checked) //RB Sel_activities activo¿?
@@ -51,6 +54,32 @@ namespace NETime_WF_EF6
         }
         #endregion
 
+        //Actualizar el DataGridTable de las actividades y los combobox
+        private void update_ActivitiesData()
+        {
+            using (this.context = new netimeContainer())
+            {
+                update_ActivitiesData(this.context);
+            }
+        }
+        private void update_ActivitiesData(netimeContainer context)
+        {
+            using (context)
+            {              
+                //Actualizar el combobox con los usuarios.
+                comboBox_Activities_User.DataSource = context.userSet.ToList<user>();
+                comboBox_Activities_User.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
+                comboBox_Activities_User.DisplayMember = "email"; //atributo del datasource q mostrará en la lista
+
+                //Actualizar el combobox con las categorias
+                comboBox_Activities_Categories.DataSource = context.categoriesSet.ToList<categories>();
+                comboBox_Activities_Categories.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
+                comboBox_Activities_Categories.DisplayMember = "name"; //atributo del datasource q mostrará en la lista
+
+                //Actualizar la datagridtable con las actividades.
+                dtg1.DataSource = context.activitiesSet.ToList<activities>();
+            }
+        }
 
         //Actualiza el GridTable de los usuarios.
         private void update_userGrid()
@@ -93,7 +122,7 @@ namespace NETime_WF_EF6
         {
             using (this.context = new netimeContainer())
             {
-                userFormHide();
+                activitiesFormSet();
                 dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
             }
         }
@@ -102,8 +131,9 @@ namespace NETime_WF_EF6
             using(this.context = new netimeContainer())
             {
                 //Implementar cambio Form1 a formulario Sel_activities
-                userFormHide();
-                dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
+                activitiesFormSet();
+                update_ActivitiesData(this.context);
+                //dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
             }
             
         }
@@ -219,6 +249,7 @@ namespace NETime_WF_EF6
             textBox_userPhone.Text = "";
             textBox_userSurname.Text = "";
         }
+
         //Verifica si los campos de texto para el usuario son validos y activa el botón crear.
         private void checkUserTextboxStatus()
         {
@@ -227,50 +258,94 @@ namespace NETime_WF_EF6
         }
         #endregion
 
-        #region SHOW / HIDE USER FROM
+        #region SHOW / HIDE FROMS
         //Muestra el formulario para el usuario.
         private void userFormShow()
-        {
-            //show textboxes
-            textBox_userName.Show();            
-            textBox_userEmail.Show();
-            textBox_userSurname.Show();
-            textBox_userPass.Show();
-            textBox_userAddress.Show();
-            textBox_userPhone.Show();
-
-            //Button show
-            button_addUser.Show();
-
-            //show labels
-            label_userName.Show();
-            label_userEmail.Show();
-            label_userSurname.Show();
-            label_userPass.Show();
-            label_userAddress.Show();
-            label_userPhone.Show();
+        {  
+            Control.ControlCollection controlList = this.Controls;
+            foreach (Control ctrl in this.Controls)
+            {
+                switch (ctrl.Name)
+                {
+                    case "label_userName":
+                        ctrl.Show(); ctrl.Text = "Nombre";
+                        break;
+                    case "label_userEmail":
+                        ctrl.Show(); ctrl.Text = "Email (unique)";
+                        break;
+                    case "label_userSurname":
+                        ctrl.Show(); ctrl.Text = "Apellidos";
+                        break;
+                    case "label_userPass":
+                        ctrl.Show(); ctrl.Text = "Contraseña";
+                        break;
+                    case "label_userAddress":
+                        ctrl.Show(); ctrl.Text = "Dirección";
+                        break;
+                    case "label_userPhone":
+                        ctrl.Show(); ctrl.Text = "Teléfono (+34555123456)";
+                        break;
+                    case "textBox_userName":
+                    case "textBox_userEmail":
+                    case "textBox_userSurname":
+                    case "textBox_userPass":
+                    case "textBox_userAddress":
+                    case "textBox_userPhone":
+                        ctrl.Show();
+                        break;
+                    default:
+                        switch (ctrl.GetType().Name)
+                        {
+                            case "TextBox":
+                            case "MaskedTextBox":
+                            case "Label":
+                            case "ComboBox":
+                                ctrl.Hide();
+                                break;
+                        }
+                        break;
+                }
+                button_addUser.Show();
+            }
         }
-        private void userFormHide()
+        private void activitiesFormSet()
         {
-            //Hide textboxes
-            textBox_userName.Hide();
-            textBox_userEmail.Hide();
-            textBox_userSurname.Hide();
-            textBox_userPass.Hide();
-            textBox_userAddress.Hide();
-            textBox_userPhone.Hide();
-
-            //Button hide
-            button_addUser.Hide();
-
-            //hide lables
-            label_userName.Hide();
-            label_userEmail.Hide();
-            label_userSurname.Hide();
-            label_userPass.Hide();
-            label_userAddress.Hide();
-            label_userPhone.Hide();
-
+            Control.ControlCollection controlList = this.Controls;
+            foreach(Control ctrl in this.Controls)
+            {
+                switch (ctrl.Name)
+                {
+                    case "label_userName":
+                        ctrl.Show(); ctrl.Text = "Usuario";
+                        break;
+                    case "label_userEmail":
+                        ctrl.Show(); ctrl.Text = "Nombre";
+                        break;
+                    case "label_userSurname":
+                        ctrl.Show(); ctrl.Text = "Categoría";
+                        break;
+                    case "label_userPass":
+                        ctrl.Show(); ctrl.Text = "Descripción";
+                        break;
+                    case "textBox_Activities_Desc":
+                    case "textBox_Activities_Nombre":
+                    case "comboBox_Activities_Categories":
+                    case "comboBox_Activities_User":
+                        ctrl.Show();
+                        break;
+                    default:
+                        switch (ctrl.GetType().Name) {
+                            case "TextBox":
+                            case "MaskedTextBox":
+                            case "Label":
+                            case "ComboBox":
+                                ctrl.Hide();
+                                break;
+                        }
+                            break;
+                }
+                button_addUser.Show();
+            }
         }
         #endregion
 
@@ -278,87 +353,94 @@ namespace NETime_WF_EF6
         //Variable para almacenar el valor inicial de la celda q se va a editar.
         private string cellValue_before_edit = null;
 
+        //Función editar usuario
+        private void updateUserAttribute(int col, int row)
+        {
+            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
+            var user = context.userSet.Find(Int32.Parse(dtg1[0, row].Value.ToString()));   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
+            bool valid = false;                                         //Variable de control.
+            string propertyName = dtg1.Columns[col].HeaderText;
+
+            switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
+            {
+                case "name":
+                    if (Utilites.nameValidation(new_value))
+                    {
+                        user.name = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "surname":
+                    if (Utilites.nameValidation(new_value))
+                    {
+                        user.surname = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "email":
+                    if (Utilites.emailValidation(new_value))
+                    {
+                        user.email = new_value;
+                        try
+                        {
+                            valid = (from u in this.context.userSet where u.email.Equals(new_value) select u).Count() < 1;
+                        }
+                        catch
+                        {
+                            valid = false;
+                            MessageBox.Show("El email ya existe en la DB");
+                        }
+                    }
+                    break;
+                case "phone":
+                    if (Utilites.phoneValidation(new_value))
+                    {
+                        user.phone = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "password":
+                    //TODO: password data control
+                    //user.address = new_value;
+                    break;
+                case "salt":
+                    //TODO: address data control
+                    //user.password = new_value;
+                    break;
+                default:
+                    break;
+            }
+
+            if (valid)
+            {
+                context.Entry(user).CurrentValues.SetValues(user);
+                try
+                {
+                    context.SaveChanges();
+
+                }
+                catch (DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
+                }
+                update_userGrid();
+            }
+            else
+            {
+                //TODO: Valorar alternativa al cambio de color
+                update_userGrid();
+                dtg1[col, row].Style.ForeColor = Color.Red;
+                //dtg1.CurrentCell.Value = this.cellValue_before_edit;                    
+            }
+        }
         //Evento editar. Modifica el contenido en la base de datos.
         private void dtg1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             using (this.context = new netimeContainer())                    //Conexión
             {
-                var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
-                var user = context.userSet.Find(Int32.Parse(dtg1[0, e.RowIndex].Value.ToString()));   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
-                bool valid = false;                                         //Variable de control.
-                string propertyName = dtg1.Columns[e.ColumnIndex].HeaderText;
-                
-                switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
-                {                    
-                    case "name":
-                        if (Utilites.nameValidation(new_value))
-                        {
-                            user.name = new_value;
-                            valid = true;
-                        }
-                        break;
-                    case "surname":
-                        if (Utilites.nameValidation(new_value))
-                        {
-                            user.surname = new_value;
-                            valid = true;
-                        }
-                        break;
-                    case "email":
-                        if (Utilites.emailValidation(new_value))
-                        {
-                            user.email = new_value;
-                            try
-                            {
-                                valid = (from u in this.context.userSet where u.email.Equals(new_value) select u).Count() < 1;
-                            }
-                            catch
-                            {
-                                valid = false;
-                                MessageBox.Show("El email ya existe en la DB");
-                            }                             
-                        }
-                        break;
-                    case "phone":
-                        if (Utilites.phoneValidation(new_value))
-                        {
-                            user.phone = new_value;
-                            valid = true;
-                        }
-                        break;
-                    case "password":
-                        //TODO: password data control
-                        //user.address = new_value;
-                        break;
-                    case "salt":
-                        //TODO: address data control
-                        //user.password = new_value;
-                        break;
-                    default:
-                        break;
-                }
-
-                if (valid)
-                {
-                    context.Entry(user).CurrentValues.SetValues(user);
-                    try
-                    {
-                        context.SaveChanges();
-
-                    }
-                    catch (DbUpdateException err)
-                    {
-                        MessageBox.Show(err.InnerException.InnerException.Message);
-                    }
-                    update_userGrid();
-                }
-                else
-                {
-                    //TODO: Valorar alternativa al cambio de color
-                    update_userGrid();
-                    dtg1[e.ColumnIndex, e.RowIndex].Style.ForeColor = Color.Red;
-                    //dtg1.CurrentCell.Value = this.cellValue_before_edit;                    
-                }
+                if (radioButtonUsers.Checked) { updateUserAttribute(e.ColumnIndex, e.RowIndex); }
+                if (radioButtonActivities.Checked) { }
+                if (radioButtonSel_Activities.Checked) { }
             }
         }
         
@@ -371,6 +453,7 @@ namespace NETime_WF_EF6
                 {
                     case "Id":
                     case "salt":
+                    case "userId":
                         dtg1.Columns[i].ReadOnly = true;
                         break;
                 }
@@ -421,7 +504,7 @@ namespace NETime_WF_EF6
 
         #endregion
 
-        #region DEPRECTEd METHODS AND VARIABLES
+        #region DEPRECTED METHODS AND VARIABLES
         //Eventos formularios
         private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
@@ -436,8 +519,18 @@ namespace NETime_WF_EF6
                 e.Cancel = true;
             */
         }
+
+
         #endregion
 
-        
+        private void userBindingSource_BindingComplete(object sender, BindingCompleteEventArgs e)
+        {
+
+        }
+
+        private void userBindingSource2_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
