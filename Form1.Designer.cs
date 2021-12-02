@@ -29,7 +29,6 @@ namespace NETime_WF_EF6
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dtg1 = new System.Windows.Forms.DataGridView();
             this.getUsers = new System.Windows.Forms.Button();
             this.radioButtonUsers = new System.Windows.Forms.RadioButton();
@@ -49,6 +48,10 @@ namespace NETime_WF_EF6
             this.label_userPhone = new System.Windows.Forms.Label();
             this.label_userAddress = new System.Windows.Forms.Label();
             this.button_del = new System.Windows.Forms.Button();
+            this.comboBox_Activities_User = new System.Windows.Forms.ComboBox();
+            this.comboBox_Activities_Categories = new System.Windows.Forms.ComboBox();
+            this.textBox_Activities_Nombre = new System.Windows.Forms.TextBox();
+            this.textBox_Activities_Desc = new System.Windows.Forms.TextBox();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox_SelAct_users = new System.Windows.Forms.ComboBox();
@@ -261,13 +264,40 @@ namespace NETime_WF_EF6
             this.button_del.UseVisualStyleBackColor = true;
             this.button_del.Click += new System.EventHandler(this.button_del_Click);
             // 
-            // userBindingSource
+            // comboBox_Activities_User
             // 
-            this.userBindingSource.DataSource = typeof(NETime_WF_EF6.user);
+            this.comboBox_Activities_User.FormattingEnabled = true;
+            this.comboBox_Activities_User.Location = new System.Drawing.Point(49, 160);
+            this.comboBox_Activities_User.Name = "comboBox_Activities_User";
+            this.comboBox_Activities_User.Size = new System.Drawing.Size(174, 21);
+            this.comboBox_Activities_User.TabIndex = 19;
+            this.comboBox_Activities_User.Visible = false;
             // 
-            // userBindingSource1
+            // comboBox_Activities_Categories
             // 
-            this.userBindingSource1.DataSource = typeof(NETime_WF_EF6.user);
+            this.comboBox_Activities_Categories.FormattingEnabled = true;
+            this.comboBox_Activities_Categories.Location = new System.Drawing.Point(49, 199);
+            this.comboBox_Activities_Categories.Name = "comboBox_Activities_Categories";
+            this.comboBox_Activities_Categories.Size = new System.Drawing.Size(174, 21);
+            this.comboBox_Activities_Categories.TabIndex = 20;
+            this.comboBox_Activities_Categories.Visible = false;
+            // 
+            // textBox_Activities_Nombre
+            // 
+            this.textBox_Activities_Nombre.Location = new System.Drawing.Point(49, 239);
+            this.textBox_Activities_Nombre.Name = "textBox_Activities_Nombre";
+            this.textBox_Activities_Nombre.Size = new System.Drawing.Size(174, 20);
+            this.textBox_Activities_Nombre.TabIndex = 21;
+            this.textBox_Activities_Nombre.Visible = false;
+            // 
+            // textBox_Activities_Desc
+            // 
+            this.textBox_Activities_Desc.Location = new System.Drawing.Point(49, 278);
+            this.textBox_Activities_Desc.Multiline = true;
+            this.textBox_Activities_Desc.Name = "textBox_Activities_Desc";
+            this.textBox_Activities_Desc.Size = new System.Drawing.Size(174, 81);
+            this.textBox_Activities_Desc.TabIndex = 22;
+            this.textBox_Activities_Desc.Visible = false;
             // 
             // comboBox_SelAct_users
             // 
@@ -322,6 +352,10 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.dtg_SelAct_Act);
             this.Controls.Add(this.dtg_SelAct_Selct);
             this.Controls.Add(this.comboBox_SelAct_users);
+            this.Controls.Add(this.textBox_Activities_Desc);
+            this.Controls.Add(this.textBox_Activities_Nombre);
+            this.Controls.Add(this.comboBox_Activities_Categories);
+            this.Controls.Add(this.comboBox_Activities_User);
             this.Controls.Add(this.button_del);
             this.Controls.Add(this.label_userAddress);
             this.Controls.Add(this.label_userPhone);
@@ -372,9 +406,11 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.TextBox textBox_userAddress;
         private System.Windows.Forms.Label label_userPhone;
         private System.Windows.Forms.Label label_userAddress;
-        private System.Windows.Forms.BindingSource userBindingSource;
-        private System.Windows.Forms.BindingSource userBindingSource1;
         private System.Windows.Forms.Button button_del;
+        private System.Windows.Forms.ComboBox comboBox_Activities_User;
+        private System.Windows.Forms.ComboBox comboBox_Activities_Categories;
+        private System.Windows.Forms.TextBox textBox_Activities_Nombre;
+        private System.Windows.Forms.TextBox textBox_Activities_Desc;
         private System.Windows.Forms.ComboBox comboBox_SelAct_users;
         private System.Windows.Forms.DataGridView dtg_SelAct_Selct;
         private System.Windows.Forms.DataGridView dtg_SelAct_Act;
