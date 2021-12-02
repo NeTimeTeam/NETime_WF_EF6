@@ -52,6 +52,7 @@ namespace NETime_WF_EF6
             this.comboBox_Activities_Categories = new System.Windows.Forms.ComboBox();
             this.textBox_Activities_Nombre = new System.Windows.Forms.TextBox();
             this.textBox_Activities_Desc = new System.Windows.Forms.TextBox();
+            this.button_Act_create = new System.Windows.Forms.Button();
             this.comboBox_SelAct_users = new System.Windows.Forms.ComboBox();
             this.dtg_SelAct_Selct = new System.Windows.Forms.DataGridView();
             this.dtg_SelAct_Act = new System.Windows.Forms.DataGridView();
@@ -130,11 +131,9 @@ namespace NETime_WF_EF6
             this.textBox_userName.Name = "textBox_userName";
             this.textBox_userName.Size = new System.Drawing.Size(184, 20);
             this.textBox_userName.TabIndex = 5;
-            this.textBox_userName.Tag = "Nombre";
-            this.textBox_userName.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.userName_MaskInputRejected);
+            this.textBox_userName.Tag = "Nombre";            
             this.textBox_userName.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
-            this.textBox_userName.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);
-            this.textBox_userName.Validating += new System.ComponentModel.CancelEventHandler(this.userName_Validating);
+            this.textBox_userName.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);            
             // 
             // textBox_userSurname
             // 
@@ -338,6 +337,16 @@ namespace NETime_WF_EF6
             this.label_SelAct_Act.TabIndex = 23;
             this.label_SelAct_Act.Text = "Actividades disponibles";
             // 
+            // button_Act_create
+            // 
+            this.button_Act_create.Enabled = false;
+            this.button_Act_create.Location = new System.Drawing.Point(85, 398);
+            this.button_Act_create.Name = "button_Act_create";
+            this.button_Act_create.Size = new System.Drawing.Size(75, 23);
+            this.button_Act_create.TabIndex = 23;
+            this.button_Act_create.Text = "Crear";
+            this.button_Act_create.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,6 +357,7 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.dtg_SelAct_Act);
             this.Controls.Add(this.dtg_SelAct_Selct);
             this.Controls.Add(this.comboBox_SelAct_users);
+            this.Controls.Add(this.button_Act_create);
             this.Controls.Add(this.textBox_Activities_Desc);
             this.Controls.Add(this.textBox_Activities_Nombre);
             this.Controls.Add(this.comboBox_Activities_Categories);
@@ -405,6 +415,7 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.ComboBox comboBox_Activities_Categories;
         private System.Windows.Forms.TextBox textBox_Activities_Nombre;
         private System.Windows.Forms.TextBox textBox_Activities_Desc;
+        private System.Windows.Forms.Button button_Act_create;
         private System.Windows.Forms.ComboBox comboBox_SelAct_users;
         private System.Windows.Forms.DataGridView dtg_SelAct_Selct;
         private System.Windows.Forms.DataGridView dtg_SelAct_Act;
