@@ -58,6 +58,7 @@ namespace NETime_WF_EF6
             this.dtg_SelAct_Act = new System.Windows.Forms.DataGridView();
             this.label_SelAct_Sel = new System.Windows.Forms.Label();
             this.label_SelAct_Act = new System.Windows.Forms.Label();
+            this.button_SelAct_SelectDismiss = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Selct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Act)).BeginInit();
@@ -301,7 +302,7 @@ namespace NETime_WF_EF6
             this.comboBox_SelAct_users.Name = "comboBox_SelAct_users";
             this.comboBox_SelAct_users.Size = new System.Drawing.Size(121, 21);
             this.comboBox_SelAct_users.TabIndex = 19;
-            this.comboBox_SelAct_users.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelAct_users_SelectionChangeCommitted);
+            this.comboBox_SelAct_users.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelAct_users_SelectionChangeCommitted);
             // 
             // dtg_SelAct_Selct
             // 
@@ -337,6 +338,16 @@ namespace NETime_WF_EF6
             this.label_SelAct_Act.TabIndex = 23;
             this.label_SelAct_Act.Text = "Actividades disponibles";
             // 
+            // button_SelAct_SelectDismiss
+            // 
+            this.button_SelAct_SelectDismiss.Location = new System.Drawing.Point(389, 218);
+            this.button_SelAct_SelectDismiss.Name = "button_SelAct_SelectDismiss";
+            this.button_SelAct_SelectDismiss.Size = new System.Drawing.Size(79, 22);
+            this.button_SelAct_SelectDismiss.TabIndex = 24;
+            this.button_SelAct_SelectDismiss.Text = "Select/Dismiss";
+            this.button_SelAct_SelectDismiss.UseVisualStyleBackColor = true;
+            this.button_SelAct_SelectDismiss.Click += new System.EventHandler(this.button_SelAct_SelectDismiss_Click);
+            // 
             // button_Act_create
             // 
             this.button_Act_create.Enabled = false;
@@ -352,10 +363,9 @@ namespace NETime_WF_EF6
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 452);
+            this.Controls.Add(this.button_SelAct_SelectDismiss);
             this.Controls.Add(this.label_SelAct_Act);
             this.Controls.Add(this.label_SelAct_Sel);
-            this.Controls.Add(this.dtg_SelAct_Act);
-            this.Controls.Add(this.dtg_SelAct_Selct);
             this.Controls.Add(this.comboBox_SelAct_users);
             this.Controls.Add(this.button_Act_create);
             this.Controls.Add(this.textBox_Activities_Desc);
@@ -381,6 +391,8 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.radioButtonUsers);
             this.Controls.Add(this.getUsers);
             this.Controls.Add(this.dtg1);
+            this.Controls.Add(this.dtg_SelAct_Selct);
+            this.Controls.Add(this.dtg_SelAct_Act);
             this.Name = "Form1";
             this.Text = "Interfaz CRUD";
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).EndInit();
@@ -421,6 +433,7 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.DataGridView dtg_SelAct_Act;
         private System.Windows.Forms.Label label_SelAct_Sel;
         private System.Windows.Forms.Label label_SelAct_Act;
+        private System.Windows.Forms.Button button_SelAct_SelectDismiss;
     }
 }
 

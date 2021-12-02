@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity.Infrastructure;
-
+using System.Data.SqlClient;
 
 namespace NETime_WF_EF6
 {
@@ -54,6 +54,7 @@ namespace NETime_WF_EF6
         }
         #endregion
 
+        #region UPDATES METHODS
         //Actualizar el DataGridTable de las actividades y los combobox
         private void update_ActivitiesData()
         {
@@ -110,8 +111,7 @@ namespace NETime_WF_EF6
         {
             using(this.context = new netimeContainer())
             {
-                update_SelActCombo(this.context);
-                dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
+                update_SelActCombo(this.context);                
             }
         }
         private void update_SelActCombo(netimeContainer context)
@@ -121,11 +121,53 @@ namespace NETime_WF_EF6
                 List<user> usersList = context.userSet.ToList<user>();
                 comboBox_SelAct_users.DataSource = usersList;
                 comboBox_SelAct_users.ValueMember = "Id";
-                comboBox_SelAct_users.DisplayMember = "email";
-
-                dtg1.DataSource = context.selected_activitiesSet.ToList<selected_activities>();                
+                comboBox_SelAct_users.DisplayMember = "email";                                
             }
         }
+        private void update_SelActGrids()
+        {            
+            using (this.context = new netimeContainer())
+            {
+                update_SelActGrids(this.context);
+            }
+        }
+        private void update_SelActGrids(netimeContainer context)
+        {
+            using (context)
+            {
+                /*
+                * https://www.entityframeworktutorial.net/EntityFramework4.3/raw-sql-query-in-entity-framework.aspx
+                */
+                try
+                {
+                     //int currentUser = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());
+                    //dtg_SelAct_Act.DataSource = context.activitiesSet.Where(A => A.userId != currentUser).ToList<activities>();
+                    
+                    //Esta consulta devuelve las actividades que no son del usuario.
+                    dtg_SelAct_Act.DataSource = context.Database.SqlQuery<Actividades>(
+                            "Select A.Id, A.name, A.description, U.email, C.name from activitiesSet as A " +
+                            "inner join userSet as U on U.Id = A.userId " +
+                            "inner join categoriesSet as C on C.Id = A.categoriesId " +
+                            "where A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
+                    
+
+                    //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
+                    var selectedActivitiesList = context.Database.SqlQuery<Actividades>(
+                        "Select S.Id, A.name, A.description, U.email, C.name from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
+                        "inner join userSet as U on U.Id = A.userId " +
+                        "inner join categoriesSet as C on C.Id = A.categoriesId " +
+                        "where S.userId = @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
+
+                    dtg_SelAct_Selct.DataSource = selectedActivitiesList;
+                    
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }            
+        }
+        #endregion
 
         #region EVENTOS RADIOBUTTONS
         //Eventos RadioButton
@@ -393,6 +435,7 @@ namespace NETime_WF_EF6
                     case "comboBox_SelAct_users":                    
                     case "dtg_SelAct_Selct":                        
                     case "dtg_SelAct_Act":
+                    case "button_SelAct_SelectDismiss":
                         ctrl.Show();
                         break;
                     default:
@@ -570,8 +613,13 @@ namespace NETime_WF_EF6
         #endregion
 
         private void comboBox_SelAct_users_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            MessageBox.Show(comboBox_SelAct_users.Text + " " + comboBox_SelAct_users.SelectedValue + " " + comboBox_SelAct_users.SelectedText);
+        {            
+            if (comboBox_SelAct_users.SelectedValue.GetType().Name.Equals("Int32") && radioButtonSel_Activities.Checked)
+            {
+                //MessageBox.Show(comboBox_SelAct_users.Text + " " + comboBox_SelAct_users.SelectedValue + " " + comboBox_SelAct_users.SelectedText);
+                //update_SelActCombo();
+                update_SelActGrids();
+            }
         }
         
         #region DEPRECTED METHODS AND VARIABLES
@@ -590,5 +638,10 @@ namespace NETime_WF_EF6
             */
         }
         #endregion
+
+        private void button_SelAct_SelectDismiss_Click(object sender, EventArgs e)
+        {
+            //TODO: Acción cuando se presiona el botón.
+        }
     }
 }
