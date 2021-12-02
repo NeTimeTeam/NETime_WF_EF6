@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 
 namespace NETime_WF_EF6
 {
-    class utilites
+    class Utilites
     {
         //Verifica el email
         static public bool emailValidation(string email)
