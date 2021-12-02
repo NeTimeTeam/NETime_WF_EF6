@@ -393,6 +393,7 @@ namespace NETime_WF_EF6
                     case "comboBox_SelAct_users":                    
                     case "dtg_SelAct_Selct":                        
                     case "dtg_SelAct_Act":
+                    case "button_SelAct_SelectDismiss":
                         ctrl.Show();
                         break;
                     default:
@@ -590,5 +591,10 @@ namespace NETime_WF_EF6
             */
         }
         #endregion
+
+        private void button_SelAct_SelectDismiss_Click(object sender, EventArgs e)
+        {
+            //Acción cuando se presiona el botón.
+        }
     }
 }
