@@ -303,7 +303,7 @@ namespace NETime_WF_EF6
             this.comboBox_SelAct_users.Name = "comboBox_SelAct_users";
             this.comboBox_SelAct_users.Size = new System.Drawing.Size(121, 21);
             this.comboBox_SelAct_users.TabIndex = 19;
-            this.comboBox_SelAct_users.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelAct_users_SelectionChangeCommitted);
+            this.comboBox_SelAct_users.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelAct_users_SelectionChangeCommitted);
             // 
             // dtg_SelAct_Selct
             // 
