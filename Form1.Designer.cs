@@ -357,8 +357,6 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.button_SelAct_SelectDismiss);
             this.Controls.Add(this.label_SelAct_Act);
             this.Controls.Add(this.label_SelAct_Sel);
-            this.Controls.Add(this.dtg_SelAct_Act);
-            this.Controls.Add(this.dtg_SelAct_Selct);
             this.Controls.Add(this.comboBox_SelAct_users);
             this.Controls.Add(this.textBox_Activities_Desc);
             this.Controls.Add(this.textBox_Activities_Nombre);
@@ -383,6 +381,8 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.radioButtonUsers);
             this.Controls.Add(this.getUsers);
             this.Controls.Add(this.dtg1);
+            this.Controls.Add(this.dtg_SelAct_Selct);
+            this.Controls.Add(this.dtg_SelAct_Act);
             this.Name = "Form1";
             this.Text = "Interfaz CRUD";
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).EndInit();
