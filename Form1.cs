@@ -504,33 +504,5 @@ namespace NETime_WF_EF6
 
         #endregion
 
-        #region DEPRECTED METHODS AND VARIABLES
-        //Eventos formularios
-        private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
-        //Validación del campo nombre usuario al salir del textbox.
-        private void userName_Validating(object sender, CancelEventArgs e)
-        {
-            /*
-            if (userName.Text != "something")
-                e.Cancel = true;
-            */
-        }
-
-
-        #endregion
-
-        private void userBindingSource_BindingComplete(object sender, BindingCompleteEventArgs e)
-        {
-
-        }
-
-        private void userBindingSource2_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
