@@ -77,6 +77,26 @@ namespace NETime_WF_EF6
             }
         }
 
+        private void update_SelActCombo()
+        {
+            using(this.context = new netimeContainer())
+            {
+                update_SelActCombo(this.context);
+            }
+        }
+        private void update_SelActCombo(netimeContainer context)
+        {
+            using (context)
+            {
+                List<user> usersList = context.userSet.ToList<user>();
+                comboBox_SelAct_users.DataSource = usersList;
+                comboBox_SelAct_users.ValueMember = "Id";
+                comboBox_SelAct_users.DisplayMember = "email";
+
+                dtg1.DataSource = context.selected_activitiesSet.ToList<selected_activities>();                
+            }
+        }
+
         #region EVENTOS RADIOBUTTONS
         //Eventos RadioButton
         private void radioButtonUsers_CheckedChanged(object sender, EventArgs e)
@@ -94,7 +114,8 @@ namespace NETime_WF_EF6
             using (this.context = new netimeContainer())
             {
                 userFormHide();
-                dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
+                //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();
+                update_SelActCombo(this.context);
             }
         }
         private void radioButtonActivities_CheckedChanged(object sender, EventArgs e)
@@ -422,6 +443,11 @@ namespace NETime_WF_EF6
 
         #endregion
 
+        private void comboBox_SelAct_users_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            MessageBox.Show(comboBox_SelAct_users.Text + " " + comboBox_SelAct_users.SelectedValue + " " + comboBox_SelAct_users.SelectedText);
+        }
+
         #region DEPRECTEd METHODS AND VARIABLES
         //Eventos formularios
         private void userName_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -437,6 +463,7 @@ namespace NETime_WF_EF6
                 e.Cancel = true;
             */
         }
+
         #endregion
 
         

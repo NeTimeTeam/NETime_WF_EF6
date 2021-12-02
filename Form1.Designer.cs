@@ -51,9 +51,16 @@ namespace NETime_WF_EF6
             this.button_del = new System.Windows.Forms.Button();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.comboBox_SelAct_users = new System.Windows.Forms.ComboBox();
+            this.dtg_SelAct_Selct = new System.Windows.Forms.DataGridView();
+            this.dtg_SelAct_Act = new System.Windows.Forms.DataGridView();
+            this.label_SelAct_Sel = new System.Windows.Forms.Label();
+            this.label_SelAct_Act = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Selct)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Act)).BeginInit();
             this.SuspendLayout();
             // 
             // dtg1
@@ -65,7 +72,7 @@ namespace NETime_WF_EF6
             this.dtg1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dtg1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dtg1.Size = new System.Drawing.Size(664, 311);
-            this.dtg1.TabIndex = 0;            
+            this.dtg1.TabIndex = 0;
             this.dtg1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dtg1_CellBeginEdit);
             this.dtg1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_RowSelect);
             this.dtg1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg1_CellValueChanged);
@@ -262,11 +269,59 @@ namespace NETime_WF_EF6
             // 
             this.userBindingSource1.DataSource = typeof(NETime_WF_EF6.user);
             // 
+            // comboBox_SelAct_users
+            // 
+            this.comboBox_SelAct_users.FormattingEnabled = true;
+            this.comboBox_SelAct_users.Location = new System.Drawing.Point(253, 400);
+            this.comboBox_SelAct_users.Name = "comboBox_SelAct_users";
+            this.comboBox_SelAct_users.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_SelAct_users.TabIndex = 19;
+            this.comboBox_SelAct_users.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelAct_users_SelectionChangeCommitted);
+            // 
+            // dtg_SelAct_Selct
+            // 
+            this.dtg_SelAct_Selct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtg_SelAct_Selct.Location = new System.Drawing.Point(21, 123);
+            this.dtg_SelAct_Selct.Name = "dtg_SelAct_Selct";
+            this.dtg_SelAct_Selct.Size = new System.Drawing.Size(448, 253);
+            this.dtg_SelAct_Selct.TabIndex = 20;
+            // 
+            // dtg_SelAct_Act
+            // 
+            this.dtg_SelAct_Act.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtg_SelAct_Act.Location = new System.Drawing.Point(492, 125);
+            this.dtg_SelAct_Act.Name = "dtg_SelAct_Act";
+            this.dtg_SelAct_Act.Size = new System.Drawing.Size(448, 251);
+            this.dtg_SelAct_Act.TabIndex = 21;
+            // 
+            // label_SelAct_Sel
+            // 
+            this.label_SelAct_Sel.AutoSize = true;
+            this.label_SelAct_Sel.Location = new System.Drawing.Point(223, 100);
+            this.label_SelAct_Sel.Name = "label_SelAct_Sel";
+            this.label_SelAct_Sel.Size = new System.Drawing.Size(133, 13);
+            this.label_SelAct_Sel.TabIndex = 22;
+            this.label_SelAct_Sel.Text = "Actividades seleccionadas";
+            // 
+            // label_SelAct_Act
+            // 
+            this.label_SelAct_Act.AutoSize = true;
+            this.label_SelAct_Act.Location = new System.Drawing.Point(684, 100);
+            this.label_SelAct_Act.Name = "label_SelAct_Act";
+            this.label_SelAct_Act.Size = new System.Drawing.Size(117, 13);
+            this.label_SelAct_Act.TabIndex = 23;
+            this.label_SelAct_Act.Text = "Actividades disponibles";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 452);
+            this.Controls.Add(this.label_SelAct_Act);
+            this.Controls.Add(this.label_SelAct_Sel);
+            this.Controls.Add(this.dtg_SelAct_Act);
+            this.Controls.Add(this.dtg_SelAct_Selct);
+            this.Controls.Add(this.comboBox_SelAct_users);
             this.Controls.Add(this.button_del);
             this.Controls.Add(this.label_userAddress);
             this.Controls.Add(this.label_userPhone);
@@ -291,6 +346,8 @@ namespace NETime_WF_EF6
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Selct)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Act)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,6 +375,11 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.BindingSource userBindingSource;
         private System.Windows.Forms.BindingSource userBindingSource1;
         private System.Windows.Forms.Button button_del;
+        private System.Windows.Forms.ComboBox comboBox_SelAct_users;
+        private System.Windows.Forms.DataGridView dtg_SelAct_Selct;
+        private System.Windows.Forms.DataGridView dtg_SelAct_Act;
+        private System.Windows.Forms.Label label_SelAct_Sel;
+        private System.Windows.Forms.Label label_SelAct_Act;
     }
 }
 
