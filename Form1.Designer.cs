@@ -34,7 +34,7 @@ namespace NETime_WF_EF6
             this.radioButtonUsers = new System.Windows.Forms.RadioButton();
             this.radioButtonActivities = new System.Windows.Forms.RadioButton();
             this.radioButtonSel_Activities = new System.Windows.Forms.RadioButton();
-            this.textBox_userName = new System.Windows.Forms.MaskedTextBox();
+            this.textBox_userName = new System.Windows.Forms.TextBox();
             this.textBox_userSurname = new System.Windows.Forms.TextBox();
             this.label_userName = new System.Windows.Forms.Label();
             this.label_userEmail = new System.Windows.Forms.Label();
@@ -127,14 +127,13 @@ namespace NETime_WF_EF6
             // textBox_userName
             // 
             this.textBox_userName.AccessibleDescription = "Nombre de usuario";
-            this.textBox_userName.CausesValidation = false;
             this.textBox_userName.Location = new System.Drawing.Point(49, 161);
             this.textBox_userName.Name = "textBox_userName";
             this.textBox_userName.Size = new System.Drawing.Size(184, 20);
             this.textBox_userName.TabIndex = 5;
-            this.textBox_userName.Tag = "Nombre";            
-            this.textBox_userName.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
-            this.textBox_userName.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);            
+            this.textBox_userName.Tag = "Nombre";
+            this.textBox_userName.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_userName.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);
             // 
             // textBox_userSurname
             // 
@@ -142,7 +141,7 @@ namespace NETime_WF_EF6
             this.textBox_userSurname.Name = "textBox_userSurname";
             this.textBox_userSurname.Size = new System.Drawing.Size(184, 20);
             this.textBox_userSurname.TabIndex = 6;
-            this.textBox_userSurname.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userSurname.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
             this.textBox_userSurname.TextChanged += new System.EventHandler(this.textBox_userName_TextChanged);
             // 
             // label_userName
@@ -170,7 +169,7 @@ namespace NETime_WF_EF6
             this.textBox_userEmail.Name = "textBox_userEmail";
             this.textBox_userEmail.Size = new System.Drawing.Size(184, 20);
             this.textBox_userEmail.TabIndex = 9;
-            this.textBox_userEmail.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userEmail.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
             this.textBox_userEmail.TextChanged += new System.EventHandler(this.textBox_userEmail_TextChanged);
             // 
             // label_userSurname
@@ -219,7 +218,7 @@ namespace NETime_WF_EF6
             this.textBox_userPhone.Name = "textBox_userPhone";
             this.textBox_userPhone.Size = new System.Drawing.Size(184, 20);
             this.textBox_userPhone.TabIndex = 14;
-            this.textBox_userPhone.CausesValidationChanged += new System.EventHandler(this.textBox_user_CausesValidationChanged);
+            this.textBox_userPhone.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
             this.textBox_userPhone.TextChanged += new System.EventHandler(this.textBox_userPhone_TextChanged);
             // 
             // textBox_userAddress
@@ -285,6 +284,8 @@ namespace NETime_WF_EF6
             this.textBox_Activities_Nombre.Size = new System.Drawing.Size(174, 20);
             this.textBox_Activities_Nombre.TabIndex = 21;
             this.textBox_Activities_Nombre.Visible = false;
+            this.textBox_Activities_Nombre.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_Activities_Nombre.TextChanged += new System.EventHandler(this.textBox_Activities_Nombre_TextChanged);
             // 
             // textBox_Activities_Desc
             // 
@@ -294,6 +295,19 @@ namespace NETime_WF_EF6
             this.textBox_Activities_Desc.Size = new System.Drawing.Size(174, 81);
             this.textBox_Activities_Desc.TabIndex = 22;
             this.textBox_Activities_Desc.Visible = false;
+            this.textBox_Activities_Desc.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_Activities_Desc.TextChanged += new System.EventHandler(this.textBox_Activities_Desc_TextChanged);
+            // 
+            // button_Act_create
+            // 
+            this.button_Act_create.Enabled = false;
+            this.button_Act_create.Location = new System.Drawing.Point(85, 398);
+            this.button_Act_create.Name = "button_Act_create";
+            this.button_Act_create.Size = new System.Drawing.Size(75, 23);
+            this.button_Act_create.TabIndex = 23;
+            this.button_Act_create.Text = "Crear";
+            this.button_Act_create.UseVisualStyleBackColor = true;
+            this.button_Act_create.Click += new System.EventHandler(this.button_Act_create_Click);
             // 
             // comboBox_SelAct_users
             // 
@@ -348,16 +362,6 @@ namespace NETime_WF_EF6
             this.button_SelAct_SelectDismiss.UseVisualStyleBackColor = true;
             this.button_SelAct_SelectDismiss.Click += new System.EventHandler(this.button_SelAct_SelectDismiss_Click);
             // 
-            // button_Act_create
-            // 
-            this.button_Act_create.Enabled = false;
-            this.button_Act_create.Location = new System.Drawing.Point(85, 398);
-            this.button_Act_create.Name = "button_Act_create";
-            this.button_Act_create.Size = new System.Drawing.Size(75, 23);
-            this.button_Act_create.TabIndex = 23;
-            this.button_Act_create.Text = "Crear";
-            this.button_Act_create.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -409,7 +413,7 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.RadioButton radioButtonUsers;
         private System.Windows.Forms.RadioButton radioButtonActivities;
         private System.Windows.Forms.RadioButton radioButtonSel_Activities;
-        private System.Windows.Forms.MaskedTextBox textBox_userName;
+        private System.Windows.Forms.TextBox textBox_userName;
         private System.Windows.Forms.TextBox textBox_userSurname;
         private System.Windows.Forms.Label label_userName;
         private System.Windows.Forms.Label label_userEmail;

@@ -19,10 +19,7 @@ namespace NETime_WF_EF6
         {
             InitializeComponent();
             radioButtonUsers.Checked = true;           
-            foreach(Control i in this.Controls)
-            {
-                Console.WriteLine(i.GetType().Name);
-            }
+            //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
         }
 
         private netimeContainer context;
@@ -203,7 +200,7 @@ namespace NETime_WF_EF6
         }
         #endregion
 
-        #region CREATE USER
+        
         private void button_addUser_Click(object sender, EventArgs e)
         {
             using(this.context = new netimeContainer())
@@ -298,10 +295,25 @@ namespace NETime_WF_EF6
                 textBox_userPhone.CausesValidation = false;
             }
         }
-        //Cada vez q el estado de validación cambia, llama a la función verificar textbox user validados para activar/desactivar el botón create.
-        private void textBox_user_CausesValidationChanged(object sender, EventArgs e)
-        {            
-            checkUserTextboxStatus();
+        //Cada vez q el estado de validación cambia, llama a la función verificar los textbox para activar/desactivar el botón create.
+        private void textBox_CausesValidationChanged(object sender, EventArgs e)
+        {
+            var obj = (TextBox)sender;
+            switch (obj.Name)
+            {
+                case "textBox_userName":
+                case "textBox_userEmail":
+                case "textBox_userSurname":
+                case "textBox_userPass":
+                case "textBox_userAddress":
+                case "textBox_userPhone":
+                    checkUserTextboxStatus();
+                    break;
+                case "textBox_Activities_Desc":
+                case "textBox_Activities_Nombre":
+                    checkActivitiesTextboxStatus();
+                    break;
+            }            
         }
         //Vacia el texto de los bloques de texto del formulario user.
         private void clean_userTextBoxes()
@@ -313,19 +325,19 @@ namespace NETime_WF_EF6
             textBox_userPhone.Text = "";
             textBox_userSurname.Text = "";
         }
-
         //Verifica si los campos de texto para el usuario son validos y activa el botón crear.
         private void checkUserTextboxStatus()
         {
             button_addUser.Enabled = (textBox_userAddress.CausesValidation & textBox_userEmail.CausesValidation & textBox_userName.CausesValidation & textBox_userPass.CausesValidation &
                     textBox_userPhone.CausesValidation & textBox_userSurname.CausesValidation);            
         }
-        #endregion
+               
 
         #region SHOW / HIDE FROMS
-        //Muestra el formulario para el usuario.
+        //Estos métodos activan o desactivan los elementos control de la pantalla según el interfaz seleccionado.
         private void userFormSet()
         {  
+            //Recorre los elementos (controles) del FORM y activa aquellos propios del interfaz usuario. Los demás interfaces disponen de un método análogo.
             Control.ControlCollection controlList = this.Controls;
             foreach (Control ctrl in this.Controls)
             {
@@ -574,41 +586,58 @@ namespace NETime_WF_EF6
 
         #region DELETE USER
         //Habilitar el botón borrar cuando se selecciona una celda.
-        private int selected_row = -1; //almacenará el valor de fila seleccionada.
+        private int selectedRowId = -1; //almacenará el valor de fila seleccionada.
         private void dtg1_RowSelect(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            DataGridView dgv = (DataGridView)sender;                        
+            if (e.RowIndex >= 0)
             {
-                if (int.TryParse(dtg1[0, e.RowIndex].Value.ToString(), out selected_row))
-                {                    
-                    button_del.Enabled = true;
-                }
+                this.selectedRowId = (int)dgv.CurrentRow.Cells[0].Value;
+                button_del.Enabled = true;
             }            
         }
+        //Borrará el contenido de la fila seleccionada.
         private void button_del_Click(object sender, EventArgs e)
         {
-            using(this.context = new netimeContainer())
+            using (this.context = new netimeContainer())
             {
-                user userToDelete = context.userSet.Find(selected_row);
-                context.userSet.Remove(userToDelete);
-                try
+                if (radioButtonUsers.Checked)
                 {
-                    context.SaveChanges();
-                }catch(DbUpdateException err)
-                {
-                    MessageBox.Show(err.InnerException.InnerException.Message);
-                }                
-                update_userGrid(this.context);
-            }
-            
-            selected_row = -1;
+                    //TODO: borrar las actividades y actividades seleccionadas asociadas al usuario.
+                    user userToDelete = context.userSet.Find(selectedRowId);
+                    context.userSet.Remove(userToDelete);
+                    try
+                    {
+                        context.SaveChanges();
+                    }
+                    catch (DbUpdateException err)
+                    {
+                        MessageBox.Show(err.InnerException.InnerException.Message);
+                    }
+                    update_userGrid(this.context);
+                }
+                if (radioButtonActivities.Checked)
+                {                    
+                    activities activityToDelete = context.activitiesSet.Find(selectedRowId);
+                    context.activitiesSet.Remove(activityToDelete);
+                    try
+                    {
+                        context.SaveChanges();
+                    }
+                    catch (DbUpdateException err)
+                    {
+                        MessageBox.Show(err.InnerException.InnerException.Message);
+                    }
+                    update_ActivitiesData(this.context);
+                }
+            }            
+            selectedRowId = -1;
             button_del.Enabled = false;
-            //MessageBox.Show(selected_row.ToString());
-            
+            //MessageBox.Show(selected_row.ToString());            
         }
-
         #endregion
 
+        //Esta función captura la selección del usuario en el interfaz de selección.
         private void comboBox_SelAct_users_SelectionChangeCommitted(object sender, EventArgs e)
         {            
             if (comboBox_SelAct_users.SelectedValue.GetType().Name.Equals("Int32") && radioButtonSel_Activities.Checked)
@@ -618,9 +647,108 @@ namespace NETime_WF_EF6
                 update_SelActGrids();
             }
         }
+        
+        //Botón para seleccionar o cancelar la selección de las actividades.
         private void button_SelAct_SelectDismiss_Click(object sender, EventArgs e)
         {
             //TODO: Acción cuando se presiona el botón.
+        }
+
+        //TODO: Hacer un refactor de la verificación de los textbox
+        private void textBox_Activities_Desc_TextChanged(object sender, EventArgs e)
+        {
+            if (Utilites.descriptionValidation(textBox_Activities_Desc.Text))
+            {
+                textBox_Activities_Desc.ForeColor = Color.Black;
+                textBox_Activities_Desc.CausesValidation = true;
+            }
+            else
+            {
+                textBox_Activities_Desc.ForeColor = Color.Red;
+                textBox_Activities_Desc.CausesValidation = false;
+            }
+        }
+        private void textBox_Activities_Nombre_TextChanged(object sender, EventArgs e)
+        {
+            if (Utilites.nameValidation(textBox_Activities_Nombre.Text))
+            {
+                textBox_Activities_Nombre.ForeColor = Color.Black;
+                textBox_Activities_Nombre.CausesValidation = true;
+            }
+            else
+            {
+                textBox_Activities_Nombre.ForeColor = Color.Red;
+                textBox_Activities_Nombre.CausesValidation = false;
+            }
+        }
+        private void clean_activitiesTextBoxes()
+        {
+            textBox_Activities_Nombre.Text = "";
+            textBox_Activities_Desc.Text = "";
+        }
+        private void checkActivitiesTextboxStatus()
+        {
+            button_Act_create.Enabled = (textBox_Activities_Desc.CausesValidation & textBox_Activities_Nombre.CausesValidation);
+        }
+        //Acción para crear una actividad 
+        private void button_Act_create_Click(object sender, EventArgs e)
+        {
+            /*
+            Console.WriteLine(comboBox_Activities_User.SelectedValue +"\n"+
+                comboBox_Activities_Categories.SelectedValue + "\n"+
+                textBox_Activities_Nombre.Text + "\n"+
+                textBox_Activities_Desc.Text);
+            */
+            int userId = (int)comboBox_Activities_User.SelectedValue;
+            int categoriesId = (int)comboBox_Activities_Categories.SelectedValue;
+            string name = textBox_Activities_Nombre.Text;
+            string description = textBox_Activities_Desc.Text;
+
+            if(checkIfActivityNameExist(userId, name))
+            {
+                activities activity = new activities
+                {
+                    userId = userId,
+                    categoriesId = categoriesId,
+                    name = name,
+                    description = description
+                };
+                
+                using (this.context = new netimeContainer())
+                {
+                    context.activitiesSet.Add(activity);
+                    try
+                    {
+                        context.SaveChanges();
+                        clean_activitiesTextBoxes();
+                    }
+                    catch (DbUpdateException err)
+                    {
+                        MessageBox.Show(err.InnerException.InnerException.Message);
+                    }
+                    update_ActivitiesData(this.context);
+                }
+            }
+            else
+            {
+                MessageBox.Show("El nombre ya ha sido usado.");
+            }            
+        }
+        //Verifica si el nombre de la actividad ya ha sido usado por el usuario.
+        private bool checkIfActivityNameExist(int userId, string name)
+        {            
+            try
+            {
+                using (this.context = new netimeContainer())
+                {
+                    var names = context.activitiesSet.Where(a => a.userId.Equals(userId)).Select(a => a.name).ToArray<string>();                    
+                    return !(names.Contains(name));
+                }
+            }catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+                return false;
+            }            
         }
     }
 }

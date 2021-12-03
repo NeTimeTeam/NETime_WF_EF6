@@ -10,6 +10,16 @@ namespace NETime_WF_EF6
 {
     class Utilites
     {
+        /*
+            (?i) sets case-insensitive mode
+            The ^ anchor asserts that we are at the beginning of the string
+            (?:(?![×Þß÷þø])[-'0-9a-zÀ-ÿ]) matches one character...
+            The lookahead (?![×Þß÷þø]) asserts that the char is not one of those in the brackets
+            [-'0-9a-zÀ-ÿ] allows dash, apostrophe, digits, letters, and chars in a wide accented range, from which we need to subtract
+            The + matches that one or more times
+            The $ anchor asserts that we are at the end of the string
+         */
+
         //Verifica el email
         static public bool emailValidation(string email)
         {
@@ -28,10 +38,15 @@ namespace NETime_WF_EF6
 
         static public bool nameValidation(string name)
         {
-            Regex rx = new Regex(@"[A-Z][A-Za-z\s]{3,16}$"); //Solo letras y mín 3 - máx 16.
+            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ\s]{3,26}$"); //Solo letras y mín 3 - máx 16.
             return rx.IsMatch(name.Length > 0 ? name : "n");
         }
-               
+        static public bool descriptionValidation(string name)
+        {
+            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ.,\s]{10,500}$"); //Solo letras y mín 3 - máx 16.
+            return rx.IsMatch(name.Length > 0 ? name : "n");
+        }
+
     }
 
     class PasswordHash
