@@ -186,6 +186,7 @@ namespace NETime_WF_EF6
                 //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();               
                 update_SelActCombo(this.context);                               
             }
+            DoColumnsReadOnly();
         }
         private void radioButtonActivities_CheckedChanged(object sender, EventArgs e)
         {
@@ -196,7 +197,7 @@ namespace NETime_WF_EF6
                 update_ActivitiesData(this.context);
                 //dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
             }
-            
+            DoColumnsReadOnly();
         }
         #endregion
 
@@ -571,6 +572,7 @@ namespace NETime_WF_EF6
                     case "Id":
                     case "salt":
                     case "userId":
+                    case "categoriesId":
                         dtg1.Columns[i].ReadOnly = true;
                         break;
                 }
@@ -589,10 +591,11 @@ namespace NETime_WF_EF6
         private int selectedRowId = -1; //almacenará el valor de fila seleccionada.
         private void dtg1_RowSelect(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridView dgv = (DataGridView)sender;                        
+            DataGridView dgv = (DataGridView)sender;
+            //Console.WriteLine(dgv.CurrentRow.Cells[0].Value);
             if (e.RowIndex >= 0)
             {
-                this.selectedRowId = (int)dgv.CurrentRow.Cells[0].Value;
+                Int32.TryParse(dgv.CurrentRow.Cells[0].Value.ToString(), out this.selectedRowId);
                 button_del.Enabled = true;
             }            
         }
