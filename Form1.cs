@@ -142,7 +142,7 @@ namespace NETime_WF_EF6
                     
                     //Esta consulta devuelve las actividades que no son del usuario.
                     dtg_SelAct_Act.DataSource = context.Database.SqlQuery<Actividades>(
-                            "Select A.Id, A.name, A.description, U.email, C.name from activitiesSet as A " +
+                            "Select A.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A " +
                             "inner join userSet as U on U.Id = A.userId " +
                             "inner join categoriesSet as C on C.Id = A.categoriesId " +
                             "where A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
@@ -150,7 +150,7 @@ namespace NETime_WF_EF6
 
                     //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
                     var selectedActivitiesList = context.Database.SqlQuery<Actividades>(
-                        "Select S.Id, A.name, A.description, U.email, C.name from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
+                        "Select S.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
                         "inner join userSet as U on U.Id = A.userId " +
                         "inner join categoriesSet as C on C.Id = A.categoriesId " +
                         "where S.userId = @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
