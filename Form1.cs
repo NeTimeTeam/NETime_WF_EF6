@@ -78,7 +78,6 @@ namespace NETime_WF_EF6
                 dtg1.DataSource = context.activitiesSet.ToList<activities>();
             }
         }
-
         //Actualiza el GridTable de los usuarios.
         private void update_userGrid()
         {
@@ -103,7 +102,7 @@ namespace NETime_WF_EF6
                 dtg1.DataSource = usuarioList;
             }
         }
-
+        //Actualiza el comobox de las actividades seleccionadas.
         private void update_SelActCombo()
         {
             using(this.context = new netimeContainer())
@@ -121,6 +120,7 @@ namespace NETime_WF_EF6
                 comboBox_SelAct_users.DisplayMember = "email";                                
             }
         }
+        //actualiza los datagrid de las actividades seleccionadas.
         private void update_SelActGrids()
         {            
             using (this.context = new netimeContainer())
@@ -636,7 +636,11 @@ namespace NETime_WF_EF6
             //MessageBox.Show(selected_row.ToString());            
         }
         #endregion
-
+        /*
+         * 
+         * ACTIVIDADES SELECCIONADAS
+         * 
+         */
         //Esta función captura la selección del usuario en el interfaz de selección.
         private void comboBox_SelAct_users_SelectionChangeCommitted(object sender, EventArgs e)
         {            
@@ -653,7 +657,11 @@ namespace NETime_WF_EF6
         {
             //TODO: Acción cuando se presiona el botón.
         }
-
+        /*
+         * 
+         * ACTIVIDADES
+         * 
+         */
         //TODO: Hacer un refactor de la verificación de los textbox
         private void textBox_Activities_Desc_TextChanged(object sender, EventArgs e)
         {
