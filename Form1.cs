@@ -470,35 +470,83 @@ namespace NETime_WF_EF6
         #region UPDATE USER
         //Variable para almacenar el valor inicial de la celda q se va a editar.
         private string cellValue_before_edit = null;
+        //Función editar actividad
+        private void updateActivityAttribute(int col, int row)
+        {            
+            bool valid = false;                                         //Variable de control.
+            var userId = Int32.Parse(comboBox_Activities_User.SelectedValue.ToString());
+            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
+            var Id = Int32.Parse(dtg1[0, row].Value.ToString());    //Obtenemos el Id de la fila.            
+            var entity = context.activitiesSet.Find(Id);   //Obtenemos la entidad actividad por el ID (el id ahora es un string)
 
+            string propertyName = dtg1.Columns[col].HeaderText;
+            switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
+            {
+                case "name":
+                    if (checkIfActivityNameExist(userId, new_value))
+                    {                        
+                        entity.name = new_value;
+                        valid = true;
+                    }
+                    break;
+                case "description":
+                    if (Utilites.descriptionValidation(new_value))
+                    {
+                        entity.description = new_value;
+                        valid = true;
+                    }
+                    break;                
+            }
+            if (valid)
+            {
+                context.Entry(entity).CurrentValues.SetValues(entity);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
+                }
+                update_ActivitiesData();
+            }
+            else
+            {                
+                update_ActivitiesData();
+                //TODO: Valorar alternativa al cambio de color
+                dtg1[col, row].Style.ForeColor = Color.Red;
+            }
+        }
         //Función editar usuario
         private void updateUserAttribute(int col, int row)
-        {
-            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
-            var user = context.userSet.Find(Int32.Parse(dtg1[0, row].Value.ToString()));   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
+        {            
             bool valid = false;                                         //Variable de control.
-            string propertyName = dtg1.Columns[col].HeaderText;
+            var new_value = dtg1.CurrentCell.Value.ToString();      //Nuevo valor en la celda
+            var Id = Int32.Parse(dtg1[0, row].Value.ToString());    //Obtenemos el Id de la fila.            
+            
+            var entity = context.userSet.Find(Id);   //Obtenemos la entidad usuario por el ID (el id ahora es un string)
 
+            string propertyName = dtg1.Columns[col].HeaderText;
             switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
             {
                 case "name":
                     if (Utilites.nameValidation(new_value))
                     {
-                        user.name = new_value;
+                        entity.name = new_value;
                         valid = true;
                     }
                     break;
                 case "surname":
                     if (Utilites.nameValidation(new_value))
                     {
-                        user.surname = new_value;
+                        entity.surname = new_value;
                         valid = true;
                     }
                     break;
                 case "email":
                     if (Utilites.emailValidation(new_value))
                     {
-                        user.email = new_value;
+                        entity.email = new_value;
                         try
                         {
                             valid = (from u in this.context.userSet where u.email.Equals(new_value) select u).Count() < 1;
@@ -513,7 +561,7 @@ namespace NETime_WF_EF6
                 case "phone":
                     if (Utilites.phoneValidation(new_value))
                     {
-                        user.phone = new_value;
+                        entity.phone = new_value;
                         valid = true;
                     }
                     break;
@@ -531,7 +579,7 @@ namespace NETime_WF_EF6
 
             if (valid)
             {
-                context.Entry(user).CurrentValues.SetValues(user);
+                context.Entry(entity).CurrentValues.SetValues(entity);
                 try
                 {
                     context.SaveChanges();
@@ -557,7 +605,7 @@ namespace NETime_WF_EF6
             using (this.context = new netimeContainer())                    //Conexión
             {
                 if (radioButtonUsers.Checked) { updateUserAttribute(e.ColumnIndex, e.RowIndex); }
-                if (radioButtonActivities.Checked) { }
+                if (radioButtonActivities.Checked) { updateActivityAttribute(e.ColumnIndex, e.RowIndex); }
                 if (radioButtonSel_Activities.Checked) { }
             }
         }
@@ -750,11 +798,8 @@ namespace NETime_WF_EF6
         {            
             try
             {
-                using (this.context = new netimeContainer())
-                {
-                    var names = context.activitiesSet.Where(a => a.userId.Equals(userId)).Select(a => a.name).ToArray<string>();                    
-                    return !(names.Contains(name));
-                }
+                var names = this.context.activitiesSet.Where(a => a.userId.Equals(userId)).Select(a => a.name).ToArray<string>();                    
+                return !(names.Contains(name));
             }catch(Exception err)
             {
                 MessageBox.Show(err.Message);
