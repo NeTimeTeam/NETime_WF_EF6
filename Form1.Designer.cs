@@ -267,6 +267,7 @@ namespace NETime_WF_EF6
             this.comboBox_Activities_User.Size = new System.Drawing.Size(174, 21);
             this.comboBox_Activities_User.TabIndex = 19;
             this.comboBox_Activities_User.Visible = false;
+            this.comboBox_Activities_User.SelectedIndexChanged += new System.EventHandler(this.comboBox_Activities_Users_SelectedIndexChanged);
             // 
             // comboBox_Activities_Categories
             // 
@@ -316,7 +317,7 @@ namespace NETime_WF_EF6
             this.comboBox_SelAct_users.Name = "comboBox_SelAct_users";
             this.comboBox_SelAct_users.Size = new System.Drawing.Size(121, 21);
             this.comboBox_SelAct_users.TabIndex = 19;
-            this.comboBox_SelAct_users.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelAct_users_SelectionChangeCommitted);
+            this.comboBox_SelAct_users.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelAct_users_SelectedIndexChanged);
             // 
             // dtg_SelAct_Selct
             // 

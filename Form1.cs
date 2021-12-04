@@ -75,7 +75,9 @@ namespace NETime_WF_EF6
                 comboBox_Activities_Categories.DisplayMember = "name"; //atributo del datasource q mostrará en la lista
 
                 //Actualizar la datagridtable con las actividades.
-                dtg1.DataSource = context.activitiesSet.ToList<activities>();
+                int userId = Int32.Parse(comboBox_Activities_User.SelectedValue.ToString());
+                //dtg1.DataSource = context.activitiesSet.ToList<activities>();                
+                dtg1.DataSource = context.activitiesSet.Where(a => a.userId.Equals(userId)).ToList<activities>();
             }
         }
         //Actualiza el GridTable de los usuarios.
@@ -704,7 +706,7 @@ namespace NETime_WF_EF6
          * 
          */
         //Esta función captura la selección del usuario en el interfaz de selección.
-        private void comboBox_SelAct_users_SelectionChangeCommitted(object sender, EventArgs e)
+        private void comboBox_SelAct_users_SelectedIndexChanged(object sender, EventArgs e)
         {            
             if (comboBox_SelAct_users.SelectedValue.GetType().Name.Equals("Int32") && radioButtonSel_Activities.Checked)
             {
@@ -816,6 +818,13 @@ namespace NETime_WF_EF6
                 MessageBox.Show(err.Message);
                 return false;
             }            
+        }
+        private void comboBox_Activities_Users_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_Activities_User.SelectedValue.GetType().Name.Equals("Int32") && radioButtonActivities.Checked)
+            {                
+                update_ActivitiesData();
+            }
         }
     }
 }
