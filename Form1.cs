@@ -52,7 +52,7 @@ namespace NETime_WF_EF6
         #endregion
 
         #region UPDATES METHODS
-        //Actualizar el DataGridTable de las actividades y los combobox
+        //Actualizar el DataGridTable de las actividades
         private void update_ActivitiesData()
         {
             using (this.context = new netimeContainer())
@@ -63,7 +63,25 @@ namespace NETime_WF_EF6
         private void update_ActivitiesData(netimeContainer context)
         {
             using (context)
-            {              
+            {   
+                //Actualizar la datagridtable con las actividades.
+                int userId = Int32.Parse(comboBox_Activities_User.SelectedValue.ToString());
+                //dtg1.DataSource = context.activitiesSet.ToList<activities>();                
+                dtg1.DataSource = context.activitiesSet.Where(a => a.userId.Equals(userId)).ToList<activities>();
+            }
+        }
+        //Actualizar los comobox de las actividades
+        private void update_ActivitiesCombos()
+        {
+            using(this.context = new netimeContainer())
+            {
+                update_ActivitiesCombos(context);
+            }
+        }
+        private void update_ActivitiesCombos(netimeContainer context)
+        {
+            using (context)
+            {
                 //Actualizar el combobox con los usuarios.
                 comboBox_Activities_User.DataSource = context.userSet.ToList<user>();
                 comboBox_Activities_User.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
@@ -73,13 +91,9 @@ namespace NETime_WF_EF6
                 comboBox_Activities_Categories.DataSource = context.categoriesSet.ToList<categories>();
                 comboBox_Activities_Categories.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
                 comboBox_Activities_Categories.DisplayMember = "name"; //atributo del datasource q mostrará en la lista
-
-                //Actualizar la datagridtable con las actividades.
-                int userId = Int32.Parse(comboBox_Activities_User.SelectedValue.ToString());
-                //dtg1.DataSource = context.activitiesSet.ToList<activities>();                
-                dtg1.DataSource = context.activitiesSet.Where(a => a.userId.Equals(userId)).ToList<activities>();
             }
         }
+
         //Actualiza el GridTable de los usuarios.
         private void update_userGrid()
         {
@@ -104,6 +118,7 @@ namespace NETime_WF_EF6
                 dtg1.DataSource = usuarioList;
             }
         }
+        
         //Actualiza el comobox de las actividades seleccionadas.
         private void update_SelActCombo()
         {
@@ -169,37 +184,47 @@ namespace NETime_WF_EF6
         #endregion
 
         #region EVENTOS RADIOBUTTONS
+        //TODO: Refactorizar los radiobuttons.
         //Eventos RadioButton
         private void radioButtonUsers_CheckedChanged(object sender, EventArgs e)
         {
-            using (this.context = new netimeContainer())
-            {
-                //Implementar cambio Form1 a formulario Sel_activities
-                userFormSet();
-                update_userGrid(this.context);
-            }
-            DoColumnsReadOnly();
+            if (radioButtonUsers.Checked)
+            {                
+                using (this.context = new netimeContainer())
+                {
+                    //Implementar cambio Form1 a formulario Sel_activities
+                    userFormSet();
+                    update_userGrid(this.context);
+                }
+                DoColumnsReadOnly();
+            }            
         }
         private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
         {
-            using (this.context = new netimeContainer())
-            {
-                selActivitiesFormSet();
-                //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();               
-                update_SelActCombo(this.context);                               
-            }
-            DoColumnsReadOnly();
+            if (radioButtonSel_Activities.Checked)
+            {             
+                using (this.context = new netimeContainer())
+                {
+                    selActivitiesFormSet();
+                    //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();               
+                    update_SelActCombo(this.context);
+                }
+                DoColumnsReadOnly();
+            }            
         }
         private void radioButtonActivities_CheckedChanged(object sender, EventArgs e)
         {
-            using(this.context = new netimeContainer())
-            {
-                //Implementar cambio Form1 a formulario Sel_activities
-                activitiesFormSet();
-                update_ActivitiesData(this.context);
-                //dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
-            }
-            DoColumnsReadOnly();
+            if (radioButtonActivities.Checked)
+            {             
+                using (this.context = new netimeContainer())
+                {
+                    //Implementar cambio Form1 a formulario Sel_activities
+                    activitiesFormSet();
+                    update_ActivitiesCombos(this.context);
+                    //dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
+                }
+                DoColumnsReadOnly();
+            }            
         }
         #endregion
 
