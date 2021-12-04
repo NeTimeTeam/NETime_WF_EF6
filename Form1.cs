@@ -281,6 +281,31 @@ namespace NETime_WF_EF6
                 textBox_userPhone.CausesValidation = false;
             }
         }
+        //Verificar que la password introducida cumple los requisitos.
+        private void textBox_userPass_TextChanged(object sender, EventArgs e)
+        {
+            textBox_userPass.CausesValidation = Utilites.passwordValidation(((TextBox)sender).Text);
+            if (textBox_userPass.CausesValidation)
+            {
+                textBox_userPass.ForeColor = Color.Black;                
+            }
+            else
+            {
+                textBox_userPass.ForeColor = Color.Red;                
+            }
+        }
+        private void textBox_userAddress_TextChanged(object sender, EventArgs e)
+        {
+            textBox_userAddress.CausesValidation = Utilites.descriptionValidation(((TextBox)sender).Text);
+            if (textBox_userAddress.CausesValidation)
+            {
+                textBox_userAddress.ForeColor = Color.Black;
+            }
+            else
+            {
+                textBox_userAddress.ForeColor = Color.Red;
+            }
+        }
         //Cada vez q el estado de validación cambia, llama a la función verificar los textbox para activar/desactivar el botón create.       
         private void textBox_CausesValidationChanged(object sender, EventArgs e)
         {

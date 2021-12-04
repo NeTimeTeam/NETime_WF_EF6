@@ -192,6 +192,7 @@ namespace NETime_WF_EF6
             // 
             // textBox_userPass
             // 
+            this.textBox_userPass.CausesValidation = false;
             this.textBox_userPass.Location = new System.Drawing.Point(49, 278);
             this.textBox_userPass.MaxLength = 16;
             this.textBox_userPass.Name = "textBox_userPass";
@@ -199,6 +200,8 @@ namespace NETime_WF_EF6
             this.textBox_userPass.Size = new System.Drawing.Size(184, 20);
             this.textBox_userPass.TabIndex = 12;
             this.textBox_userPass.UseSystemPasswordChar = true;
+            this.textBox_userPass.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_userPass.TextChanged += new System.EventHandler(this.textBox_userPass_TextChanged);
             // 
             // button_addUser
             // 
@@ -223,10 +226,13 @@ namespace NETime_WF_EF6
             // 
             // textBox_userAddress
             // 
+            this.textBox_userAddress.CausesValidation = false;
             this.textBox_userAddress.Location = new System.Drawing.Point(49, 356);
             this.textBox_userAddress.Name = "textBox_userAddress";
             this.textBox_userAddress.Size = new System.Drawing.Size(184, 20);
             this.textBox_userAddress.TabIndex = 15;
+            this.textBox_userAddress.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_userAddress.TextChanged += new System.EventHandler(this.textBox_userAddress_TextChanged);
             // 
             // label_userPhone
             // 
