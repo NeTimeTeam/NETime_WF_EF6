@@ -38,15 +38,36 @@ namespace NETime_WF_EF6
 
         static public bool nameValidation(string name)
         {
-            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ\s]{3,26}$"); //Solo letras y mín 3 - máx 16.
+            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ\s]{3,26}$"); //Solo letras y mín 3 - máx 26.
             return rx.IsMatch(name.Length > 0 ? name : "n");
         }
         static public bool descriptionValidation(string name)
         {
-            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ.,\s]{10,500}$"); //Solo letras y mín 3 - máx 16.
+            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ.,\-/\\0-9\s]{10,500}$"); //Solo letras y mín 10 - máx 500.
             return rx.IsMatch(name.Length > 0 ? name : "n");
         }
-
+        static public bool passwordValidation(string pass, int lvl=0) //validación de password según nivel definido. Predeterminado 0, nvl más bajo.
+        {
+            string rgx;
+            switch (lvl)
+            {
+                case 1:                    
+                    rgx = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,}$"; //Al menos una letra, un número, uno de estos símbolos [@$!%*#?&] y 8 carteres de longitud.
+                    break;
+                case 2:
+                    rgx = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$"; //Al menos una letra minúscula, una mayúscula, un número y 8 carcateres de longitud.
+                    break;
+                case 3:
+                    rgx = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$"; //Al menos una letra minúscula, una mayúscula, un número, uno de estos símbolos [@$!%*#?&] y 8 carteres de longitud.
+                    break;
+                case 0:
+                default:
+                    rgx = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{8,}$"; //Al menos una letra, un número y 8 caracteres de longitud.
+                    break;             
+            }
+            Regex rx = new Regex(rgx);
+            return rx.IsMatch(pass.Length > 0 ? pass : "n");
+        }
     }
 
     class PasswordHash

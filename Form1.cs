@@ -566,12 +566,23 @@ namespace NETime_WF_EF6
                     }
                     break;
                 case "password":
-                    //TODO: password data control
-                    //user.address = new_value;
+                    if (Utilites.passwordValidation(new_value))
+                    {
+                        byte[] salt = entity.salt;
+                        byte[] newPass;
+                        //public PasswordHash(string pass, byte[] salt, int saltLengthLimit = 32)
+                        PasswordHash ph = new PasswordHash(new_value, salt); //Le pasamos la nueva password al objeto y el salt del usuario al objeto que la va a cifrar.
+                        newPass = ph.GenerateSaltedHash(); //Llamamos a la función que nos devolverá el nuevo password cifrado mediante el SALT.
+                        entity.password = newPass;
+                        valid = true;
+                    }                    
                     break;
-                case "salt":
-                    //TODO: address data control
-                    //user.password = new_value;
+                case "address":
+                    if (Utilites.descriptionValidation(new_value))
+                    {
+                        entity.address = new_value;
+                        valid = true;
+                    }                    
                     break;
                 default:
                     break;
