@@ -18,35 +18,34 @@ namespace NETime_WF_EF6
         public Form1()
         {
             InitializeComponent();
-            radioButtonUsers.Checked = true;           
-            //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
+            radioButtonUsers.Checked = true;
+            //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}            
         }
-
-        private netimeContainer context;
+        
+        private netimeContainer context = new netimeContainer();
 
         #region GET METHODS
         //Evento click en botón getUsers
         private void getUsers_Click(object sender, EventArgs e)
         {
-            using (this.context = new netimeContainer())
+            //Usuarios
+            if (radioButtonUsers.Checked)//¿RB Ususarios activo?
             {
-                //Usuarios
-                if (radioButtonUsers.Checked)//¿RB Ususarios activo?
-                {
-                    update_userGrid(this.context);
-                }
+                update_userGrid(this.context);
+            }
 
-                //Actividades
-                if (radioButtonActivities.Checked) //RB Activities activo¿?
-                {
-                    update_ActivitiesData(this.context);
-                }
-                //Actividades seleccionadas
-                if (radioButtonSel_Activities.Checked) //RB Sel_activities activo¿?
-                {
-                    var sel_activities = context.selected_activitiesSet; //Analogo a usuarios.
-                    dtg1.DataSource = sel_activities.ToList<selected_activities>();
-                }
+            //Actividades
+            if (radioButtonActivities.Checked) //RB Activities activo¿?
+            {
+                update_ActivitiesCombos();
+                //update_ActivitiesData(this.context);
+            }
+            //Actividades seleccionadas
+            if (radioButtonSel_Activities.Checked) //RB Sel_activities activo¿?
+            {
+                update_SelActCombo();
+                //var sel_activities = context.selected_activitiesSet; //Analogo a usuarios.
+                //dtg1.DataSource = sel_activities.ToList<selected_activities>();
             }
         }
         #endregion
@@ -55,130 +54,101 @@ namespace NETime_WF_EF6
         //Actualizar el DataGridTable de las actividades
         private void update_ActivitiesData()
         {
-            using (this.context = new netimeContainer())
-            {
-                update_ActivitiesData(this.context);
-            }
+                update_ActivitiesData(this.context);         
         }
         private void update_ActivitiesData(netimeContainer context)
         {
-            using (context)
-            {   
-                //Actualizar la datagridtable con las actividades.
-                int userId = Int32.Parse(comboBox_Activities_User.SelectedValue.ToString());
-                //dtg1.DataSource = context.activitiesSet.ToList<activities>();                
-                dtg1.DataSource = context.activitiesSet.Where(a => a.userId.Equals(userId)).ToList<activities>();
-            }
+            //Actualizar la datagridtable con las actividades.
+            int userId = Int32.Parse(comboBox_Activities_User.SelectedValue.ToString());
+            //dtg1.DataSource = context.activitiesSet.ToList<activities>();                
+            dtg1.DataSource = context.activitiesSet.Where(a => a.userId.Equals(userId)).ToList<activities>();            
         }
         //Actualizar los comobox de las actividades
         private void update_ActivitiesCombos()
         {
-            using(this.context = new netimeContainer())
-            {
-                update_ActivitiesCombos(context);
-            }
+            update_ActivitiesCombos(context);        
         }
         private void update_ActivitiesCombos(netimeContainer context)
         {
-            using (context)
-            {
-                //Actualizar el combobox con los usuarios.
-                comboBox_Activities_User.DataSource = context.userSet.ToList<user>();
-                comboBox_Activities_User.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
-                comboBox_Activities_User.DisplayMember = "email"; //atributo del datasource q mostrará en la lista
+            //Actualizar el combobox con los usuarios.
+            comboBox_Activities_User.DataSource = context.userSet.ToList<user>();
+            comboBox_Activities_User.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
+            comboBox_Activities_User.DisplayMember = "email"; //atributo del datasource q mostrará en la lista
 
-                //Actualizar el combobox con las categorias
-                comboBox_Activities_Categories.DataSource = context.categoriesSet.ToList<categories>();
-                comboBox_Activities_Categories.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
-                comboBox_Activities_Categories.DisplayMember = "name"; //atributo del datasource q mostrará en la lista
-            }
+            //Actualizar el combobox con las categorias
+            comboBox_Activities_Categories.DataSource = context.categoriesSet.ToList<categories>();
+            comboBox_Activities_Categories.ValueMember = "Id"; //atributo del datasource q devolverá al seleccionarlo
+            comboBox_Activities_Categories.DisplayMember = "name"; //atributo del datasource q mostrará en la lista
         }
 
         //Actualiza el GridTable de los usuarios.
         private void update_userGrid()
         {
-            using (this.context = new netimeContainer())
-            {
-                update_userGrid(this.context);
-            }
+            update_userGrid(this.context);            
         }
         private void update_userGrid(netimeContainer context)
-        {            
-            using (context)
-            {
-                //Obtenemos solo los datos del usuario q nos interesan                
-                //var users = context.userSet.Select(u => new Usuario(u.Id, u.email, u.name, u.surname, u.phone, u.address, Convert.ToBase64String(u.password), Convert.ToBase64String(u.salt))).ToList<Usuario>(); //Obtener todos los usuarios.                
-                List<Usuario> usuarioList = new List<Usuario>();
-                var users = context.userSet;
-                foreach(user u in users)
-                {                    
-                    usuarioList.Add(new Usuario(u));
-                }
-                //dtg1.DataSource = users.ToArray<Usuario>();//Enviar Lista<USUARIOS> a DataGridTable1
-                dtg1.DataSource = usuarioList;
+        {
+            //TODO: modificar la clase usuario de manera análoga a actividades. Sin contructor.
+            //Obtenemos solo los datos del usuario q nos interesan                
+            //var users = context.userSet.Select(u => new Usuario(u.Id, u.email, u.name, u.surname, u.phone, u.address, Convert.ToBase64String(u.password), Convert.ToBase64String(u.salt))).ToList<Usuario>(); //Obtener todos los usuarios.                
+            List<Usuario> usuarioList = new List<Usuario>();
+            var users = this.context.userSet;
+            foreach(user u in users)
+            {                    
+                usuarioList.Add(new Usuario(u));
             }
+            //dtg1.DataSource = users.ToArray<Usuario>();//Enviar Lista<USUARIOS> a DataGridTable1
+            dtg1.DataSource = usuarioList;        
         }
         
         //Actualiza el comobox de las actividades seleccionadas.
         private void update_SelActCombo()
         {
-            using(this.context = new netimeContainer())
-            {
-                update_SelActCombo(this.context);                
-            }
+            update_SelActCombo(this.context);
         }
         private void update_SelActCombo(netimeContainer context)
         {
-            using (context)
-            {
-                List<user> usersList = context.userSet.ToList<user>();
-                comboBox_SelAct_users.DataSource = usersList;
-                comboBox_SelAct_users.ValueMember = "Id";
-                comboBox_SelAct_users.DisplayMember = "email";                                
-            }
+            List<user> usersList = context.userSet.ToList<user>();
+            comboBox_SelAct_users.DataSource = usersList;
+            comboBox_SelAct_users.ValueMember = "Id";
+            comboBox_SelAct_users.DisplayMember = "email";
         }
         //actualiza los datagrid de las actividades seleccionadas.
         private void update_SelActGrids()
-        {            
-            using (this.context = new netimeContainer())
-            {
-                update_SelActGrids(this.context);
-            }
+        {
+            update_SelActGrids(this.context);
         }
         private void update_SelActGrids(netimeContainer context)
         {
-            using (context)
+            /*
+            * https://www.entityframeworktutorial.net/EntityFramework4.3/raw-sql-query-in-entity-framework.aspx
+            */
+            try
             {
-                /*
-                * https://www.entityframeworktutorial.net/EntityFramework4.3/raw-sql-query-in-entity-framework.aspx
-                */
-                try
-                {
-                     //int currentUser = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());
-                    //dtg_SelAct_Act.DataSource = context.activitiesSet.Where(A => A.userId != currentUser).ToList<activities>();
+                //int currentUser = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());
+                //dtg_SelAct_Act.DataSource = context.activitiesSet.Where(A => A.userId != currentUser).ToList<activities>();
                     
-                    //Esta consulta devuelve las actividades que no son del usuario.
-                    dtg_SelAct_Act.DataSource = context.Database.SqlQuery<Actividades>(
-                            "Select A.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A " +
-                            "inner join userSet as U on U.Id = A.userId " +
-                            "inner join categoriesSet as C on C.Id = A.categoriesId " +
-                            "where A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
-                    
-
-                    //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
-                    var selectedActivitiesList = context.Database.SqlQuery<Actividades>(
-                        "Select S.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
+                //Esta consulta devuelve las actividades que no son del usuario.
+                dtg_SelAct_Act.DataSource = context.Database.SqlQuery<Actividades>(
+                        "Select A.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A " +
                         "inner join userSet as U on U.Id = A.userId " +
                         "inner join categoriesSet as C on C.Id = A.categoriesId " +
-                        "where S.userId = @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
-
-                    dtg_SelAct_Selct.DataSource = selectedActivitiesList;
+                        "where A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
                     
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                }
+
+                //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
+                var selectedActivitiesList = context.Database.SqlQuery<Actividades>(
+                    "Select S.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
+                    "inner join userSet as U on U.Id = A.userId " +
+                    "inner join categoriesSet as C on C.Id = A.categoriesId " +
+                    "where S.userId = @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
+
+                dtg_SelAct_Selct.DataSource = selectedActivitiesList;
+                    
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }            
         }
         #endregion
@@ -189,88 +159,76 @@ namespace NETime_WF_EF6
         private void radioButtonUsers_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonUsers.Checked)
-            {                
-                using (this.context = new netimeContainer())
-                {
-                    //Implementar cambio Form1 a formulario Sel_activities
-                    userFormSet();
-                    update_userGrid(this.context);
-                }
+            {
+                //Implementar cambio Form1 a formulario Sel_activities
+                userFormSet();
+                update_userGrid(this.context);             
                 DoColumnsReadOnly();
             }            
         }
         private void radioButtonSel_Activities_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonSel_Activities.Checked)
-            {             
-                using (this.context = new netimeContainer())
-                {
-                    selActivitiesFormSet();
-                    //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();               
-                    update_SelActCombo(this.context);
-                }
+            {
+                selActivitiesFormSet();
+                //dtg1.DataSource = this.context.selected_activitiesSet.ToList<selected_activities>();               
+                update_SelActCombo(this.context);
                 DoColumnsReadOnly();
-            }            
+            }
         }
         private void radioButtonActivities_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonActivities.Checked)
-            {             
-                using (this.context = new netimeContainer())
-                {
-                    //Implementar cambio Form1 a formulario Sel_activities
-                    activitiesFormSet();
-                    update_ActivitiesCombos(this.context);
-                    //dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
-                }
+            {
+                //Implementar cambio Form1 a formulario Sel_activities
+                activitiesFormSet();
+                update_ActivitiesCombos(this.context);
+                //dtg1.DataSource = this.context.activitiesSet.ToList<activities>();
                 DoColumnsReadOnly();
-            }            
+            }
         }
         #endregion
 
         
         private void button_addUser_Click(object sender, EventArgs e)
         {
-            using(this.context = new netimeContainer())
+            //Obtenemos el byte[] del password y el salt[] antes de almacenarlo en el DB.
+            PasswordHash passGen = new PasswordHash(textBox_userPass.Text);
+
+            //Creamos un objeto usuario con los datos del formulario
+            user usuario = new user()
             {
-                //Obtenemos el byte[] del password y el salt[] antes de almacenarlo en el DB.
-                PasswordHash passGen = new PasswordHash(textBox_userPass.Text);
+                name = textBox_userName.Text,
+                email = textBox_userEmail.Text,
+                password = passGen.GenerateSaltedHash(),
+                salt = passGen.Salt(),
+                surname = textBox_userSurname.Text,
+                phone = textBox_userPhone.Text,
+                //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
+                address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
+            };
+            try
+            {
 
-                //Creamos un objeto usuario con los datos del formulario
-                user usuario = new user()
+                int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
+                if (userExist > 0)
                 {
-                    name = textBox_userName.Text,
-                    email = textBox_userEmail.Text,
-                    password = passGen.GenerateSaltedHash(),
-                    salt = passGen.Salt(),
-                    surname = textBox_userSurname.Text,
-                    phone = textBox_userPhone.Text,
-                    //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
-                    address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
-                };
-                try
-                {
-
-                    int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
-                    if (userExist > 0)
-                    {
-                        MessageBox.Show("El usuario ya existe");
-                        textBox_userEmail.ForeColor = Color.Red;
-                    }
-                    else
-                    {
-                        context.userSet.Add(usuario); //Le pasamos el objeto al context.            
-                        context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
-                        clean_userTextBoxes();
-                    }
+                    MessageBox.Show("El usuario ya existe");
+                    textBox_userEmail.ForeColor = Color.Red;
                 }
-                catch (DbUpdateException err)
+                else
                 {
-                    string errMsg = err.InnerException.InnerException.Message;
-                    MessageBox.Show(errMsg);
+                    context.userSet.Add(usuario); //Le pasamos el objeto al context.            
+                    context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
+                    clean_userTextBoxes();
                 }
-                update_userGrid(context);
-            }            
+            }
+            catch (DbUpdateException err)
+            {
+                string errMsg = err.InnerException.InnerException.Message;
+                MessageBox.Show(errMsg);
+            }
+            update_userGrid(context);
         }
         private void textBox_userEmail_TextChanged(object sender, EventArgs e)
         {
@@ -323,7 +281,7 @@ namespace NETime_WF_EF6
                 textBox_userPhone.CausesValidation = false;
             }
         }
-        //Cada vez q el estado de validación cambia, llama a la función verificar los textbox para activar/desactivar el botón create.
+        //Cada vez q el estado de validación cambia, llama a la función verificar los textbox para activar/desactivar el botón create.       
         private void textBox_CausesValidationChanged(object sender, EventArgs e)
         {
             var obj = (TextBox)sender;
@@ -526,10 +484,10 @@ namespace NETime_WF_EF6
             }
             if (valid)
             {
-                context.Entry(entity).CurrentValues.SetValues(entity);
+                this.context.Entry(entity).CurrentValues.SetValues(entity);
                 try
                 {
-                    context.SaveChanges();
+                    this.context.SaveChanges();
                 }
                 catch (DbUpdateException err)
                 {
@@ -617,10 +575,10 @@ namespace NETime_WF_EF6
 
             if (valid)
             {
-                context.Entry(entity).CurrentValues.SetValues(entity);
+                this.context.Entry(entity).CurrentValues.SetValues(entity);
                 try
                 {
-                    context.SaveChanges();
+                    this.context.SaveChanges();
 
                 }
                 catch (DbUpdateException err)
@@ -637,15 +595,12 @@ namespace NETime_WF_EF6
                 //dtg1.CurrentCell.Value = this.cellValue_before_edit;                    
             }
         }
-        //Evento editar. Modifica el contenido en la base de datos.
+        //Evento editar. Cuando detecta el cambio del contenido de un celda, llama a la función que actualiza el contenido en la base de datos.
         private void dtg1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            using (this.context = new netimeContainer())                    //Conexión
-            {
-                if (radioButtonUsers.Checked) { updateUserAttribute(e.ColumnIndex, e.RowIndex); }
-                if (radioButtonActivities.Checked) { updateActivityAttribute(e.ColumnIndex, e.RowIndex); }
-                if (radioButtonSel_Activities.Checked) { }
-            }
+            if (radioButtonUsers.Checked) { updateUserAttribute(e.ColumnIndex, e.RowIndex); }
+            if (radioButtonActivities.Checked) { updateActivityAttribute(e.ColumnIndex, e.RowIndex); }
+            if (radioButtonSel_Activities.Checked) { }
         }
         
         //Bloquear la edición de ciertas columnas
@@ -673,8 +628,10 @@ namespace NETime_WF_EF6
         #endregion
 
         #region DELETE USER
+        //TODO: añadir borrar en cascada.
         //Habilitar el botón borrar cuando se selecciona una celda.
         private int selectedRowId = -1; //almacenará el valor de fila seleccionada.
+        //Activa el botón borrar cuando se seleciona un celda de la tabla.
         private void dtg1_RowSelect(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
@@ -685,40 +642,37 @@ namespace NETime_WF_EF6
                 button_del.Enabled = true;
             }            
         }
-        //Borrará el contenido de la fila seleccionada.
+        //Borrará el contenido de la fila seleccionada en la tabla para actividades y usuarios.
         private void button_del_Click(object sender, EventArgs e)
         {
-            using (this.context = new netimeContainer())
+            if (radioButtonUsers.Checked)
             {
-                if (radioButtonUsers.Checked)
+                //TODO: borrar las actividades y actividades seleccionadas asociadas al usuario.
+                user userToDelete = this.context.userSet.Find(selectedRowId);
+                this.context.userSet.Remove(userToDelete);
+                try
                 {
-                    //TODO: borrar las actividades y actividades seleccionadas asociadas al usuario.
-                    user userToDelete = context.userSet.Find(selectedRowId);
-                    context.userSet.Remove(userToDelete);
-                    try
-                    {
-                        context.SaveChanges();
-                    }
-                    catch (DbUpdateException err)
-                    {
-                        MessageBox.Show(err.InnerException.InnerException.Message);
-                    }
-                    update_userGrid(this.context);
+                    this.context.SaveChanges();
                 }
-                if (radioButtonActivities.Checked)
-                {                    
-                    activities activityToDelete = context.activitiesSet.Find(selectedRowId);
-                    context.activitiesSet.Remove(activityToDelete);
-                    try
-                    {
-                        context.SaveChanges();
-                    }
-                    catch (DbUpdateException err)
-                    {
-                        MessageBox.Show(err.InnerException.InnerException.Message);
-                    }
-                    update_ActivitiesData(this.context);
+                catch (DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
                 }
+                update_userGrid(this.context);
+            }
+            if (radioButtonActivities.Checked)
+            {                    
+                activities activityToDelete = this.context.activitiesSet.Find(selectedRowId);
+                context.activitiesSet.Remove(activityToDelete);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
+                }
+                update_ActivitiesData(this.context);
             }            
             selectedRowId = -1;
             button_del.Enabled = false;
@@ -811,20 +765,17 @@ namespace NETime_WF_EF6
                     description = description
                 };
                 
-                using (this.context = new netimeContainer())
+                this.context.activitiesSet.Add(activity);
+                try
                 {
-                    context.activitiesSet.Add(activity);
-                    try
-                    {
-                        context.SaveChanges();
-                        clean_activitiesTextBoxes();
-                    }
-                    catch (DbUpdateException err)
-                    {
-                        MessageBox.Show(err.InnerException.InnerException.Message);
-                    }
-                    update_ActivitiesData(this.context);
+                    context.SaveChanges();
+                    clean_activitiesTextBoxes();
                 }
+                catch (DbUpdateException err)
+                {
+                    MessageBox.Show(err.InnerException.InnerException.Message);
+                }
+                update_ActivitiesData(this.context);
             }
             else
             {
