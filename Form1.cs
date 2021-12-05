@@ -132,8 +132,9 @@ namespace NETime_WF_EF6
                 dtg_SelAct_Act.DataSource = context.Database.SqlQuery<Actividades>(
                         "Select A.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A " +
                         "inner join userSet as U on U.Id = A.userId " +
-                        "inner join categoriesSet as C on C.Id = A.categoriesId " +
-                        "where A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
+                        "inner join categoriesSet as C on C.Id = A.categoriesId " +                        
+                        "where A.Id not in (select activitiesId from selected_activitiesSet where userId = @Id) and " +
+                        "A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
                     
 
                 //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
@@ -723,7 +724,46 @@ namespace NETime_WF_EF6
         //Botón para seleccionar o cancelar la selección de las actividades.
         private void button_SelAct_SelectDismiss_Click(object sender, EventArgs e)
         {
-            //TODO: Acción cuando se presiona el botón.
+            string action = ((Button)sender).Tag.ToString(); //Determina la acción a realizar mediante la etiqueta del botón.
+            switch (action)
+            {
+                case "SELECT":
+                    selectActivity();
+                    break;
+                case "DIMISS":
+                    dimissActivity();
+                    break;
+            }            
+            try
+            {
+                this.context.SaveChanges();     //Escribimos en la base de datos.
+            }catch (DbUpdateException err)
+            {
+                MessageBox.Show(err.InnerException.InnerException.Message);
+            }
+            update_SelActGrids();
+        }
+        //ELIMINA UNA ACTIVIDAD DE LA SELECCIÖN DEL USUARIO.
+        private void dimissActivity()
+        {
+            Console.WriteLine("DISMISS ACTIVITY");
+            int selectedActivityId = Int32.Parse(dtg_SelAct_Selct.CurrentRow.Cells[0].Value.ToString());          //Id de la actividad seleccionada que queremos eliminar.
+            selected_activities selActivity = this.context.selected_activitiesSet.Find(selectedActivityId); //Recuperamos la entidad desde el context
+            this.context.selected_activitiesSet.Remove(selActivity);                                        //Le pasamos la orden de borrado a la clase context.            
+        }
+        //AÑADE UNA ACTIVIDAD A LA SELECCIÖN DEL USUARIO.
+        private void selectActivity()
+        {            
+            //Seleccionar actividad.
+            Console.WriteLine("ADD ACTIVITY");
+            int userId = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());        //Id usuario que se apunta a la actividad.
+            int activityId = Int32.Parse(dtg_SelAct_Act.CurrentRow.Cells[0].Value.ToString());    //Id actividad a la que se apunta el usuairo.
+            selected_activities newSelActivity = new selected_activities                       //Creamos la entidad actividad con los datos de usuario y actividad.
+            {
+                userId = userId,
+                activitiesId = activityId
+            };
+            this.context.selected_activitiesSet.Add(newSelActivity);                           //Añadimos la actividad a traves de la clase context.            
         }
         /*
          * 
@@ -826,6 +866,33 @@ namespace NETime_WF_EF6
             {                
                 update_ActivitiesData();
             }
+        }
+
+        //AÑADEN O ELIMINAN ACTIVIDADES EN EL PREFIL DEL USUARIO
+        private void dtg_SelAct_Selct_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {            
+            Console.WriteLine("ACTIVIDADES SELECCIONADAS: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
+            button_SelAct_SelectDismiss.Enabled = true;
+            button_SelAct_SelectDismiss.Text = "";
+            var icon = Properties.Resources.Arrows_Right_Arrow.ToBitmap();
+            button_SelAct_SelectDismiss.BackgroundImage = Properties.Resources.Arrows_Right_Arrow.ToBitmap();
+            button_SelAct_SelectDismiss.Size = icon.Size;
+            button_SelAct_SelectDismiss.Tag = "DIMISS";
+        }
+
+        private void dtg_SelAct_Act_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dtg_SelAct_Selct.Focused)
+            {
+                Console.WriteLine("Focused");
+            }
+            Console.WriteLine("ACTIVIDADES: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
+            button_SelAct_SelectDismiss.Enabled = true;
+            button_SelAct_SelectDismiss.Text = "";
+            var icon = Properties.Resources.Arrows_Left_Arrow.ToBitmap();
+            button_SelAct_SelectDismiss.BackgroundImage = icon;
+            button_SelAct_SelectDismiss.Size = icon.Size;
+            button_SelAct_SelectDismiss.Tag = "SELECT";
         }
     }
 }

@@ -109,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -132,6 +133,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\Arrows-Left-Arrow.ico" />
+    <Content Include="img\Arrows-Right-Arrow.ico" />
     <Content Include="netime.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>netime.Context.cs</LastGenOutput>
@@ -143,6 +146,7 @@
       <LastGenOutput>netime.cs</LastGenOutput>
       <DependentUpon>netime.edmx</DependentUpon>
     </Content>
+    <None Include="Resources\Arrow-left.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -332,6 +332,7 @@ namespace NETime_WF_EF6
             this.dtg_SelAct_Selct.Name = "dtg_SelAct_Selct";
             this.dtg_SelAct_Selct.Size = new System.Drawing.Size(353, 215);
             this.dtg_SelAct_Selct.TabIndex = 20;
+            this.dtg_SelAct_Selct.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg_SelAct_Selct_CellEnter);
             // 
             // dtg_SelAct_Act
             // 
@@ -340,6 +341,7 @@ namespace NETime_WF_EF6
             this.dtg_SelAct_Act.Name = "dtg_SelAct_Act";
             this.dtg_SelAct_Act.Size = new System.Drawing.Size(448, 338);
             this.dtg_SelAct_Act.TabIndex = 21;
+            this.dtg_SelAct_Act.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtg_SelAct_Act_CellEnter);
             // 
             // label_SelAct_Sel
             // 
