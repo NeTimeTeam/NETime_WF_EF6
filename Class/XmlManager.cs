@@ -118,29 +118,7 @@ namespace NETime_WF_EF6
             XmlNode node = doc.CreateElement(name);
             node.InnerText = value;
             return node;
-        }
-        private static Type getTypeofFromObjectTypeName(string type)
-        {
-            Type res = typeof(user);
-            switch (type)
-            {
-                case "user":                    
-                    break;
-                case "activities":
-                    res = typeof(activities);
-                    break;
-                case "balance":
-                    res = typeof(balance);
-                    break;
-                case "categories":
-                    res = typeof(categories);
-                    break;
-                case "selected_activities":
-                    res = typeof(selected_activities);
-                    break;
-            }
-            return res;
-        }
+        }        
         public static void genXmlFromListOftEntities<T>(IEnumerable<T> lista) //nombre función <T> (IEnumerable<T> parámetro){}
         {
             //Generamos el documento XML
@@ -164,10 +142,8 @@ namespace NETime_WF_EF6
             {
                 XmlNode node = doc.CreateNode(XmlNodeType.Element, nameFromType(data.Current.GetType().Name, false), "");
 
-                //Determinamos el tipo de elemento recibido en la lista.
-
-                Type propiedades = Type.GetType(data.Current.GetType().FullName);
-                //Type propiedades = getTypeofFromObjectTypeName(data.Current.GetType().Name);
+                //Determinamos el tipo de elemento recibido en la lista y recorremos sus propiedades para generar el nuevo nodo.
+                Type propiedades = Type.GetType(data.Current.GetType().FullName);                
                 foreach (var propiedad in propiedades.GetProperties())
                 {
                     string name = propiedad.Name; //El nombre de la propiedad será el nombre del atributo o del nodo hijo.

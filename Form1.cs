@@ -20,7 +20,7 @@ namespace NETime_WF_EF6
             InitializeComponent();
             radioButtonUsers.Checked = true;
             //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
-            test();
+            //test();
         }
         
         private netimeContainer context = new netimeContainer();
