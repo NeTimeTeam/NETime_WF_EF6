@@ -93,17 +93,16 @@ namespace NETime_WF_EF6
             return res;
         }
         private static string getStringByType(PropertyInfo objInfo, object data)
-        {
-            Console.WriteLine(objInfo.Name + ": " + objInfo.PropertyType.Name);
+        {            
             string res = "";
             switch (objInfo.PropertyType.Name)
             {
                 case "Byte[]":                    
-                    res = Convert.ToBase64String((byte[])objInfo.GetValue(data));
+                    res = Convert.ToBase64String((byte[])objInfo.GetValue(data, null));
                     break;
                 case "Int32":
                 default:
-                    res = objInfo.GetValue(data).ToString();
+                    res = objInfo.GetValue(data,null).ToString();
                     break;
             }
             return res;
@@ -119,6 +118,28 @@ namespace NETime_WF_EF6
             XmlNode node = doc.CreateElement(name);
             node.InnerText = value;
             return node;
+        }
+        private static Type getTypeofFromObjectTypeName(string type)
+        {
+            Type res = typeof(user);
+            switch (type)
+            {
+                case "user":                    
+                    break;
+                case "activities":
+                    res = typeof(activities);
+                    break;
+                case "balance":
+                    res = typeof(balance);
+                    break;
+                case "categories":
+                    res = typeof(categories);
+                    break;
+                case "selected_activities":
+                    res = typeof(selected_activities);
+                    break;
+            }
+            return res;
         }
         public static void genXmlFromListOftEntities<T>(IEnumerable<T> lista) //nombre función <T> (IEnumerable<T> parámetro){}
         {
@@ -144,7 +165,9 @@ namespace NETime_WF_EF6
                 XmlNode node = doc.CreateNode(XmlNodeType.Element, nameFromType(data.Current.GetType().Name, false), "");
 
                 //Determinamos el tipo de elemento recibido en la lista.
-                Type propiedades = typeof(user);
+
+                Type propiedades = Type.GetType(data.Current.GetType().FullName);
+                //Type propiedades = getTypeofFromObjectTypeName(data.Current.GetType().Name);
                 foreach (var propiedad in propiedades.GetProperties())
                 {
                     string name = propiedad.Name; //El nombre de la propiedad será el nombre del atributo o del nodo hijo.

@@ -894,15 +894,14 @@ namespace NETime_WF_EF6
 
         private void test()
         {
-            List<user> users = this.context.userSet.ToList<user>();
+            //List<user> users = this.context.userSet.ToList<user>();
             //List<categories> users = this.context.categoriesSet.ToList<categories>();
-            var userEnum = users.GetEnumerator();            
-            //userEnum.MoveNext();
-            
-            Type data = typeof(user);
+            List<activities> users = this.context.activitiesSet.ToList<activities>();
+
+            Type data = typeof(categories);
             foreach(var d in data.GetProperties())
             {
-            //    Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
+                Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
             }
             xml.genXmlFromListOftEntities(users);
         }
