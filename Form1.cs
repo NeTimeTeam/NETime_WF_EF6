@@ -19,7 +19,8 @@ namespace NETime_WF_EF6
         {
             InitializeComponent();
             radioButtonUsers.Checked = true;
-            //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}            
+            //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
+            test();
         }
         
         private netimeContainer context = new netimeContainer();
@@ -746,7 +747,7 @@ namespace NETime_WF_EF6
         //ELIMINA UNA ACTIVIDAD DE LA SELECCIÖN DEL USUARIO.
         private void dimissActivity()
         {
-            Console.WriteLine("DISMISS ACTIVITY");
+            //Console.WriteLine("DISMISS ACTIVITY");
             int selectedActivityId = Int32.Parse(dtg_SelAct_Selct.CurrentRow.Cells[0].Value.ToString());          //Id de la actividad seleccionada que queremos eliminar.
             selected_activities selActivity = this.context.selected_activitiesSet.Find(selectedActivityId); //Recuperamos la entidad desde el context
             this.context.selected_activitiesSet.Remove(selActivity);                                        //Le pasamos la orden de borrado a la clase context.            
@@ -755,7 +756,7 @@ namespace NETime_WF_EF6
         private void selectActivity()
         {            
             //Seleccionar actividad.
-            Console.WriteLine("ADD ACTIVITY");
+            //Console.WriteLine("ADD ACTIVITY");
             int userId = Int32.Parse(comboBox_SelAct_users.SelectedValue.ToString());        //Id usuario que se apunta a la actividad.
             int activityId = Int32.Parse(dtg_SelAct_Act.CurrentRow.Cells[0].Value.ToString());    //Id actividad a la que se apunta el usuairo.
             selected_activities newSelActivity = new selected_activities                       //Creamos la entidad actividad con los datos de usuario y actividad.
@@ -871,7 +872,7 @@ namespace NETime_WF_EF6
         //AÑADEN O ELIMINAN ACTIVIDADES EN EL PREFIL DEL USUARIO
         private void dtg_SelAct_Selct_CellEnter(object sender, DataGridViewCellEventArgs e)
         {            
-            Console.WriteLine("ACTIVIDADES SELECCIONADAS: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
+            //Console.WriteLine("ACTIVIDADES SELECCIONADAS: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
             button_SelAct_SelectDismiss.Enabled = true;
             button_SelAct_SelectDismiss.Text = "";
             var icon = Properties.Resources.Arrows_Right_Arrow.ToBitmap();
@@ -881,18 +882,29 @@ namespace NETime_WF_EF6
         }
 
         private void dtg_SelAct_Act_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dtg_SelAct_Selct.Focused)
-            {
-                Console.WriteLine("Focused");
-            }
-            Console.WriteLine("ACTIVIDADES: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
+        {            
+            //Console.WriteLine("ACTIVIDADES: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
             button_SelAct_SelectDismiss.Enabled = true;
             button_SelAct_SelectDismiss.Text = "";
             var icon = Properties.Resources.Arrows_Left_Arrow.ToBitmap();
             button_SelAct_SelectDismiss.BackgroundImage = icon;
             button_SelAct_SelectDismiss.Size = icon.Size;
             button_SelAct_SelectDismiss.Tag = "SELECT";
+        }
+
+        private void test()
+        {
+            List<user> users = this.context.userSet.ToList<user>();
+            //List<categories> users = this.context.categoriesSet.ToList<categories>();
+            var userEnum = users.GetEnumerator();            
+            //userEnum.MoveNext();
+            
+            Type data = typeof(user);
+            foreach(var d in data.GetProperties())
+            {
+            //    Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
+            }
+            xml.genXmlFromListOftEntities(users);
         }
     }
 }

@@ -110,10 +110,10 @@ namespace NETime_WF_EF6
 
         private byte[] pass;
         private byte[] salt;
-        private int saltLengthLimit;
+        public int saltLengthLimit { get; set; }
 
         public byte[] Salt() { return this.salt; }
-
+        
         /*
          * You can convert text to byte arrays using Encoding.UTF8.GetBytes(string).
          * If you must convert a hash to its string representation you can use Convert.ToBase64String and Convert.FromBase64String to convert it back.
@@ -156,7 +156,7 @@ namespace NETime_WF_EF6
             return algorithm.ComputeHash(plainTextWithSaltBytes);
         }
 
-        private byte[] GenerateSalt()
+        public byte[] GenerateSalt()
         {
             return GenerateSalt(this.saltLengthLimit);
         }
