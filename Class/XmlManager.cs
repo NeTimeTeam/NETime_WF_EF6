@@ -68,7 +68,8 @@ namespace NETime_WF_EF6
         }      
     }
     public static class xml
-    {        
+    {
+        //Se puede especificar el nombre del nodo raíz o el de los nodos hijos en este método. Si no se hace se utilizará el nombre de la clase y sus propiedades respectivamente.
         private static string nameFromType(string nombreTipo, bool rootElement)
         {
             string res = "";
@@ -88,6 +89,9 @@ namespace NETime_WF_EF6
                     break;
                 case "selected_activities":
                     res = rootElement ? "Actividades_Seleccionadas" : "Actividad";
+                    break;
+                default:
+                    res = nombreTipo;
                     break;
             }
             return res;
@@ -119,7 +123,7 @@ namespace NETime_WF_EF6
             node.InnerText = value;
             return node;
         }        
-        public static void genXmlFromListOftEntities<T>(IEnumerable<T> lista) //nombre función <T> (IEnumerable<T> parámetro){}
+        public static XmlDocument genXmlFromListOftEntities<T>(IEnumerable<T> lista) //nombre función <T> (IEnumerable<T> parámetro){}
         {
             //Generamos el documento XML
             XmlDocument doc = new XmlDocument();            
@@ -167,6 +171,84 @@ namespace NETime_WF_EF6
             } while (data.MoveNext());
             doc.AppendChild(rootNode);
             doc.Save(Console.Out);
+            return doc;
+        }
+        //Devuelve un List<categories> desde un documento XML
+        public static List<categories> getCategoriesFromXml(XmlDocument document)
+        {
+            ///Basado en las categorias
+            Console.WriteLine(document.FirstChild.LocalName);
+            XmlNodeList nodeList = document.FirstChild.SelectNodes("Categoria");
+            List<categories> listOfEntities = new List<categories>();            
+
+            foreach (XmlNode node in nodeList)            
+            {
+                categories entity = new categories();                
+                XmlNodeList childNodesList = node.ChildNodes;
+                Type propiedades = entity.GetType();
+
+                foreach (var prop in propiedades.GetProperties())
+                {   
+                  foreach(XmlNode childNode in childNodesList)
+                    {
+                        if (childNode.Name.Equals(prop.Name))
+                        {
+                            switch (prop.PropertyType.Name)
+                            {
+                                case "Byte[]":
+                                    prop.SetValue(entity, Convert.FromBase64String(childNode.InnerText));
+                                    break;
+                                case "Int32":
+                                    prop.SetValue(entity, Int32.Parse(childNode.InnerText));
+                                    break;
+                                default:
+                                    prop.SetValue(entity, childNode.InnerText);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                listOfEntities.Add(entity);
+            }            
+            return listOfEntities;
+        }
+        //Devuelve una List<user> desde un documento XML
+        public static List<user> getUsersFromXml(XmlDocument document)
+        {
+            ///Basado en las usuarios            
+            XmlNodeList nodeList = document.FirstChild.SelectNodes("Usuario"); //Obtiene una lista de los nodos "Usuario" del nodo raíz.            
+            List<user> listOfEntities = new List<user>();
+
+            foreach (XmlNode node in nodeList)  //Recorremos la lista de nodos anterior.
+            {
+                user entity = new user();       //Instanciamos un objeto user para almacenar los datos.
+                XmlNodeList childNodesList = node.ChildNodes; //Obtenemos una lista de los nodos hijo de cada nodo usuario.
+                Type propiedades = entity.GetType(); //Obtenemos un cursor de las propiedades de la clase user.
+
+                foreach (var prop in propiedades.GetProperties()) //Recorremos las propiedades de la clase user para asociarle los valores obtenidos de los nodos.
+                {
+                    foreach (XmlNode childNode in childNodesList) //Recorremos los nodos child de usuario hasta encontrar el que tiene el valor de la propiedad seleccioanda.
+                    {                        
+                        if (childNode.Name.Equals(prop.Name))
+                        {
+                            switch (prop.PropertyType.Name) //Asignarmos el valor a el objeto user transformando el string en el tipo correspondiente a la propiedad.
+                            {
+                            case "Byte[]":                                    
+                                    prop.SetValue(entity, Convert.FromBase64String(childNode.InnerText));
+                                    break;                                
+                            case "Int32":                                    
+                                    prop.SetValue(entity, Int32.Parse(childNode.InnerText));
+                                    break;
+                            default:
+                                    prop.SetValue(entity, childNode.InnerText);
+                                    break;
+                            }
+                        }                        
+                    }
+                }
+                listOfEntities.Add(entity); //Almacena el objeto user en una lista que finalmente devolverá.
+            }
+            return listOfEntities;
         }
     }
 }

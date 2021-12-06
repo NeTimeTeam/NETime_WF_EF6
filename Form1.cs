@@ -20,7 +20,7 @@ namespace NETime_WF_EF6
             InitializeComponent();
             radioButtonUsers.Checked = true;
             //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
-            //test();
+            test();
         }
         
         private netimeContainer context = new netimeContainer();
@@ -894,16 +894,25 @@ namespace NETime_WF_EF6
 
         private void test()
         {
-            //List<user> users = this.context.userSet.ToList<user>();
-            //List<categories> users = this.context.categoriesSet.ToList<categories>();
-            List<activities> users = this.context.activitiesSet.ToList<activities>();
+            List<user> users = this.context.userSet.ToList<user>();
+            List<categories> categories = this.context.categoriesSet.ToList<categories>();
+            //List<activities> activities = this.context.activitiesSet.ToList<activities>();
 
             Type data = typeof(categories);
             foreach(var d in data.GetProperties())
             {
                 Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
             }
-            xml.genXmlFromListOftEntities(users);
+            List<user> userList = xml.getUsersFromXml(xml.genXmlFromListOftEntities(users));
+            foreach(user u in userList)
+            {
+                Console.WriteLine("{0}, {1}, {2}", u.email, u.name, u.surname);
+            }
+            List<categories> categoryList = xml.getCategoriesFromXml(xml.genXmlFromListOftEntities(categories));
+            foreach(categories c in categoryList)
+            {
+                Console.WriteLine("{0}, {1}", c.family, c.name);
+            }
         }
     }
 }
