@@ -230,30 +230,16 @@ namespace NETime_WF_EF6
 
     public class Actividades
     {
-        /*
-        public Actividades(activities actividades, string ownerEmail = "", string categoryName = "")
-        {
-            this.Id = actividades.Id;
-            this.name = actividades.name;            
-            this.description = actividades.description;
-            this.email = "";
-            this.category = "";
-        }
-        
-        
-        Actividades(int Id, string name, string description ="", string ownerEmail ="", string categoryName ="")
-        {
-            this.Id = Id;
-            this.name = name;            
-            this.description = description;
-            this.email = ownerEmail;
-            this.category= categoryName;
-        }
-        */
         public int Id { get; set; }
         public string name { get; set; }
         public string description { get; set; }        
         public string email { get; set; }
         public string category { get; set; }
+    }
+    public class Balance
+    {        
+        public DateTime datetime { get; set; }
+        public string activity { get; set; }
+        public int qtty { get; set; }
     }
 }

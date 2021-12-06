@@ -64,6 +64,12 @@
     <Compile Include="balance.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
+    <Compile Include="BalanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BalanceForm.Designer.cs">
+      <DependentUpon>BalanceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="categories.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
@@ -98,6 +104,9 @@
     <Compile Include="user.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BalanceForm.resx">
+      <DependentUpon>BalanceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

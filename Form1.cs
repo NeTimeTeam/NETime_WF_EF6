@@ -20,7 +20,7 @@ namespace NETime_WF_EF6
             InitializeComponent();
             radioButtonUsers.Checked = true;
             //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
-            test();
+            //test();
         }
         
         private netimeContainer context = new netimeContainer();
@@ -138,7 +138,7 @@ namespace NETime_WF_EF6
                         "A.userId != @Id", new SqlParameter("@id", comboBox_SelAct_users.SelectedValue)).ToList<Actividades>();
                     
 
-                //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria.
+                //Esta consulta devuelve el ID de selected_Activities, el nobre de la actividad, el email del creador y el nombre de la categoria de las actividades seleccionadas por un usuario.
                 var selectedActivitiesList = context.Database.SqlQuery<Actividades>(
                     "Select S.Id, A.name, A.description, U.email, C.name as category from activitiesSet as A inner join selected_activitiesSet as S on A.Id = S.activitiesId " +
                     "inner join userSet as U on U.Id = A.userId " +
@@ -189,9 +189,17 @@ namespace NETime_WF_EF6
                 DoColumnsReadOnly();
             }
         }
+        private void radioButton_Balance_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_Balance.Checked)
+            {
+                BalanceForm bf = new BalanceForm();
+                bf.ShowDialog();
+            }
+        }
         #endregion
 
-        
+
         private void button_addUser_Click(object sender, EventArgs e)
         {
             //Obtenemos el byte[] del password y el salt[] antes de almacenarlo en el DB.
@@ -220,8 +228,8 @@ namespace NETime_WF_EF6
                 }
                 else
                 {
-                    context.userSet.Add(usuario); //Le pasamos el objeto al context.            
-                    context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
+                    this.context.userSet.Add(usuario); //Le pasamos el objeto al context.
+                    this.context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
                     clean_userTextBoxes();
                 }
             }
@@ -914,5 +922,6 @@ namespace NETime_WF_EF6
                 Console.WriteLine("{0}, {1}", c.family, c.name);
             }
         }
+
     }
 }

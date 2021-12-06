@@ -59,6 +59,7 @@ namespace NETime_WF_EF6
             this.label_SelAct_Sel = new System.Windows.Forms.Label();
             this.label_SelAct_Act = new System.Windows.Forms.Label();
             this.button_SelAct_SelectDismiss = new System.Windows.Forms.Button();
+            this.radioButton_Balance = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Selct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Act)).BeginInit();
@@ -91,7 +92,7 @@ namespace NETime_WF_EF6
             // radioButtonUsers
             // 
             this.radioButtonUsers.AutoSize = true;
-            this.radioButtonUsers.Location = new System.Drawing.Point(49, 54);
+            this.radioButtonUsers.Location = new System.Drawing.Point(29, 20);
             this.radioButtonUsers.Name = "radioButtonUsers";
             this.radioButtonUsers.Size = new System.Drawing.Size(66, 17);
             this.radioButtonUsers.TabIndex = 2;
@@ -103,7 +104,7 @@ namespace NETime_WF_EF6
             // radioButtonActivities
             // 
             this.radioButtonActivities.AutoSize = true;
-            this.radioButtonActivities.Location = new System.Drawing.Point(49, 77);
+            this.radioButtonActivities.Location = new System.Drawing.Point(29, 43);
             this.radioButtonActivities.Name = "radioButtonActivities";
             this.radioButtonActivities.Size = new System.Drawing.Size(80, 17);
             this.radioButtonActivities.TabIndex = 3;
@@ -115,7 +116,7 @@ namespace NETime_WF_EF6
             // radioButtonSel_Activities
             // 
             this.radioButtonSel_Activities.AutoSize = true;
-            this.radioButtonSel_Activities.Location = new System.Drawing.Point(49, 100);
+            this.radioButtonSel_Activities.Location = new System.Drawing.Point(29, 66);
             this.radioButtonSel_Activities.Name = "radioButtonSel_Activities";
             this.radioButtonSel_Activities.Size = new System.Drawing.Size(153, 17);
             this.radioButtonSel_Activities.TabIndex = 4;
@@ -371,11 +372,25 @@ namespace NETime_WF_EF6
             this.button_SelAct_SelectDismiss.UseVisualStyleBackColor = true;
             this.button_SelAct_SelectDismiss.Click += new System.EventHandler(this.button_SelAct_SelectDismiss_Click);
             // 
+            // radioButton_Balance
+            // 
+            this.radioButton_Balance.AutoSize = true;
+            this.radioButton_Balance.Location = new System.Drawing.Point(29, 89);
+            this.radioButton_Balance.Name = "radioButton_Balance";
+            this.radioButton_Balance.Size = new System.Drawing.Size(95, 17);
+            this.radioButton_Balance.TabIndex = 25;
+            this.radioButton_Balance.TabStop = true;
+            this.radioButton_Balance.Tag = "balance";
+            this.radioButton_Balance.Text = "Transacciones";
+            this.radioButton_Balance.UseVisualStyleBackColor = true;
+            this.radioButton_Balance.CheckedChanged += new System.EventHandler(this.radioButton_Balance_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 452);
+            this.Controls.Add(this.radioButton_Balance);
             this.Controls.Add(this.button_SelAct_SelectDismiss);
             this.Controls.Add(this.label_SelAct_Act);
             this.Controls.Add(this.label_SelAct_Sel);
@@ -447,6 +462,7 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Label label_SelAct_Sel;
         private System.Windows.Forms.Label label_SelAct_Act;
         private System.Windows.Forms.Button button_SelAct_SelectDismiss;
+        private System.Windows.Forms.RadioButton radioButton_Balance;
     }
 }
 
