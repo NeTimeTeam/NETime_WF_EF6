@@ -917,12 +917,12 @@ namespace NETime_WF_EF6
             {
                 Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
             }
-            List<user> userList = xml.getUsersFromXml(xml.genXmlFromListOftEntities(users));
+            List<user> userList = xmlTool.getUsersFromXml(xmlTool.genXmlFromListOftEntities(users));
             foreach(user u in userList)
             {
                 Console.WriteLine("{0}, {1}, {2}", u.email, u.name, u.surname);
             }
-            List<categories> categoryList = xml.getCategoriesFromXml(xml.genXmlFromListOftEntities(categories));
+            List<categories> categoryList = xmlTool.getCategoriesFromXml(xmlTool.genXmlFromListOftEntities(categories));
             foreach(categories c in categoryList)
             {
                 Console.WriteLine("{0}, {1}", c.family, c.name);
@@ -931,46 +931,22 @@ namespace NETime_WF_EF6
 
         private void button_Import_Click(object sender, EventArgs e)
         {
-            var fileContent = string.Empty;
-            var filePath = string.Empty;
-
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    //Get the path of specified file
-                    filePath = openFileDialog.FileName;
-
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
-                }
-            }
-            Console.WriteLine(fileContent);
+            xmlTool.readFromFile();
         }
 
         private void button_Export_Click(object sender, EventArgs e)
         {
             if (radioButtonUsers.Checked)
             {
-                xml.genXmlFromListOftEntities(this.context.userSet.ToList<user>());
+                xmlTool.genXmlFromListOftEntities(this.context.userSet.ToList<user>());
             }
             if (radioButtonActivities.Checked)
             {
-                xml.genXmlFromListOftEntities(this.context.activitiesSet.ToList<activities>());
+                xmlTool.genXmlFromListOftEntities(this.context.activitiesSet.ToList<activities>());
             }
             if (radioButtonSel_Activities.Checked)
             {
-                xml.genXmlFromListOftEntities(this.context.selected_activitiesSet.ToList<selected_activities>());
+                xmlTool.genXmlFromListOftEntities(this.context.selected_activitiesSet.ToList<selected_activities>());
             }            
         }
     }    

@@ -7,6 +7,7 @@ using System.Xml;
 using System.Reflection;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 namespace NETime_WF_EF6
 {
@@ -69,7 +70,7 @@ namespace NETime_WF_EF6
 
         }      
     }
-    public static class xml
+    public static class xmlTool
     {
         //Se puede especificar el nombre del nodo raíz o el de los nodos hijos en este método. Si no se hace se utilizará el nombre de la clase y sus propiedades respectivamente.
         private static string nameFromType(string nombreTipo, bool rootElement)
@@ -177,9 +178,8 @@ namespace NETime_WF_EF6
         //Devuelve un List<categories> desde un documento XML
         public static List<categories> getCategoriesFromXml(XmlDocument document)
         {
-            ///Basado en las categorias
-            Console.WriteLine(document.FirstChild.LocalName);
-            XmlNodeList nodeList = document.FirstChild.SelectNodes("Categoria");
+            ///Basado en las categorias            
+            XmlNodeList nodeList = document.DocumentElement.SelectNodes("Categoria");
             List<categories> listOfEntities = new List<categories>();            
 
             foreach (XmlNode node in nodeList)            
@@ -215,9 +215,9 @@ namespace NETime_WF_EF6
         }
         //Devuelve una List<user> desde un documento XML
         public static List<user> getUsersFromXml(XmlDocument document)
-        {
-            ///Basado en las usuarios            
-            XmlNodeList nodeList = document.FirstChild.SelectNodes("Usuario"); //Obtiene una lista de los nodos "Usuario" del nodo raíz.            
+        {            
+            ///Basado en las usuarios          
+            XmlNodeList nodeList = document.DocumentElement.SelectNodes("Usuario"); //Obtiene una lista de los nodos "Usuario" del nodo raíz.            
             List<user> listOfEntities = new List<user>();
 
             foreach (XmlNode node in nodeList)  //Recorremos la lista de nodos anterior.
@@ -253,8 +253,6 @@ namespace NETime_WF_EF6
         }
         private static void writeToFile(XmlDocument document)
         {
-            var filePath = string.Empty;
-
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.InitialDirectory = "c:\\";
@@ -270,14 +268,67 @@ namespace NETime_WF_EF6
                 saveFileDialog.ShowDialog();
 
                 if (saveFileDialog.FileName != string.Empty)
-                {
-                    var fileStream = saveFileDialog.OpenFile();
+                {                    
+                    var fileStream = saveFileDialog.OpenFile();                    
                     using (StreamWriter writer = new StreamWriter(fileStream))
                     {
                         document.Save(writer);
                     }
                 }
             }
+        }
+        public static void readFromFile()
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            Console.WriteLine(fileContent);
+            XmlDocument document = new XmlDocument();
+            document.LoadXml(fileContent);
+            switch (document.DocumentElement.Name)
+            {
+                case "Categorias":
+                    List<categories> categorias = getCategoriesFromXml(document);
+                    foreach(categories c in categorias)
+                    {
+                        Console.WriteLine(c.name);
+                    }
+                    break;
+                case "Usuarios":
+                    List<user> users = getUsersFromXml(document);
+                    foreach(user u in users)
+                    {
+                        Console.WriteLine(u.email);
+                    }
+                    break;
+            }
+        }
+        private static void linqTest(StreamReader reader)
+        {
+            XDocument xDocument = XDocument.Load(reader);
+
+            //TODO: explorar Linq XML
         }
     }
 }
