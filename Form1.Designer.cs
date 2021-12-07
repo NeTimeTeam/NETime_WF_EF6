@@ -60,6 +60,8 @@ namespace NETime_WF_EF6
             this.label_SelAct_Act = new System.Windows.Forms.Label();
             this.button_SelAct_SelectDismiss = new System.Windows.Forms.Button();
             this.radioButton_Balance = new System.Windows.Forms.RadioButton();
+            this.button_Import = new System.Windows.Forms.Button();
+            this.button_Export = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtg1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Selct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_SelAct_Act)).BeginInit();
@@ -385,11 +387,33 @@ namespace NETime_WF_EF6
             this.radioButton_Balance.UseVisualStyleBackColor = true;
             this.radioButton_Balance.CheckedChanged += new System.EventHandler(this.radioButton_Balance_CheckedChanged);
             // 
+            // button_Import
+            // 
+            this.button_Import.Location = new System.Drawing.Point(865, 417);
+            this.button_Import.Name = "button_Import";
+            this.button_Import.Size = new System.Drawing.Size(82, 23);
+            this.button_Import.TabIndex = 26;
+            this.button_Import.Text = "Importar";
+            this.button_Import.UseVisualStyleBackColor = true;
+            this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
+            // 
+            // button_Export
+            // 
+            this.button_Export.Location = new System.Drawing.Point(784, 417);
+            this.button_Export.Name = "button_Export";
+            this.button_Export.Size = new System.Drawing.Size(75, 23);
+            this.button_Export.TabIndex = 27;
+            this.button_Export.Text = "Exportar";
+            this.button_Export.UseVisualStyleBackColor = true;
+            this.button_Export.Click += new System.EventHandler(this.button_Export_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 452);
+            this.Controls.Add(this.button_Export);
+            this.Controls.Add(this.button_Import);
             this.Controls.Add(this.radioButton_Balance);
             this.Controls.Add(this.button_SelAct_SelectDismiss);
             this.Controls.Add(this.label_SelAct_Act);
@@ -463,6 +487,8 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Label label_SelAct_Act;
         private System.Windows.Forms.Button button_SelAct_SelectDismiss;
         private System.Windows.Forms.RadioButton radioButton_Balance;
+        private System.Windows.Forms.Button button_Import;
+        private System.Windows.Forms.Button button_Export;
     }
 }
 

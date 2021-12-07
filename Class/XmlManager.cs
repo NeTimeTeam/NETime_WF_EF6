@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Reflection;
+using System.Windows.Forms;
+using System.IO;
 
 namespace NETime_WF_EF6
 {
@@ -135,7 +137,6 @@ namespace NETime_WF_EF6
 
             //Creamos el nodo raíz según el tipo de dato recibido en la lista. Utilizamos la función auxiliar nameFromType.
             rootNode = doc.CreateElement(nameFromType(data.Current.GetType().Name, true));
-            //doc.AppendChild(rootNode);
 
             /*
             * Recorremos la lista mediante el cursor, creando un nodo para cada elemento de la lista.
@@ -170,7 +171,7 @@ namespace NETime_WF_EF6
                 rootNode.AppendChild(node);
             } while (data.MoveNext());
             doc.AppendChild(rootNode);
-            doc.Save(Console.Out);
+            writeToFile(doc);
             return doc;
         }
         //Devuelve un List<categories> desde un documento XML
@@ -249,6 +250,34 @@ namespace NETime_WF_EF6
                 listOfEntities.Add(entity); //Almacena el objeto user en una lista que finalmente devolverá.
             }
             return listOfEntities;
+        }
+        private static void writeToFile(XmlDocument document)
+        {
+            var filePath = string.Empty;
+
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.Title = "XML Export File";
+                saveFileDialog.AddExtension = true;
+                saveFileDialog.DefaultExt = ".xml";
+                saveFileDialog.CreatePrompt = true;
+                saveFileDialog.OverwritePrompt = true;
+                //saveFileDialog.FileOk += SaveFileDialog_FileOk(object sender, CancelEventArgs e);
+                saveFileDialog.ShowDialog();
+
+                if (saveFileDialog.FileName != string.Empty)
+                {
+                    var fileStream = saveFileDialog.OpenFile();
+                    using (StreamWriter writer = new StreamWriter(fileStream))
+                    {
+                        document.Save(writer);
+                    }
+                }
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace NETime_WF_EF6
 {
@@ -392,6 +393,8 @@ namespace NETime_WF_EF6
                     case "getUsers":
                     case "button_del":
                     case "dtg1":
+                    case "button_Import":
+                    case "button_Export":
                         ctrl.Show();
                         break;
                     default:
@@ -437,6 +440,8 @@ namespace NETime_WF_EF6
                     case "getUsers":
                     case "button_del":
                     case "dtg1":
+                    case "button_Import":
+                    case "button_Export":
                         ctrl.Show();
                         break;
                     default:
@@ -466,7 +471,8 @@ namespace NETime_WF_EF6
                     case "comboBox_SelAct_users":                    
                     case "dtg_SelAct_Selct":                        
                     case "dtg_SelAct_Act":
-                    case "button_SelAct_SelectDismiss":
+                    case "button_SelAct_SelectDismiss":                    
+                    case "button_Export":
                         ctrl.Show();
                         break;
                     default:
@@ -923,5 +929,49 @@ namespace NETime_WF_EF6
             }
         }
 
-    }
+        private void button_Import_Click(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            Console.WriteLine(fileContent);
+        }
+
+        private void button_Export_Click(object sender, EventArgs e)
+        {
+            if (radioButtonUsers.Checked)
+            {
+                xml.genXmlFromListOftEntities(this.context.userSet.ToList<user>());
+            }
+            if (radioButtonActivities.Checked)
+            {
+                xml.genXmlFromListOftEntities(this.context.activitiesSet.ToList<activities>());
+            }
+            if (radioButtonSel_Activities.Checked)
+            {
+                xml.genXmlFromListOftEntities(this.context.selected_activitiesSet.ToList<selected_activities>());
+            }            
+        }
+    }    
 }
