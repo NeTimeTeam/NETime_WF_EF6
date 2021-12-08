@@ -25,6 +25,7 @@ namespace NETime_WF_EF6
         }
         
         private netimeContainer context = new netimeContainer();
+     
 
         #region GET METHODS
         //Evento click en botón getUsers
@@ -734,8 +735,7 @@ namespace NETime_WF_EF6
                 //update_SelActCombo();
                 update_SelActGrids();
             }
-        }
-        
+        }        
         //Botón para seleccionar o cancelar la selección de las actividades.
         private void button_SelAct_SelectDismiss_Click(object sender, EventArgs e)
         {
@@ -894,7 +894,6 @@ namespace NETime_WF_EF6
             button_SelAct_SelectDismiss.Size = icon.Size;
             button_SelAct_SelectDismiss.Tag = "DIMISS";
         }
-
         private void dtg_SelAct_Act_CellEnter(object sender, DataGridViewCellEventArgs e)
         {            
             //Console.WriteLine("ACTIVIDADES: "+((DataGridView)sender).AccessibleName + " / " + e.ToString());
@@ -905,7 +904,6 @@ namespace NETime_WF_EF6
             button_SelAct_SelectDismiss.Size = icon.Size;
             button_SelAct_SelectDismiss.Tag = "SELECT";
         }
-
         private void test()
         {
             List<user> users = this.context.userSet.ToList<user>();
@@ -931,9 +929,98 @@ namespace NETime_WF_EF6
 
         private void button_Import_Click(object sender, EventArgs e)
         {
-            xmlTool.readFromFile();
+            if (radioButtonActivities.Checked)
+            {
+                var data = xmlTool.importFromFile<categories>();
+                if(data.Count() > 0)
+                {
+                    insertListOfData<categories>(data);
+                }
+            }
+            if (radioButtonUsers.Checked)
+            {
+                var data = xmlTool.importFromFile<user>();
+                if (data.Count() > 0)
+                {
+                    insertListOfData<user>(data);
+                }
+            }
         }
-
+        private void insertListOfData<T>(IEnumerable<T> data)
+        {            
+            IEnumerator <T> dataEnum = data.GetEnumerator();            
+            while (dataEnum.MoveNext())
+            {                
+                switch (dataEnum.Current.GetType().Name){
+                    case "user":
+                        user nuser = dataEnum.Current as user;
+                        if (verifyUserImportData(nuser))
+                        {
+                            this.context.userSet.Add(nuser);
+                        }
+                        break;
+                    case "categories":
+                        categories nCategory = dataEnum.Current as categories;
+                        if (verifyCategoryImportData(nCategory))
+                        {
+                            this.context.categoriesSet.Add(nCategory);
+                        }
+                        break;
+                }                
+            }
+            try
+            {
+                this.context.SaveChanges();
+            }catch(DbUpdateException err)
+            {
+                MessageBox.Show("Error importando usuarios.\n" + err.InnerException.Message);
+            }
+        }
+        private bool verifyCategoryImportData(categories entity)
+        {
+            if (!Utilites.nameValidation(entity.name))
+            {
+                Console.WriteLine("Error importando categorías. {0} no es un nombre válido.", entity.name);
+                return false;
+            }
+            if (!Utilites.descriptionValidation(entity.family))
+            {
+                Console.WriteLine("Error importando categorías. {0} no es un nombre de famila válido.", entity.family);
+                return false;
+            }
+            if (this.context.categoriesSet.Where(c => c.name.Equals(entity.name)).Count() > 0)
+            {
+                Console.WriteLine("Error importando categorías. El nombre {0} ya existe en la base de datos.", entity.name);
+                return false;
+            }
+            Console.WriteLine("Categoría {0} - {1} importada.", entity.name, entity.family);
+            return true;
+        }
+        private bool verifyUserImportData(user entity)
+        {            
+            if (!Utilites.nameValidation(entity.name))
+            {
+                Console.WriteLine("Error importando usuarios. {0} no es un nombre válido.", entity.name);
+                return false;
+            }
+            if (!Utilites.descriptionValidation(entity.address)) {
+                Console.WriteLine("Error importando usuarios. {0} no es una dirección válida.", entity.address);
+                return false;
+            }
+            if (!Utilites.emailValidation(entity.email)) {
+                Console.WriteLine("Error importando usuarios. {0} no es un email válido.", entity.email);
+                return false;
+            }
+            if (!Utilites.phoneValidation(entity.phone)) {
+                Console.WriteLine("Error importando usuarios. {0} no es un teléfono válido.", entity.phone);
+                return false; }
+            if(this.context.userSet.Where(u => u.email.Equals(entity.email)).Count() > 0) {
+                Console.WriteLine("Error importando usuarios. El email {0} ya existe en la base de datos.", entity.email);
+                return false;
+            }
+            Console.WriteLine("Usuario {0} importado.", entity.email);
+            return true;
+        }
         private void button_Export_Click(object sender, EventArgs e)
         {
             if (radioButtonUsers.Checked)

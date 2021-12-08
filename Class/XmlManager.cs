@@ -277,7 +277,7 @@ namespace NETime_WF_EF6
                 }
             }
         }
-        public static void readFromFile()
+        public static IEnumerable<T> importFromFile<T>()
         {
             var fileContent = string.Empty;
             var filePath = string.Empty;
@@ -292,7 +292,7 @@ namespace NETime_WF_EF6
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
-                    filePath = openFileDialog.FileName;
+                    filePath = openFileDialog.FileName;                    
 
                     //Read the contents of the file into a stream
                     var fileStream = openFileDialog.OpenFile();
@@ -303,27 +303,54 @@ namespace NETime_WF_EF6
                     }
                 }
             }
-            Console.WriteLine(fileContent);
-            XmlDocument document = new XmlDocument();
-            document.LoadXml(fileContent);
-            switch (document.DocumentElement.Name)
+            if(filePath.Length < 1)
             {
-                case "Categorias":
-                    List<categories> categorias = getCategoriesFromXml(document);
-                    foreach(categories c in categorias)
-                    {
-                        Console.WriteLine(c.name);
-                    }
-                    break;
-                case "Usuarios":
-                    List<user> users = getUsersFromXml(document);
-                    foreach(user u in users)
-                    {
-                        Console.WriteLine(u.email);
-                    }
-                    break;
+                return new List<T>();
             }
+            //Console.WriteLine(fileContent);
+            return xmlDataExtraction<T>(fileContent, filePath);
         }
+        private static IEnumerable<T> xmlDataExtraction<T>(string fileContent, string filePath)
+        {
+            IEnumerable<T> dataList = new List<T>();
+            try
+            {
+                XmlDocument document = new XmlDocument();
+                document.LoadXml(fileContent);
+                switch (document.DocumentElement.Name)
+                {
+                    case "Categorias":
+                        List<categories> categorias = getCategoriesFromXml(document);
+                        //foreach (categories c in categorias){Console.WriteLine(c.name);}
+                        dataList =  categorias.AsEnumerable().Cast<T>();
+                        break;
+                    case "Usuarios":
+                        List<user> users = getUsersFromXml(document);
+                        //foreach (user u in users){Console.WriteLine(u.email);}
+                        dataList = users.AsEnumerable().Cast<T>();
+                        break;
+                    default:
+                        MessageBox.Show("El archivo no contiene datos válidos.", "IMPORT ERROR");
+                        break;
+                }
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                MessageBox.Show(shortFileName(filePath) + " no es un archivo XML válido.", "IMPORT ERROR");
+
+                return dataList;
+            }
+            if(dataList.Count() < 1) { MessageBox.Show("El archivo no contiene datos que se puedan importar.", "IMPORT ERROR"); }
+            return dataList;
+        }
+        private static string shortFileName(string fullFileName)
+        {
+            var shortFileName = fullFileName.Split('\\');            
+            return shortFileName[shortFileName.Length -1];
+        }
+
+        //TESTING
         private static void linqTest(StreamReader reader)
         {
             XDocument xDocument = XDocument.Load(reader);
