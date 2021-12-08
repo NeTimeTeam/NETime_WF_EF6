@@ -936,6 +936,7 @@ namespace NETime_WF_EF6
                 {
                     insertListOfData<categories>(data);
                 }
+                update_ActivitiesCombos();
             }
             if (radioButtonUsers.Checked)
             {
@@ -944,6 +945,7 @@ namespace NETime_WF_EF6
                 {
                     insertListOfData<user>(data);
                 }
+                update_userGrid();
             }
         }
         private void insertListOfData<T>(IEnumerable<T> data)
@@ -974,7 +976,7 @@ namespace NETime_WF_EF6
             }catch(DbUpdateException err)
             {
                 MessageBox.Show("Error importando usuarios.\n" + err.InnerException.Message);
-            }
+            }            
         }
         private bool verifyCategoryImportData(categories entity)
         {
