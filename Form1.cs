@@ -904,29 +904,8 @@ namespace NETime_WF_EF6
             button_SelAct_SelectDismiss.Size = icon.Size;
             button_SelAct_SelectDismiss.Tag = "SELECT";
         }
-        private void test()
-        {
-            List<user> users = this.context.userSet.ToList<user>();
-            List<categories> categories = this.context.categoriesSet.ToList<categories>();
-            //List<activities> activities = this.context.activitiesSet.ToList<activities>();
-
-            Type data = typeof(categories);
-            foreach(var d in data.GetProperties())
-            {
-                Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
-            }
-            List<user> userList = xmlTool.getUsersFromXml(xmlTool.genXmlFromListOftEntities(users));
-            foreach(user u in userList)
-            {
-                Console.WriteLine("{0}, {1}, {2}", u.email, u.name, u.surname);
-            }
-            List<categories> categoryList = xmlTool.getCategoriesFromXml(xmlTool.genXmlFromListOftEntities(categories));
-            foreach(categories c in categoryList)
-            {
-                Console.WriteLine("{0}, {1}", c.family, c.name);
-            }
-        }
-
+        
+        //XML IMPORT-EXPORT DATA
         private void button_Import_Click(object sender, EventArgs e)
         {
             if (radioButtonActivities.Checked)
@@ -1037,6 +1016,29 @@ namespace NETime_WF_EF6
             {
                 xmlTool.genXmlFromListOftEntities(this.context.selected_activitiesSet.ToList<selected_activities>());
             }            
+        }
+
+        private void test()
+        {
+            List<user> users = this.context.userSet.ToList<user>();
+            List<categories> categories = this.context.categoriesSet.ToList<categories>();
+            //List<activities> activities = this.context.activitiesSet.ToList<activities>();
+
+            Type data = typeof(categories);
+            foreach (var d in data.GetProperties())
+            {
+                Console.WriteLine(d.Name + ": " + d.PropertyType.Name);
+            }
+            List<user> userList = xmlTool.getUsersFromXml(xmlTool.genXmlFromListOftEntities(users));
+            foreach (user u in userList)
+            {
+                Console.WriteLine("{0}, {1}, {2}", u.email, u.name, u.surname);
+            }
+            List<categories> categoryList = xmlTool.getCategoriesFromXml(xmlTool.genXmlFromListOftEntities(categories));
+            foreach (categories c in categoryList)
+            {
+                Console.WriteLine("{0}, {1}", c.family, c.name);
+            }
         }
     }    
 }
