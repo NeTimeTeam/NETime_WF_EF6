@@ -197,15 +197,33 @@ namespace NETime_WF_EF6
                             switch (prop.PropertyType.Name)
                             {
                                 case "Byte[]":
-                                    prop.SetValue(entity, Convert.FromBase64String(childNode.InnerText));
-                                    break;
+                                    try
+                                    {
+                                        prop.SetValue(entity, Convert.FromBase64String(childNode.InnerText));
+                                        break;
+                                    }catch(Exception err)
+                                    {
+                                        Console.WriteLine(err.Message);
+                                        MessageBox.Show("El dato " + childNode.InnerText + " no es un valor válido. Importación cancelada.", "ERROR IMPORTACIÓN");
+                                        return new List<categories>();
+                                    }
+                                        
                                 case "Int32":
-                                    prop.SetValue(entity, Int32.Parse(childNode.InnerText));
-                                    break;
+                                    try
+                                    {
+                                        prop.SetValue(entity, Int32.Parse(childNode.InnerText));
+                                        break;
+                                    }
+                                    catch(Exception err)
+                                    {
+                                        Console.WriteLine(err.Message);
+                                        MessageBox.Show("El dato " + childNode.InnerText + " no es un valor válido. Importación cancelada.", "ERROR IMPORTACIÓN");                                        
+                                        return new List<categories>();
+                                    }                                        
                                 default:
                                     prop.SetValue(entity, childNode.InnerText);
                                     break;
-                            }
+                            }                        
                         }
                     }
                 }
@@ -234,13 +252,32 @@ namespace NETime_WF_EF6
                         {
                             switch (prop.PropertyType.Name) //Asignarmos el valor a el objeto user transformando el string en el tipo correspondiente a la propiedad.
                             {
-                            case "Byte[]":                                    
-                                    prop.SetValue(entity, Convert.FromBase64String(childNode.InnerText));
-                                    break;                                
-                            case "Int32":                                    
-                                    prop.SetValue(entity, Int32.Parse(childNode.InnerText));
+                            case "Byte[]":
+                                    try
+                                    {
+                                        prop.SetValue(entity, Convert.FromBase64String(childNode.InnerText));                                    
+                                    }
+                                    catch (Exception err)
+                                    {
+                                        Console.WriteLine(err.Message);
+                                        MessageBox.Show("El dato " + childNode.InnerText + " no es un valor válido. Importación cancelada.", "ERROR IMPORTACIÓN");
+                                        return new List<user>();
+                                    }
                                     break;
-                            default:
+
+                                case "Int32":
+                                    try
+                                    {
+                                        prop.SetValue(entity, Int32.Parse(childNode.InnerText));
+                                    }                                    
+                                    catch (Exception err)
+                                    {
+                                        Console.WriteLine(err.Message);
+                                        MessageBox.Show("El dato " + childNode.InnerText + " no es un valor válido. Importación cancelada.", "ERROR IMPORTACIÓN");
+                                        return new List<user>();
+                                    }
+                                    break;
+                                default:
                                     prop.SetValue(entity, childNode.InnerText);
                                     break;
                             }
