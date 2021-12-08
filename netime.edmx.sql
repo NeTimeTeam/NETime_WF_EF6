@@ -226,7 +226,7 @@ ON [dbo].[balanceSet]
 GO
 
 
--- ELIMINAR EL FOREIGN KEY ACTIVITIESID DE BALANCE PARA EL BORRADO. (Isaac)
+-- ELIMINAR EL FOREIGN KEY ACTIVITIESID DE BALANCE PARA EL BORRADO. (Isaac) 
 /*
 -- Creating foreign key on [activitiesId] in table 'balanceSet'
 ALTER TABLE [dbo].[balanceSet]
