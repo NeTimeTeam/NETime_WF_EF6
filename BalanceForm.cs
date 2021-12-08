@@ -81,7 +81,7 @@ namespace NETime_WF_EF6
             try
             {
                 balanceList = context.Database.SqlQuery<Balance>(
-                    "SELECT B.datetime, A.name as activity, B.qtty from balanceSet as B inner join activitiesSet as A ON B.activitiesId = A.Id " +
+                    "SELECT B.datetime, ISNULL(A.name, 'Actividad eliminada') as activity, B.qtty from balanceSet as B left join activitiesSet as A ON B.activitiesId = A.Id " +
                     "WHERE B.userId = @userId", new SqlParameter("@userId", userId)).ToList<Balance>();
             }catch (Exception err)
             {

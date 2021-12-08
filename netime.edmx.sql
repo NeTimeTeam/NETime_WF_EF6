@@ -95,8 +95,8 @@ CREATE TABLE [dbo].[balanceSet] (
     [datetime] datetime  NOT NULL,
     [qtty] int  NOT NULL,
     [sing] bit  NOT NULL,
-    [userId] int  NOT NULL,
-    [activitiesId] int  NOT NULL
+    [userId] int,
+    [activitiesId] int
 );
 GO
 
@@ -106,7 +106,7 @@ CREATE TABLE [dbo].[activitiesSet] (
     [name] nvarchar(max)  NOT NULL,
     [description] nvarchar(max)  NOT NULL,
     [categoriesId] int  NOT NULL,
-    [userId] int  NOT NULL
+    [userId] int
 );
 GO
 
@@ -208,6 +208,8 @@ ON [dbo].[selected_activitiesSet]
     ([activitiesId]);
 GO
 
+-- ELIMINAR EL FOREIGN KEY  USERID DE BALANCE PARA EL BORRADO. (Isaac)
+/*
 -- Creating foreign key on [userId] in table 'balanceSet'
 ALTER TABLE [dbo].[balanceSet]
 ADD CONSTRAINT [FK_userbalance]
@@ -216,13 +218,16 @@ ADD CONSTRAINT [FK_userbalance]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
-
+*/
 -- Creating non-clustered index for FOREIGN KEY 'FK_userbalance'
 CREATE INDEX [IX_FK_userbalance]
 ON [dbo].[balanceSet]
     ([userId]);
 GO
 
+
+-- ELIMINAR EL FOREIGN KEY ACTIVITIESID DE BALANCE PARA EL BORRADO. (Isaac)
+/*
 -- Creating foreign key on [activitiesId] in table 'balanceSet'
 ALTER TABLE [dbo].[balanceSet]
 ADD CONSTRAINT [FK_activitiesbalance]
@@ -231,12 +236,14 @@ ADD CONSTRAINT [FK_activitiesbalance]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
+*/
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_activitiesbalance'
 CREATE INDEX [IX_FK_activitiesbalance]
 ON [dbo].[balanceSet]
     ([activitiesId]);
 GO
+
 
 --Creating UNIQUE constrain for user email (Isaac)
 ALTER TABLE [dbo].[userSet]
@@ -246,3 +253,5 @@ GO
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------
+
+

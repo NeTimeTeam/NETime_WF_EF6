@@ -690,6 +690,17 @@ namespace NETime_WF_EF6
             if (radioButtonUsers.Checked)
             {
                 //TODO: borrar las actividades y actividades seleccionadas asociadas al usuario.
+                List<activities> activitiesToDelete = this.context.activitiesSet.Where(a => a.userId.Equals(selectedRowId)).ToList<activities>();
+                List<selected_activities> userSelectedActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.userId.Equals(selectedRowId)).ToList<selected_activities>();
+                List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesToDelete.Select(a => a.Id).Contains(s.activitiesId)).ToList<selected_activities>();
+
+                selected_ActivitiesToDelete.All<selected_activities>(sa => this.context.selected_activitiesSet.Remove(sa).Equals(true));
+                userSelectedActivitiesToDelete.All<selected_activities>(sa => this.context.selected_activitiesSet.Remove(sa).Equals(true));                
+                activitiesToDelete.All<activities>(a => this.context.activitiesSet.Remove(a).Equals(true));
+
+                //foreach(selected_activities sa in selected_ActivitiesToDelete){this.context.selected_activitiesSet.Remove(sa);}
+                //foreach(activities a in activitiesToDelete){ this.context.activitiesSet.Remove(a); }
+                
                 user userToDelete = this.context.userSet.Find(selectedRowId);
                 this.context.userSet.Remove(userToDelete);
                 try
