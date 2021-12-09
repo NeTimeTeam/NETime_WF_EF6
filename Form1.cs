@@ -710,10 +710,10 @@ namespace NETime_WF_EF6
             if (radioButtonUsers.Checked)
             {
                 //OBETNER UN LISTADO DE LAS ACTIVIDADES Y ACTIVIDADES SELECCIONADAS Y BALANCE DEL USUARIO QUE SERÁ BORRADO
-                List<activities> activitiesToDelete = this.context.activitiesSet.Where(a => a.userId.Equals(selectedRowId)).ToList<activities>();
-                int[] activitiesIdToDelete = activitiesToDelete.Select(a => a.Id).ToArray<int>();
+                List<activities> activitiesToDelete = this.context.activitiesSet.Where(a => a.userId.Equals(selectedRowId)).ToList<activities>();                
+                int[] activitiesIdToDelete = activitiesToDelete.Select(a => a.Id).ToArray<int>();                
                 List<selected_activities> userSelectedActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.userId.Equals(selectedRowId)).ToList<selected_activities>();
-                List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesIdToDelete.Contains(s.activitiesId)).ToList<selected_activities>();
+                List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesIdToDelete.Contains(s.activitiesId)).ToList<selected_activities>();                
                 List<balance> balanceToDelete = this.context.balanceSet.Where(b => b.userId.Equals(selectedRowId)).ToList<balance>();
 
                 //BORRAR LAS ACTIVIDADES SELECCIONADAS POR EL USUARIO Y DEL USUARIO
