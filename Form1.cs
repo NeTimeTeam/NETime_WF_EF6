@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.IO;
+using System.Data.Entity.Validation;
 
 namespace NETime_WF_EF6
 {
@@ -24,8 +25,51 @@ namespace NETime_WF_EF6
             //test();
         }
         
+        //CONTEXT CLASS
         private netimeContainer context = new netimeContainer();
-     
+        private void saveChanges(string fnDesc, callback callback)
+        {
+            saveChanges(this.context, fnDesc);
+            callback();
+        }
+        private void saveChanges(string fnDesc)
+        {
+            saveChanges(this.context, fnDesc);
+        }
+        private void saveChanges(netimeContainer context, string fnDesc)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (DBConcurrencyException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (DbEntityValidationException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (NotSupportedException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (ObjectDisposedException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (InvalidOperationException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+        }
+
+        //DELEGATES
+        public delegate void callback();
 
         #region GET METHODS
         //Evento click en botón getUsers
@@ -219,26 +263,18 @@ namespace NETime_WF_EF6
                 //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
                 address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
             };
-            try
-            {
 
-                int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
-                if (userExist > 0)
-                {
-                    MessageBox.Show("El usuario ya existe");
-                    textBox_userEmail.ForeColor = Color.Red;
-                }
-                else
-                {
-                    this.context.userSet.Add(usuario); //Le pasamos el objeto al context.
-                    this.context.SaveChanges(); //Solicitamos al context que guarde los cambios en la BD.
-                    clean_userTextBoxes();
-                }
-            }
-            catch (DbUpdateException err)
+            int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
+            if (userExist > 0)
             {
-                string errMsg = err.InnerException.InnerException.Message;
-                MessageBox.Show(errMsg);
+                MessageBox.Show("El usuario ya existe");
+                textBox_userEmail.ForeColor = Color.Red;
+            }
+            else
+            {
+                this.context.userSet.Add(usuario); //Le pasamos el objeto al context.
+                callback callback = clean_userTextBoxes;
+                saveChanges("CREATE USER", callback); //Solicitamos al context que guarde los cambios en la BD.                    
             }
             update_userGrid(context);
         }
@@ -527,14 +563,7 @@ namespace NETime_WF_EF6
             if (valid)
             {
                 this.context.Entry(entity).CurrentValues.SetValues(entity);
-                try
-                {
-                    this.context.SaveChanges();
-                }
-                catch (DbUpdateException err)
-                {
-                    MessageBox.Show(err.InnerException.InnerException.Message);
-                }
+                saveChanges("UPDATE ACTIVITY");                
                 update_ActivitiesData();
             }
             else
@@ -618,15 +647,7 @@ namespace NETime_WF_EF6
             if (valid)
             {
                 this.context.Entry(entity).CurrentValues.SetValues(entity);
-                try
-                {
-                    this.context.SaveChanges();
-
-                }
-                catch (DbUpdateException err)
-                {
-                    MessageBox.Show(err.InnerException.InnerException.Message);
-                }
+                saveChanges("UPDATE USER");                
                 update_userGrid();
             }
             else
@@ -669,8 +690,7 @@ namespace NETime_WF_EF6
         }
         #endregion
 
-        #region DELETE USER
-        //TODO: añadir borrar en cascada.
+        #region DELETE USER       
         //Habilitar el botón borrar cuando se selecciona una celda.
         private int selectedRowId = -1; //almacenará el valor de fila seleccionada.
         //Activa el botón borrar cuando se seleciona un celda de la tabla.
@@ -689,90 +709,56 @@ namespace NETime_WF_EF6
         {
             if (radioButtonUsers.Checked)
             {
-                //TODO: borrar las actividades y actividades seleccionadas asociadas al usuario.
+                //OBETNER UN LISTADO DE LAS ACTIVIDADES Y ACTIVIDADES SELECCIONADAS Y BALANCE DEL USUARIO QUE SERÁ BORRADO
                 List<activities> activitiesToDelete = this.context.activitiesSet.Where(a => a.userId.Equals(selectedRowId)).ToList<activities>();
                 int[] activitiesIdToDelete = activitiesToDelete.Select(a => a.Id).ToArray<int>();
                 List<selected_activities> userSelectedActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.userId.Equals(selectedRowId)).ToList<selected_activities>();
                 List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesIdToDelete.Contains(s.activitiesId)).ToList<selected_activities>();
                 List<balance> balanceToDelete = this.context.balanceSet.Where(b => b.userId.Equals(selectedRowId)).ToList<balance>();
 
-                
-                try
-                {
-                    
-                    selected_ActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
-                    userSelectedActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
-                }
-                catch(InvalidOperationException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE SELECTED ACTIVITIES");
-                }
-                try
-                {
-                    activitiesToDelete.ForEach(a => this.context.activitiesSet.Remove(a));
-                }
-                catch (InvalidOperationException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE ACTIVITIES");
-                }
-                try
-                {
-                    balanceToDelete.ForEach(b => this.context.balanceSet.Remove(b));
-                }
-                catch(InvalidOperationException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE BALANCE");
-                }
-                
+                //BORRAR LAS ACTIVIDADES SELECCIONADAS POR EL USUARIO Y DEL USUARIO
+                selected_ActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
+                userSelectedActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
+                saveChanges("DELETE SELECTED ACTIVITIES");
 
-                //foreach(selected_activities sa in selected_ActivitiesToDelete){this.context.selected_activitiesSet.Remove(sa);}
-                //foreach(activities a in activitiesToDelete){ this.context.activitiesSet.Remove(a); }
+                //BORRAR LAS ACTIVIDADES CREADAS POR EL USUARIO
+                activitiesToDelete.ForEach(a => this.context.activitiesSet.Remove(a));
+                saveChanges("DELETE ACTIVITIES");
+
+                //ELIMINAR LOS REGISTROS DE BALANCE DEL USUARIO
+                balanceToDelete.ForEach(b => this.context.balanceSet.Remove(b));
+                saveChanges("DELETE BALANCE");
                 
+                //ELIMINAR EL USUARIO                
                 user userToDelete = this.context.userSet.Find(selectedRowId);
                 this.context.userSet.Remove(userToDelete);
-                try
-                {
-                    this.context.SaveChanges();
-                }
-                catch (InvalidOperationException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE USER");
-                }
-                catch (NotSupportedException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE USER");
-                }
+                saveChanges("DELETE USER");
+
+                //ACTUALIZAR EL INTERFAZ
                 update_userGrid(this.context);
             }
 
             if (radioButtonActivities.Checked)
-            {                    
+            {
+                //OBTENER LOS REGISTROS DE ACTIVIDADES SELECCIONADAS PARA ESTA ACTIVIDAD.
                 activities activityToDelete = this.context.activitiesSet.Find(selectedRowId);
                 List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.activitiesId.Equals(selectedRowId)).ToList<selected_activities>();
-                try
-                {
-                    selected_ActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));                    
-                }
-                catch (InvalidOperationException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE SELECTED ACTIVITIES");
-                }
+                
+                //BORRAR LA ACTIVIDAD DE ACTIVIDADES SELECCIONADAS
+                selected_ActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
+                saveChanges("DELETE SELECTED ACTIVITIES");
 
+                //ELIMINAR LA ACTIVIDAD
                 context.activitiesSet.Remove(activityToDelete);
-                try
-                {
-                    context.SaveChanges();
-                }
-                catch (InvalidOperationException err)
-                {
-                    MessageBox.Show(err.Message, "ERROR DELETE ACTIVITIES");
-                }
+                saveChanges("DELETE ACTIVITY");
+
+                //ACTUALIZAR LA INTERFAZ
                 update_ActivitiesData(this.context);
             }            
             selectedRowId = -1;
             button_del.Enabled = false;
             //MessageBox.Show(selected_row.ToString());            
-        }
+        }        
         #endregion
         /*
          * 
@@ -801,14 +787,8 @@ namespace NETime_WF_EF6
                 case "DIMISS":
                     dimissActivity();
                     break;
-            }            
-            try
-            {
-                this.context.SaveChanges();     //Escribimos en la base de datos.
-            }catch (DbUpdateException err)
-            {
-                MessageBox.Show(err.InnerException.InnerException.Message);
             }
+            saveChanges("SELECCIONAR ACTIVIDAD");
             update_SelActGrids();
         }
         //ELIMINA UNA ACTIVIDAD DE LA SELECCIÖN DEL USUARIO.
@@ -899,16 +879,10 @@ namespace NETime_WF_EF6
                 };
                 
                 this.context.activitiesSet.Add(activity);
-                try
-                {
-                    context.SaveChanges();
-                    clean_activitiesTextBoxes();
-                }
-                catch (DbUpdateException err)
-                {
-                    MessageBox.Show(err.InnerException.InnerException.Message);
-                }
-                update_ActivitiesData(this.context);
+                callback callback = clean_activitiesTextBoxes;
+
+                saveChanges("CREATE ACTIVITY", callback);
+                update_ActivitiesData();
             }
             else
             {
@@ -1002,13 +976,7 @@ namespace NETime_WF_EF6
                         break;
                 }                
             }
-            try
-            {
-                this.context.SaveChanges();
-            }catch(DbUpdateException err)
-            {
-                MessageBox.Show("Error importando usuarios.\n" + err.InnerException.Message);
-            }            
+            saveChanges("IMPORT XML DATA");            
         }
         private bool verifyCategoryImportData(categories entity)
         {
