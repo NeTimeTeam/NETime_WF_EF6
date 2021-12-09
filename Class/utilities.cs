@@ -32,7 +32,7 @@ namespace NETime_WF_EF6
 
         static public bool phoneValidation(string phone)
         {
-            Regex rx = new Regex(@"^\+[1-9]{1}[0-9]{3,14}");
+            Regex rx = new Regex(@"^\+[1-9]{1}[0-9]{9,14}");
             return rx.IsMatch(phone.Length > 0 ? phone : "null");
         }
 
@@ -43,7 +43,7 @@ namespace NETime_WF_EF6
         }
         static public bool descriptionValidation(string name)
         {
-            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ.,\-/\\0-9\s]{10,500}$"); //Solo letras y mín 10 - máx 500.
+            Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ.,\-/\\0-9\s]{3,500}$"); //Solo letras y mín 10 - máx 500.
             return rx.IsMatch(name.Length > 0 ? name : "n");
         }
         static public bool passwordValidation(string pass, int lvl=0) //validación de password según nivel definido. Predeterminado 0, nvl más bajo.

@@ -985,7 +985,7 @@ namespace NETime_WF_EF6
                 Console.WriteLine("Error importando categorías. {0} no es un nombre válido.", entity.name);
                 return false;
             }
-            if (!Utilites.descriptionValidation(entity.family))
+            if (!Utilites.nameValidation(entity.family))
             {
                 Console.WriteLine("Error importando categorías. {0} no es un nombre de famila válido.", entity.family);
                 return false;

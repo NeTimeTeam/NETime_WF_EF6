@@ -209,7 +209,7 @@ ON [dbo].[selected_activitiesSet]
 GO
 
 -- ELIMINAR EL FOREIGN KEY  USERID DE BALANCE PARA EL BORRADO. (Isaac)
-/*
+
 -- Creating foreign key on [userId] in table 'balanceSet'
 ALTER TABLE [dbo].[balanceSet]
 ADD CONSTRAINT [FK_userbalance]
@@ -218,7 +218,7 @@ ADD CONSTRAINT [FK_userbalance]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
-*/
+
 -- Creating non-clustered index for FOREIGN KEY 'FK_userbalance'
 CREATE INDEX [IX_FK_userbalance]
 ON [dbo].[balanceSet]
