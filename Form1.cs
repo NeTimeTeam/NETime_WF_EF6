@@ -694,7 +694,7 @@ namespace NETime_WF_EF6
                 int[] activitiesIdToDelete = activitiesToDelete.Select(a => a.Id).ToArray<int>();
                 List<selected_activities> userSelectedActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.userId.Equals(selectedRowId)).ToList<selected_activities>();
                 List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesIdToDelete.Contains(s.activitiesId)).ToList<selected_activities>();
-                List<balance> balanceToDelete = this.context.balanceSet.Where(b => b.Equals(selectedRowId)).ToList<balance>();
+                List<balance> balanceToDelete = this.context.balanceSet.Where(b => b.userId.Equals(selectedRowId)).ToList<balance>();
 
                 
                 try
@@ -744,17 +744,28 @@ namespace NETime_WF_EF6
                 }
                 update_userGrid(this.context);
             }
+
             if (radioButtonActivities.Checked)
             {                    
                 activities activityToDelete = this.context.activitiesSet.Find(selectedRowId);
+                List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.activitiesId.Equals(selectedRowId)).ToList<selected_activities>();
+                try
+                {
+                    selected_ActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));                    
+                }
+                catch (InvalidOperationException err)
+                {
+                    MessageBox.Show(err.Message, "ERROR DELETE SELECTED ACTIVITIES");
+                }
+
                 context.activitiesSet.Remove(activityToDelete);
                 try
                 {
                     context.SaveChanges();
                 }
-                catch (DbUpdateException err)
+                catch (InvalidOperationException err)
                 {
-                    MessageBox.Show(err.InnerException.InnerException.Message);
+                    MessageBox.Show(err.Message, "ERROR DELETE ACTIVITIES");
                 }
                 update_ActivitiesData(this.context);
             }            
