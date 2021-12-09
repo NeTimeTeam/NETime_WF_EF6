@@ -691,12 +691,39 @@ namespace NETime_WF_EF6
             {
                 //TODO: borrar las actividades y actividades seleccionadas asociadas al usuario.
                 List<activities> activitiesToDelete = this.context.activitiesSet.Where(a => a.userId.Equals(selectedRowId)).ToList<activities>();
+                int[] activitiesIdToDelete = activitiesToDelete.Select(a => a.Id).ToArray<int>();
                 List<selected_activities> userSelectedActivitiesToDelete = this.context.selected_activitiesSet.Where(s => s.userId.Equals(selectedRowId)).ToList<selected_activities>();
-                List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesToDelete.Select(a => a.Id).Contains(s.activitiesId)).ToList<selected_activities>();
+                List<selected_activities> selected_ActivitiesToDelete = this.context.selected_activitiesSet.Where(s => activitiesIdToDelete.Contains(s.activitiesId)).ToList<selected_activities>();
+                List<balance> balanceToDelete = this.context.balanceSet.Where(b => b.Equals(selectedRowId)).ToList<balance>();
 
-                selected_ActivitiesToDelete.All<selected_activities>(sa => this.context.selected_activitiesSet.Remove(sa).Equals(true));
-                userSelectedActivitiesToDelete.All<selected_activities>(sa => this.context.selected_activitiesSet.Remove(sa).Equals(true));                
-                activitiesToDelete.All<activities>(a => this.context.activitiesSet.Remove(a).Equals(true));
+                
+                try
+                {
+                    
+                    selected_ActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
+                    userSelectedActivitiesToDelete.ForEach(sa => this.context.selected_activitiesSet.Remove(sa));
+                }
+                catch(InvalidOperationException err)
+                {
+                    MessageBox.Show(err.Message, "ERROR DELETE SELECTED ACTIVITIES");
+                }
+                try
+                {
+                    activitiesToDelete.ForEach(a => this.context.activitiesSet.Remove(a));
+                }
+                catch (InvalidOperationException err)
+                {
+                    MessageBox.Show(err.Message, "ERROR DELETE ACTIVITIES");
+                }
+                try
+                {
+                    balanceToDelete.ForEach(b => this.context.balanceSet.Remove(b));
+                }
+                catch(InvalidOperationException err)
+                {
+                    MessageBox.Show(err.Message, "ERROR DELETE BALANCE");
+                }
+                
 
                 //foreach(selected_activities sa in selected_ActivitiesToDelete){this.context.selected_activitiesSet.Remove(sa);}
                 //foreach(activities a in activitiesToDelete){ this.context.activitiesSet.Remove(a); }
@@ -707,9 +734,13 @@ namespace NETime_WF_EF6
                 {
                     this.context.SaveChanges();
                 }
-                catch (DbUpdateException err)
+                catch (InvalidOperationException err)
                 {
-                    MessageBox.Show(err.InnerException.InnerException.Message);
+                    MessageBox.Show(err.Message, "ERROR DELETE USER");
+                }
+                catch (NotSupportedException err)
+                {
+                    MessageBox.Show(err.Message, "ERROR DELETE USER");
                 }
                 update_userGrid(this.context);
             }
