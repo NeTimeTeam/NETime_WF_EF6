@@ -1031,7 +1031,10 @@ namespace NETime_WF_EF6
             }
             if (radioButtonActivities.Checked)
             {
+                MessageBox.Show("Exportar actividades", "EXPORT");
                 xmlTool.genXmlFromListOftEntities(this.context.activitiesSet.ToList<activities>());
+                MessageBox.Show("Exportar categorías", "EXPORT");
+                xmlTool.genXmlFromListOftEntities(this.context.categoriesSet.ToList<categories>());
             }
             if (radioButtonSel_Activities.Checked)
             {
