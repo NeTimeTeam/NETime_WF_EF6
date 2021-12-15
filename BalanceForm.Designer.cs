@@ -29,6 +29,7 @@ namespace NETime_WF_EF6
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BalanceForm));
             this.numericUpDown_qtty = new System.Windows.Forms.NumericUpDown();
             this.button_pay = new System.Windows.Forms.Button();
             this.comboBox_payer = new System.Windows.Forms.ComboBox();
@@ -46,18 +47,22 @@ namespace NETime_WF_EF6
             // 
             // numericUpDown_qtty
             // 
-            this.numericUpDown_qtty.Location = new System.Drawing.Point(153, 139);
+            this.numericUpDown_qtty.Location = new System.Drawing.Point(306, 267);
+            this.numericUpDown_qtty.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.numericUpDown_qtty.Name = "numericUpDown_qtty";
-            this.numericUpDown_qtty.Size = new System.Drawing.Size(72, 20);
+            this.numericUpDown_qtty.Size = new System.Drawing.Size(144, 31);
             this.numericUpDown_qtty.TabIndex = 0;
             this.numericUpDown_qtty.ValueChanged += new System.EventHandler(this.numericUpDown_qtty_ValueChanged);
             // 
             // button_pay
             // 
+            this.button_pay.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
             this.button_pay.Enabled = false;
-            this.button_pay.Location = new System.Drawing.Point(23, 178);
+            this.button_pay.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.button_pay.Location = new System.Drawing.Point(46, 342);
+            this.button_pay.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button_pay.Name = "button_pay";
-            this.button_pay.Size = new System.Drawing.Size(78, 23);
+            this.button_pay.Size = new System.Drawing.Size(156, 44);
             this.button_pay.TabIndex = 1;
             this.button_pay.Tag = "balance";
             this.button_pay.Text = "Pagar";
@@ -67,63 +72,71 @@ namespace NETime_WF_EF6
             // comboBox_payer
             // 
             this.comboBox_payer.FormattingEnabled = true;
-            this.comboBox_payer.Location = new System.Drawing.Point(22, 93);
+            this.comboBox_payer.Location = new System.Drawing.Point(44, 179);
+            this.comboBox_payer.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.comboBox_payer.Name = "comboBox_payer";
-            this.comboBox_payer.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_payer.Size = new System.Drawing.Size(238, 33);
             this.comboBox_payer.TabIndex = 2;
             this.comboBox_payer.SelectedIndexChanged += new System.EventHandler(this.comboBox_payer_SelectedIndexChanged);
             // 
             // comboBox_Activity
             // 
             this.comboBox_Activity.FormattingEnabled = true;
-            this.comboBox_Activity.Location = new System.Drawing.Point(23, 139);
+            this.comboBox_Activity.Location = new System.Drawing.Point(46, 267);
+            this.comboBox_Activity.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.comboBox_Activity.Name = "comboBox_Activity";
-            this.comboBox_Activity.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_Activity.Size = new System.Drawing.Size(238, 33);
             this.comboBox_Activity.TabIndex = 3;
             // 
             // label_payer
             // 
             this.label_payer.AutoSize = true;
-            this.label_payer.Location = new System.Drawing.Point(19, 77);
+            this.label_payer.Location = new System.Drawing.Point(38, 148);
+            this.label_payer.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_payer.Name = "label_payer";
-            this.label_payer.Size = new System.Drawing.Size(47, 13);
+            this.label_payer.Size = new System.Drawing.Size(93, 25);
             this.label_payer.TabIndex = 4;
             this.label_payer.Text = "Pagador";
             // 
             // label_activity
             // 
             this.label_activity.AutoSize = true;
-            this.label_activity.Location = new System.Drawing.Point(19, 123);
+            this.label_activity.Location = new System.Drawing.Point(38, 237);
+            this.label_activity.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_activity.Name = "label_activity";
-            this.label_activity.Size = new System.Drawing.Size(51, 13);
+            this.label_activity.Size = new System.Drawing.Size(100, 25);
             this.label_activity.TabIndex = 5;
             this.label_activity.Text = "Actividad";
             // 
             // label_qttty
             // 
             this.label_qttty.AutoSize = true;
-            this.label_qttty.Location = new System.Drawing.Point(149, 123);
+            this.label_qttty.Location = new System.Drawing.Point(298, 237);
+            this.label_qttty.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_qttty.Name = "label_qttty";
-            this.label_qttty.Size = new System.Drawing.Size(76, 13);
+            this.label_qttty.Size = new System.Drawing.Size(152, 25);
             this.label_qttty.TabIndex = 6;
             this.label_qttty.Text = "Núm. de horas";
             // 
             // dgt_balance
             // 
             this.dgt_balance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgt_balance.Location = new System.Drawing.Point(270, 46);
+            this.dgt_balance.Location = new System.Drawing.Point(540, 88);
+            this.dgt_balance.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dgt_balance.Name = "dgt_balance";
             this.dgt_balance.ReadOnly = true;
-            this.dgt_balance.Size = new System.Drawing.Size(268, 260);
+            this.dgt_balance.RowHeadersWidth = 82;
+            this.dgt_balance.Size = new System.Drawing.Size(536, 500);
             this.dgt_balance.TabIndex = 7;
             this.dgt_balance.Tag = "balance";
             // 
             // label_transactions
             // 
             this.label_transactions.AutoSize = true;
-            this.label_transactions.Location = new System.Drawing.Point(267, 30);
+            this.label_transactions.Location = new System.Drawing.Point(534, 58);
+            this.label_transactions.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_transactions.Name = "label_transactions";
-            this.label_transactions.Size = new System.Drawing.Size(77, 13);
+            this.label_transactions.Size = new System.Drawing.Size(153, 25);
             this.label_transactions.TabIndex = 8;
             this.label_transactions.Tag = "balance";
             this.label_transactions.Text = "Transacciones";
@@ -131,28 +144,33 @@ namespace NETime_WF_EF6
             // textBox_total_hours
             // 
             this.textBox_total_hours.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_total_hours.Location = new System.Drawing.Point(22, 46);
+            this.textBox_total_hours.Location = new System.Drawing.Point(44, 88);
+            this.textBox_total_hours.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBox_total_hours.Name = "textBox_total_hours";
             this.textBox_total_hours.ReadOnly = true;
-            this.textBox_total_hours.Size = new System.Drawing.Size(44, 26);
+            this.textBox_total_hours.Size = new System.Drawing.Size(84, 44);
             this.textBox_total_hours.TabIndex = 9;
             this.textBox_total_hours.Tag = "balance";
             // 
             // label_total_hours
             // 
             this.label_total_hours.AutoSize = true;
-            this.label_total_hours.Location = new System.Drawing.Point(19, 30);
+            this.label_total_hours.BackColor = System.Drawing.Color.LightGray;
+            this.label_total_hours.Location = new System.Drawing.Point(38, 58);
+            this.label_total_hours.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_total_hours.Name = "label_total_hours";
-            this.label_total_hours.Size = new System.Drawing.Size(90, 13);
+            this.label_total_hours.Size = new System.Drawing.Size(184, 25);
             this.label_total_hours.TabIndex = 10;
             this.label_total_hours.Tag = "balance";
             this.label_total_hours.Text = "Horas disponibles";
             // 
             // BalanceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(557, 325);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1114, 625);
             this.Controls.Add(this.label_total_hours);
             this.Controls.Add(this.textBox_total_hours);
             this.Controls.Add(this.label_transactions);
@@ -164,6 +182,7 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.comboBox_payer);
             this.Controls.Add(this.button_pay);
             this.Controls.Add(this.numericUpDown_qtty);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "BalanceForm";
             this.Tag = "balance";
             this.Text = "Transacciones";
