@@ -24,6 +24,12 @@ namespace NETime_WF_EF6
             //foreach(Control i in this.Controls){Console.WriteLine(i.GetType().Name);}
             //test();
         }
+        public Form1(user currentUser)
+        {
+            this.currentUser = currentUser;
+            InitializeComponent();
+            radioButtonUsers.Checked = true;            
+        }
         
         //CONTEXT CLASS
         private netimeContainer context = new netimeContainer();
@@ -36,11 +42,12 @@ namespace NETime_WF_EF6
         {
             saveChanges(this.context, fnDesc);
         }
-        private void saveChanges(netimeContainer context, string fnDesc)
-        {
+        private bool saveChanges(netimeContainer context, string fnDesc)
+        {            
             try
             {
                 context.SaveChanges();
+                return true;
             }
             catch (DbUpdateException err)
             {
@@ -66,7 +73,9 @@ namespace NETime_WF_EF6
             {
                 MessageBox.Show(err.Message, fnDesc);
             }
+            return false;
         }
+        private user currentUser = new user{};
 
         //DELEGATES
         public delegate void callback();
