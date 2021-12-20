@@ -66,9 +66,14 @@ namespace NETime_WF_EF6
         private void hideAllUserContro()
         {
             this.udm.Hide();
-            this.uam.Hide();
+            this.uam.Hide();           
         }
 
-
+        private void pictureBox_Logout_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.ShowDialog();
+            this.Close();
+        }
     }
 }

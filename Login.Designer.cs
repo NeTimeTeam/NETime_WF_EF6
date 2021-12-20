@@ -37,24 +37,27 @@ namespace NETime_WF_EF6
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label_response = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(632, 245);
+            this.txtUser.Location = new System.Drawing.Point(370, 127);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtUser.Multiline = true;
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(391, 46);
+            this.txtUser.Size = new System.Drawing.Size(198, 26);
             this.txtUser.TabIndex = 0;
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(642, 344);
+            this.txtPass.Location = new System.Drawing.Point(375, 179);
+            this.txtPass.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtPass.Multiline = true;
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(381, 46);
+            this.txtPass.Size = new System.Drawing.Size(192, 26);
             this.txtPass.TabIndex = 1;
             // 
             // pictureBox1
@@ -62,9 +65,10 @@ namespace NETime_WF_EF6
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(570, 245);
+            this.pictureBox1.Location = new System.Drawing.Point(339, 127);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(56, 46);
+            this.pictureBox1.Size = new System.Drawing.Size(28, 24);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
@@ -72,9 +76,10 @@ namespace NETime_WF_EF6
             // 
             this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(570, 344);
+            this.pictureBox2.Location = new System.Drawing.Point(339, 179);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(56, 46);
+            this.pictureBox2.Size = new System.Drawing.Size(28, 24);
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
@@ -83,9 +88,10 @@ namespace NETime_WF_EF6
             this.button1.BackColor = System.Drawing.Color.Snow;
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button1.Location = new System.Drawing.Point(726, 423);
+            this.button1.Location = new System.Drawing.Point(417, 220);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 55);
+            this.button1.Size = new System.Drawing.Size(80, 29);
             this.button1.TabIndex = 4;
             this.button1.Text = "Iniciar Sesión";
             this.button1.UseVisualStyleBackColor = false;
@@ -94,8 +100,9 @@ namespace NETime_WF_EF6
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(0, 0);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(38, 12);
             this.button2.TabIndex = 7;
             // 
             // linkLabel1
@@ -103,21 +110,35 @@ namespace NETime_WF_EF6
             this.linkLabel1.ActiveLinkColor = System.Drawing.Color.DarkSlateBlue;
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Location = new System.Drawing.Point(627, 513);
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.Location = new System.Drawing.Point(349, 332);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(355, 25);
+            this.linkLabel1.Size = new System.Drawing.Size(219, 16);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "¿No tienes cuenta? Registrate aquí.";
+            this.linkLabel1.Visible = false;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label_response
+            // 
+            this.label_response.AutoSize = true;
+            this.label_response.ForeColor = System.Drawing.Color.Red;
+            this.label_response.Location = new System.Drawing.Point(349, 287);
+            this.label_response.Name = "label_response";
+            this.label_response.Size = new System.Drawing.Size(50, 13);
+            this.label_response.TabIndex = 8;
+            this.label_response.Text = "response";
             // 
             // Login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1114, 625);
+            this.ClientSize = new System.Drawing.Size(633, 415);
+            this.Controls.Add(this.label_response);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -125,6 +146,7 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.txtUser);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Login";
             this.Text = "BIENVENIDO A NETIME";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -143,5 +165,6 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label_response;
     }
 }

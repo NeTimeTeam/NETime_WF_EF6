@@ -85,6 +85,7 @@ namespace NETime_WF_EF6
             this.pictureBox_Logout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox_Logout.TabIndex = 4;
             this.pictureBox_Logout.TabStop = false;
+            this.pictureBox_Logout.Click += new System.EventHandler(this.pictureBox_Logout_Click);
             // 
             // pictureBox_Transactions
             // 
