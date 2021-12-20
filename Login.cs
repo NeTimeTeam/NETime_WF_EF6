@@ -87,7 +87,8 @@ namespace NETime_WF_EF6
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //Pendiente desarrollo de Form CrearUsuarios.
+            AltaUsuario regiserForm = new AltaUsuario();
+            regiserForm.Show();
         }
 
         //LOGIN: funciones

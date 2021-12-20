@@ -29,7 +29,6 @@ namespace NETime_WF_EF6
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltaUsuario));
             this.textBox_userName = new System.Windows.Forms.TextBox();
             this.textBox_userSurname = new System.Windows.Forms.TextBox();
             this.textBox_userEmail = new System.Windows.Forms.TextBox();
@@ -242,7 +241,7 @@ namespace NETime_WF_EF6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.backgroundImage;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(491, 368);
             this.Controls.Add(this.label_msg);
