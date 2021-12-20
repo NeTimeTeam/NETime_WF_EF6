@@ -288,7 +288,7 @@ namespace NETime_WF_EF6
             update_userGrid(context);
         }
         private void textBox_userEmail_TextChanged(object sender, EventArgs e)
-        {
+        {            
             if (Utilites.emailValidation(textBox_userEmail.Text))
             {
                 textBox_userEmail.ForeColor = Color.Black;

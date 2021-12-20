@@ -80,6 +80,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_main.Designer.cs">
+      <DependentUpon>Form_main.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,11 +116,26 @@
     <Compile Include="user.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserActivitiesMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserActivitiesMenu.Designer.cs">
+      <DependentUpon>UserActivitiesMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserDataMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserDataMenu.Designer.cs">
+      <DependentUpon>UserDataMenu.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="BalanceForm.resx">
       <DependentUpon>BalanceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_main.resx">
+      <DependentUpon>Form_main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -129,6 +150,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserActivitiesMenu.resx">
+      <DependentUpon>UserActivitiesMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserDataMenu.resx">
+      <DependentUpon>UserDataMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -151,6 +178,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="icons\userData.ico" />
+    <None Include="icons\Activity.ico" />
+    <None Include="icons\select_Activities.ico" />
+    <None Include="icons\logout.ico" />
+    <None Include="icons\transaction.ico" />
     <Content Include="img\Arrows-Left-Arrow.ico" />
     <Content Include="img\Arrows-Right-Arrow.ico" />
     <Content Include="netime.Context.tt">
@@ -164,6 +196,7 @@
       <LastGenOutput>netime.cs</LastGenOutput>
       <DependentUpon>netime.edmx</DependentUpon>
     </Content>
+    <Content Include="img\userData.ico" />
     <None Include="Resources\boton %281%29.png" />
     <None Include="Resources\Arrow-left.bmp" />
   </ItemGroup>

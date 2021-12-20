@@ -26,15 +26,15 @@ namespace NETime_WF_EF6
         private void deleteMe()
         {
             using (netimeContainer context = new netimeContainer())
-            {
+            {                
                 if (!context.userSet.Any<user>(us => us.email.Equals("nrovira@uoc.com")))
                 {
                     PasswordHash pg = new PasswordHash("a1234567890");
                     user u = new user()
                     {
-                        name = "isaac",
-                        surname = "rovira",
-                        address = "la dirección que sea.",
+                        name = "Isaac",
+                        surname = "Rovira",
+                        address = "Mi dirección.",
                         phone = "+34686970016",
                         email = "nrovira@uoc.com",
                         salt = pg.Salt(),
@@ -42,11 +42,14 @@ namespace NETime_WF_EF6
                     };
                     context.userSet.Add(u);
                     context.SaveChanges();
-                    Console.WriteLine("Usuario {0} creado", u.email);
+                    Console.WriteLine("Usuario {0} creado", u.email);                    
                 }
                 else
                 {
                     Console.WriteLine("Existe un usuario nrovira@uoc.com");
+                    context.userSet.Remove(context.userSet.Where(u => u.email.Equals("nrovira@uoc.com")).First<user>());
+                    context.SaveChanges();
+                    deleteMe();
                 }
                 //USUARIO PREDETERMINADO PARA EL LOGIN (TESTING)
                 txtUser.Text = "nrovira@uoc.com";
@@ -82,14 +85,15 @@ namespace NETime_WF_EF6
         //passGen tiene el HASH generado con el salt del usuario y el texto del formulario. Y dispone de un método para comparar dos hases, a saber, el almacenado para este usuario.
                     if (passGen.PasswordMatch(currentUser.password)){
                         Console.WriteLine("Usuario {0} y password {1} coinciden", currentUser.email, currentUser.password);
-                        MessageBox.Show("Usuario y password correcto.");
-        //4 -He implementado un nuevo consructor en FORM1 que permite pasar como parámetro el objeto usuario q ha iniciado sesión y de esta forma lo tenemos disponible para las funciones de Form1.
-                        Form1 form1 = new Form1(currentUser);
+                        //MessageBox.Show("Usuario y password correcto.");
+                        //4 -He implementado un nuevo consructor en FORM1 que permite pasar como parámetro el objeto usuario q ha iniciado sesión y de esta forma lo tenemos disponible para las funciones de Form1.
+                        //Form_main form_main = new Form_main(currentUser);                        
+                        Form_main form_main = new Form_main(currentUser.Id);
                         Console.WriteLine("Lanzar Form1");
         //5 -Escondemos el Form del login
                         this.Hide();
         //6 -Mostramos el FORM1. La ejecución del código entra en el bucle del FORM1 y no seguira ejecutando el resto del código del form Login hasta que se cierre el FORM1.
-                        form1.ShowDialog();
+                        form_main.ShowDialog();
         //7 -Cerramos el este form, el Login si se ha cerrado el Form1.
                         this.Close();
 
