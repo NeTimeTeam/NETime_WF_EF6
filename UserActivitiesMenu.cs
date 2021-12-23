@@ -139,7 +139,7 @@ namespace NETime_WF_EF6
             if (dataGridView_Activities.Rows.Count > 0)
             {
                 SetDataGridViewProperties(dataGridView_Activities.Columns);
-                //dataGridView_Activities.Columns["Id"].Visible = false;                
+                
             }
         }
         private void SetDataGridViewProperties(DataGridViewColumnCollection columnList)
@@ -149,42 +149,44 @@ namespace NETime_WF_EF6
                 //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 //Console.WriteLine(col.Name);
                 
-                switch (col.Name)
+                switch (col.Index)
                 {   
-                    case "name":
-                        dataGridView_Activities.Columns[col.Name].Name = "Actividad";
-                        dataGridView_Activities.Columns[col.Name].Visible = true;
-                        dataGridView_Activities.Columns[col.Name].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        dataGridView_Activities.Columns[col.Name].DisplayIndex = 1;
+                    case 2: //name                           
+                        dataGridView_Activities.Columns[col.Index].Visible = true;
+                        dataGridView_Activities.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        dataGridView_Activities.Columns[col.Index].DisplayIndex = 1;
+                        dataGridView_Activities.Columns[col.Index].HeaderText = "Actividad";
                         break;
-                    case "category":
-                        dataGridView_Activities.Columns[col.Name].Name = "Categoria";
-                        dataGridView_Activities.Columns[col.Name].Visible = true;
-                        dataGridView_Activities.Columns[col.Name].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        dataGridView_Activities.Columns[col.Name].DisplayIndex = 2;
+                    case 4://category                        
+                        dataGridView_Activities.Columns[col.Index].Visible = true;
+                        dataGridView_Activities.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        dataGridView_Activities.Columns[col.Index].DisplayIndex = 2;
+                        dataGridView_Activities.Columns[col.Index].HeaderText = "Categoria";
                         break;
-                    case "description":
-                        dataGridView_Activities.Columns[col.Name].Name = "Descripción";
-                        dataGridView_Activities.Columns[col.Name].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                        dataGridView_Activities.Columns[col.Name].Visible = true;
-                        dataGridView_Activities.Columns[col.Name].DisplayIndex = 3;
+                    case 3://Description                        
+                        dataGridView_Activities.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        dataGridView_Activities.Columns[col.Index].Visible = true;
+                        dataGridView_Activities.Columns[col.Index].DisplayIndex = 3;
+                        dataGridView_Activities.Columns[col.Index].HeaderText = "Descripción";
                         break;
-                    case "selector":
-                        dataGridView_Activities.Columns[col.Name].Name = "Sel.";
-                        dataGridView_Activities.Columns[col.Name].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        dataGridView_Activities.Columns[col.Name].Visible = true;
-                        dataGridView_Activities.Columns[col.Name].DisplayIndex = 0;
+                    case 0://Selector           
+                        dataGridView_Activities.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        dataGridView_Activities.Columns[col.Index].Visible = true;
+                        dataGridView_Activities.Columns[col.Index].DisplayIndex = 0;
+                        dataGridView_Activities.Columns[col.Index].HeaderText = "Sel.";
                         break;
-                    case "Id":
-                    case "email":
-                    case "userId":
-                        dataGridView_Activities.Columns[col.Name].Visible = false;
-                        break;
-                    default:
-                        
+                    case 1://Id
+                    case 6://email
+                    case 5://userId
+                        dataGridView_Activities.Columns[col.Index].Visible = false;
                         break;
                 }
-            }            
+            }
+            dataGridView_Activities.Refresh();
+            foreach(DataGridViewColumn c in columnList)
+            {
+                Console.WriteLine($"Nombre: {c.Name} - Index: {c.Index}");
+            }
         }
 
         //CREAR ACTIVIDAD
@@ -210,10 +212,6 @@ namespace NETime_WF_EF6
         {            
             TextBox[] textboxes = { this.textBox_name, this.textBox_ActivityDesc };
             Utilities.checkTextboxStatus(textboxes, button_AddActivity);            
-        }
-        private void checkUserTextboxStatus()
-        {
-            button_AddActivity.Enabled = (textBox_ActivityDesc.CausesValidation & textBox_name.CausesValidation);
         }
         private async void CreateActivity()
         {
@@ -278,14 +276,11 @@ namespace NETime_WF_EF6
             {                
                 if ((bool)row.Cells[0].Value)
                 {
-                    activitiesId.Add(Convert.ToInt32(row.Cells["Id"].Value));
+                    activitiesId.Add(Convert.ToInt32(row.Cells[1].Value));
                 }                
             }            
             DeleteActivities(activitiesId);            
-        }
-        private void dataGridView_Activities_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {   
-        }
+        }        
         private async void DeleteActivities(int activityId)
         {
             using(netimeContainer context = new netimeContainer())
@@ -328,30 +323,39 @@ namespace NETime_WF_EF6
         {
             Console.WriteLine("dataGridView_Activities_CellEnter");
         }
-
         private void dataGridView_Activities_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
             Console.WriteLine("ataGridView_Activities_CellLeave");
         }
-
         private void dataGridView_Activities_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridView data = sender as DataGridView;            
-            int Id = Convert.ToInt32(data["Id", e.RowIndex].Value);
-            string value = data[e.ColumnIndex, e.RowIndex].Value.ToString();
-            
-            Console.WriteLine("dataGridView_Activities_CellValueChanged " + Id +" "+ e.ColumnIndex +" "+value);
+            DataGridView data = sender as DataGridView;
+            if(e.RowIndex >= 0)
+            {
+                int Id = Convert.ToInt32(data[1, e.RowIndex].Value);
+                string value = data[e.ColumnIndex, e.RowIndex].Value.ToString();
 
-            ErrorObject res = IsValidNewTextInCell(e.ColumnIndex, value);
-            if (res.status)
-            {
-                Messages.ErrorMessage(label_msg, res.message);
-            }
-            else
-            {
-                UpdataActivityAttribute(value, Id);
-            }
+                Console.WriteLine("dataGridView_Activities_CellValueChanged " + Id + " " + e.ColumnIndex + " " + value);
+
+                ErrorObject res = IsValidNewTextInCell(e.ColumnIndex, value);
+                if (res.status)
+                {
+                    Messages.ErrorMessage(label_msg, res.message);
+                }
+                else
+                {
+                    UpdataActivityAttribute(value, Id);
+                }
+            }            
         }
+        private void dataGridView_Activities_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            Console.WriteLine("dataGridView_Activities_CellErrorTextChanged");
+        }
+        private void dataGridView_Activities_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+        }
+
         private ErrorObject IsValidNewTextInCell(int col, string value)
         {
             ErrorObject err = new ErrorObject(false, $"Error: \"{value}\" no coumple los requisitos del campo.");
@@ -391,8 +395,7 @@ namespace NETime_WF_EF6
                     return err;
             }
             return err;
-        }
-        
+        }        
         private void UpdataActivityAttribute(string value,  int Id)
         {
             //TODO: update attribute
@@ -413,9 +416,6 @@ namespace NETime_WF_EF6
             return false;
         }
 
-        private void dataGridView_Activities_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            Console.WriteLine("dataGridView_Activities_CellErrorTextChanged");
-        }
+        
     }
 }

@@ -151,6 +151,7 @@ namespace NETime_WF_EF6
             int task = await Context.saveChanges(context, fnDesc);
             if (task > 0)
             {
+                Messages.Message(label, "Finalizado.", Color.Black);
                 callback();
                 return true;
             }
