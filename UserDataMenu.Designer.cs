@@ -30,6 +30,8 @@ namespace NETime_WF_EF6
         private void InitializeComponent()
         {
             this.groupBox_userDataForm = new System.Windows.Forms.GroupBox();
+            this.label_userPass2 = new System.Windows.Forms.Label();
+            this.textBox_userPass2 = new System.Windows.Forms.TextBox();
             this.label_userTel = new System.Windows.Forms.Label();
             this.textBox_userTel = new System.Windows.Forms.TextBox();
             this.label_userAddress = new System.Windows.Forms.Label();
@@ -51,8 +53,7 @@ namespace NETime_WF_EF6
             this.label_ActivitiesCounterLabel = new System.Windows.Forms.Label();
             this.panel_Message = new System.Windows.Forms.Panel();
             this.label_Msg = new System.Windows.Forms.Label();
-            this.label_userPass2 = new System.Windows.Forms.Label();
-            this.textBox_userPass2 = new System.Windows.Forms.TextBox();
+            this.button_ChangePass = new System.Windows.Forms.Button();
             this.groupBox_userDataForm.SuspendLayout();
             this.groupBox_userCounters.SuspendLayout();
             this.panel_Message.SuspendLayout();
@@ -60,6 +61,7 @@ namespace NETime_WF_EF6
             // 
             // groupBox_userDataForm
             // 
+            this.groupBox_userDataForm.Controls.Add(this.button_ChangePass);
             this.groupBox_userDataForm.Controls.Add(this.label_userPass2);
             this.groupBox_userDataForm.Controls.Add(this.textBox_userPass2);
             this.groupBox_userDataForm.Controls.Add(this.label_userTel);
@@ -81,6 +83,32 @@ namespace NETime_WF_EF6
             this.groupBox_userDataForm.TabStop = false;
             this.groupBox_userDataForm.Tag = "UserForm";
             this.groupBox_userDataForm.Text = "Edición de datos de usaurio";
+            // 
+            // label_userPass2
+            // 
+            this.label_userPass2.AutoSize = true;
+            this.label_userPass2.Location = new System.Drawing.Point(21, 179);
+            this.label_userPass2.Name = "label_userPass2";
+            this.label_userPass2.Size = new System.Drawing.Size(97, 13);
+            this.label_userPass2.TabIndex = 13;
+            this.label_userPass2.Tag = "UserForm";
+            this.label_userPass2.Text = "Repetir contraseña";
+            this.label_userPass2.Visible = false;
+            this.label_userPass2.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
+            this.label_userPass2.Leave += new System.EventHandler(this.userData_TextBoxLeave);
+            // 
+            // textBox_userPass2
+            // 
+            this.textBox_userPass2.Location = new System.Drawing.Point(24, 195);
+            this.textBox_userPass2.Name = "textBox_userPass2";
+            this.textBox_userPass2.PasswordChar = '-';
+            this.textBox_userPass2.Size = new System.Drawing.Size(170, 20);
+            this.textBox_userPass2.TabIndex = 12;
+            this.textBox_userPass2.Tag = "UserForm";
+            this.textBox_userPass2.UseSystemPasswordChar = true;
+            this.textBox_userPass2.Visible = false;
+            this.textBox_userPass2.CausesValidationChanged += new System.EventHandler(this.textBox_pass_ChangeValidation);
+            this.textBox_userPass2.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
             // 
             // label_userTel
             // 
@@ -186,8 +214,8 @@ namespace NETime_WF_EF6
             this.textBox_userPass.TabIndex = 2;
             this.textBox_userPass.Tag = "UserForm";
             this.textBox_userPass.UseSystemPasswordChar = true;
+            this.textBox_userPass.CausesValidationChanged += new System.EventHandler(this.textBox_pass_ChangeValidation);
             this.textBox_userPass.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
-            this.textBox_userPass.Leave += new System.EventHandler(this.userData_TextBoxLeave);
             // 
             // label_userName
             // 
@@ -291,6 +319,7 @@ namespace NETime_WF_EF6
             this.panel_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_Message.Controls.Add(this.label_Msg);
+            this.panel_Message.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel_Message.Location = new System.Drawing.Point(8, 339);
             this.panel_Message.Name = "panel_Message";
             this.panel_Message.Size = new System.Drawing.Size(494, 66);
@@ -307,27 +336,19 @@ namespace NETime_WF_EF6
             this.label_Msg.Tag = "UserMsg";
             this.label_Msg.Text = "message";
             // 
-            // label_userPass2
+            // button_ChangePass
             // 
-            this.label_userPass2.AutoSize = true;
-            this.label_userPass2.Location = new System.Drawing.Point(21, 179);
-            this.label_userPass2.Name = "label_userPass2";
-            this.label_userPass2.Size = new System.Drawing.Size(97, 13);
-            this.label_userPass2.TabIndex = 13;
-            this.label_userPass2.Tag = "UserForm";
-            this.label_userPass2.Text = "Repetir contraseña";
-            this.label_userPass2.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
-            this.label_userPass2.Leave += new System.EventHandler(this.userData_TextBoxLeave);
-            // 
-            // textBox_userPass2
-            // 
-            this.textBox_userPass2.Location = new System.Drawing.Point(24, 195);
-            this.textBox_userPass2.Name = "textBox_userPass2";
-            this.textBox_userPass2.PasswordChar = '-';
-            this.textBox_userPass2.Size = new System.Drawing.Size(170, 20);
-            this.textBox_userPass2.TabIndex = 12;
-            this.textBox_userPass2.Tag = "UserForm";
-            this.textBox_userPass2.UseSystemPasswordChar = true;
+            this.button_ChangePass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.button_ChangePass.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_ChangePass.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_ChangePass.Location = new System.Drawing.Point(203, 156);
+            this.button_ChangePass.Name = "button_ChangePass";
+            this.button_ChangePass.Size = new System.Drawing.Size(50, 59);
+            this.button_ChangePass.TabIndex = 14;
+            this.button_ChangePass.Text = "Cambiar";
+            this.button_ChangePass.UseVisualStyleBackColor = true;
+            this.button_ChangePass.Visible = false;
+            this.button_ChangePass.Click += new System.EventHandler(this.button_ChangePass_Click);
             // 
             // UserDataMenu
             // 
@@ -374,5 +395,6 @@ namespace NETime_WF_EF6
         public System.Windows.Forms.Label label_Msg;
         private System.Windows.Forms.Label label_userPass2;
         private System.Windows.Forms.TextBox textBox_userPass2;
+        private System.Windows.Forms.Button button_ChangePass;
     }
 }

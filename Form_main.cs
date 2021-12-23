@@ -37,7 +37,7 @@ namespace NETime_WF_EF6
         //Función de inicio.
         private void SetPanelUser()
         {
-            udm = new UserDataMenu(userId);
+            udm = new UserDataMenu();
             uam = new UserActivitiesMenu();            
             hideAllUserContro();
             panel_ContainerInterface.Controls.Add(this.uam);
@@ -49,16 +49,16 @@ namespace NETime_WF_EF6
         private void pictureBox_Activities_Click(object sender, EventArgs e)
         {
             Console.WriteLine("click userActivities");
+            uam.Load();
             hideAllUserContro();
             this.uam.Show();
-            this.label_title.Text = "Actividades del usuario";
-            
+            this.label_title.Text = "Actividades del usuario";            
         }
 
         private void pictureBox_UserData_Click(object sender, EventArgs e)
         {
             Console.WriteLine("click userData");
-            udm.reLoad();
+            udm.Load();
             hideAllUserContro();
             this.udm.Show();
             this.label_title.Text = "Datos de cuenta del usuario";

@@ -289,7 +289,7 @@ namespace NETime_WF_EF6
         }
         private void textBox_userEmail_TextChanged(object sender, EventArgs e)
         {            
-            if (Utilites.emailValidation(textBox_userEmail.Text))
+            if (Utilities.emailValidation(textBox_userEmail.Text))
             {
                 textBox_userEmail.ForeColor = Color.Black;
                 textBox_userEmail.CausesValidation = true;
@@ -303,7 +303,7 @@ namespace NETime_WF_EF6
         //Verifica el formato del texto introducido y cambia de color si no es valido.
         private void textBox_userName_TextChanged(object sender, EventArgs e)
         {
-            if (Utilites.nameValidation(textBox_userName.Text))
+            if (Utilities.nameValidation(textBox_userName.Text))
             {
                 textBox_userName.ForeColor = Color.Black;
                 textBox_userName.CausesValidation = true;
@@ -313,7 +313,7 @@ namespace NETime_WF_EF6
                 textBox_userName.ForeColor = Color.Red;
                 textBox_userName.CausesValidation = false;
             }
-            if (Utilites.nameValidation(textBox_userSurname.Text))
+            if (Utilities.nameValidation(textBox_userSurname.Text))
             {
                 textBox_userSurname.ForeColor = Color.Black;
                 textBox_userSurname.CausesValidation = true;
@@ -327,7 +327,7 @@ namespace NETime_WF_EF6
         //Verifica el formato del texto introducido y cambia de color si no es valido.
         private void textBox_userPhone_TextChanged(object sender, EventArgs e)
         {
-            if(Utilites.phoneValidation(textBox_userPhone.Text))
+            if(Utilities.phoneValidation(textBox_userPhone.Text))
             {
                 textBox_userPhone.ForeColor = Color.Black;
                 textBox_userPhone.CausesValidation = true;
@@ -341,7 +341,7 @@ namespace NETime_WF_EF6
         //Verificar que la password introducida cumple los requisitos.
         private void textBox_userPass_TextChanged(object sender, EventArgs e)
         {
-            textBox_userPass.CausesValidation = Utilites.passwordValidation(((TextBox)sender).Text);
+            textBox_userPass.CausesValidation = Utilities.passwordValidation(((TextBox)sender).Text);
             if (textBox_userPass.CausesValidation)
             {
                 textBox_userPass.ForeColor = Color.Black;                
@@ -353,7 +353,7 @@ namespace NETime_WF_EF6
         }
         private void textBox_userAddress_TextChanged(object sender, EventArgs e)
         {
-            textBox_userAddress.CausesValidation = Utilites.descriptionValidation(((TextBox)sender).Text);
+            textBox_userAddress.CausesValidation = Utilities.descriptionValidation(((TextBox)sender).Text);
             if (textBox_userAddress.CausesValidation)
             {
                 textBox_userAddress.ForeColor = Color.Black;
@@ -562,7 +562,7 @@ namespace NETime_WF_EF6
                     }
                     break;
                 case "description":
-                    if (Utilites.descriptionValidation(new_value))
+                    if (Utilities.descriptionValidation(new_value))
                     {
                         entity.description = new_value;
                         valid = true;
@@ -595,21 +595,21 @@ namespace NETime_WF_EF6
             switch (propertyName)  //Determinamos que opración en función de la columna seleccionada.
             {
                 case "name":
-                    if (Utilites.nameValidation(new_value))
+                    if (Utilities.nameValidation(new_value))
                     {
                         entity.name = new_value;
                         valid = true;
                     }
                     break;
                 case "surname":
-                    if (Utilites.nameValidation(new_value))
+                    if (Utilities.nameValidation(new_value))
                     {
                         entity.surname = new_value;
                         valid = true;
                     }
                     break;
                 case "email":
-                    if (Utilites.emailValidation(new_value))
+                    if (Utilities.emailValidation(new_value))
                     {
                         entity.email = new_value;
                         try
@@ -624,14 +624,14 @@ namespace NETime_WF_EF6
                     }
                     break;
                 case "phone":
-                    if (Utilites.phoneValidation(new_value))
+                    if (Utilities.phoneValidation(new_value))
                     {
                         entity.phone = new_value;
                         valid = true;
                     }
                     break;
                 case "password":
-                    if (Utilites.passwordValidation(new_value))
+                    if (Utilities.passwordValidation(new_value))
                     {
                         byte[] salt = entity.salt;
                         byte[] newPass;
@@ -643,7 +643,7 @@ namespace NETime_WF_EF6
                     }                    
                     break;
                 case "address":
-                    if (Utilites.descriptionValidation(new_value))
+                    if (Utilities.descriptionValidation(new_value))
                     {
                         entity.address = new_value;
                         valid = true;
@@ -830,7 +830,7 @@ namespace NETime_WF_EF6
         //TODO: Hacer un refactor de la verificación de los textbox
         private void textBox_Activities_Desc_TextChanged(object sender, EventArgs e)
         {
-            if (Utilites.descriptionValidation(textBox_Activities_Desc.Text))
+            if (Utilities.descriptionValidation(textBox_Activities_Desc.Text))
             {
                 textBox_Activities_Desc.ForeColor = Color.Black;
                 textBox_Activities_Desc.CausesValidation = true;
@@ -843,7 +843,7 @@ namespace NETime_WF_EF6
         }
         private void textBox_Activities_Nombre_TextChanged(object sender, EventArgs e)
         {
-            if (Utilites.nameValidation(textBox_Activities_Nombre.Text))
+            if (Utilities.nameValidation(textBox_Activities_Nombre.Text))
             {
                 textBox_Activities_Nombre.ForeColor = Color.Black;
                 textBox_Activities_Nombre.CausesValidation = true;
@@ -989,12 +989,12 @@ namespace NETime_WF_EF6
         }
         private bool verifyCategoryImportData(categories entity)
         {
-            if (!Utilites.nameValidation(entity.name))
+            if (!Utilities.nameValidation(entity.name))
             {
                 Console.WriteLine("Error importando categorías. {0} no es un nombre válido.", entity.name);
                 return false;
             }
-            if (!Utilites.nameValidation(entity.family))
+            if (!Utilities.nameValidation(entity.family))
             {
                 Console.WriteLine("Error importando categorías. {0} no es un nombre de famila válido.", entity.family);
                 return false;
@@ -1009,20 +1009,20 @@ namespace NETime_WF_EF6
         }
         private bool verifyUserImportData(user entity)
         {            
-            if (!Utilites.nameValidation(entity.name))
+            if (!Utilities.nameValidation(entity.name))
             {
                 Console.WriteLine("Error importando usuarios. {0} no es un nombre válido.", entity.name);
                 return false;
             }
-            if (!Utilites.descriptionValidation(entity.address)) {
+            if (!Utilities.descriptionValidation(entity.address)) {
                 Console.WriteLine("Error importando usuarios. {0} no es una dirección válida.", entity.address);
                 return false;
             }
-            if (!Utilites.emailValidation(entity.email)) {
+            if (!Utilities.emailValidation(entity.email)) {
                 Console.WriteLine("Error importando usuarios. {0} no es un email válido.", entity.email);
                 return false;
             }
-            if (!Utilites.phoneValidation(entity.phone)) {
+            if (!Utilities.phoneValidation(entity.phone)) {
                 Console.WriteLine("Error importando usuarios. {0} no es un teléfono válido.", entity.phone);
                 return false; }
             if(this.context.userSet.Where(u => u.email.Equals(entity.email)).Count() > 0) {

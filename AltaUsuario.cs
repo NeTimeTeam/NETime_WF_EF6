@@ -21,56 +21,7 @@ namespace NETime_WF_EF6
         }
 
         //CONTEXT CLASS
-        private netimeContainer context = new netimeContainer();
-        private void saveChanges(string fnDesc, res callback)
-        {   
-            responseMsg("Resgistrando...", Color.Black);            
-            if (saveChanges(this.context, fnDesc).Result)
-            {
-                this.Close();
-            }
-            else
-            {
-                callback("Error de acceso a la base de datos.", Color.Red);
-            }
-        }
-        private void saveChanges(string fnDesc)
-        {
-            saveChanges(this.context, fnDesc);
-        }
-        private async Task<bool> saveChanges(netimeContainer context, string fnDesc)
-        {
-            try
-            {
-                await context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException err)
-            {
-                MessageBox.Show(err.Message, fnDesc);
-            }
-            catch (DBConcurrencyException err)
-            {
-                MessageBox.Show(err.Message, fnDesc);
-            }
-            catch (DbEntityValidationException err)
-            {
-                MessageBox.Show(err.Message, fnDesc);
-            }
-            catch (NotSupportedException err)
-            {
-                MessageBox.Show(err.Message, fnDesc);
-            }
-            catch (ObjectDisposedException err)
-            {
-                MessageBox.Show(err.Message, fnDesc);
-            }
-            catch (InvalidOperationException err)
-            {
-                MessageBox.Show(err.Message, fnDesc);
-            }
-            return false;
-        }        
+        private netimeContainer context = new netimeContainer();  
 
         //DELEGATES
         public delegate void callback();
@@ -87,22 +38,22 @@ namespace NETime_WF_EF6
             switch (textBox.Name)
             {
                 case "textBox_userEmail":
-                    setTextBoxStatus(Utilites.emailValidation(textBox.Text), textBox);
+                    setTextBoxStatus(Utilities.emailValidation(textBox.Text), textBox);
                     break;
                 case "textBox_userName":
                 case "textBox_userSurname":
-                    setTextBoxStatus(Utilites.nameValidation(textBox.Text), textBox);
+                    setTextBoxStatus(Utilities.nameValidation(textBox.Text), textBox);
                     break;
                 case "textBox_userPhone":
-                    setTextBoxStatus(Utilites.phoneValidation(textBox.Text), textBox);
+                    setTextBoxStatus(Utilities.phoneValidation(textBox.Text), textBox);
                     break;
                 case "textBox_userAddress":
-                    setTextBoxStatus(Utilites.descriptionValidation(textBox.Text), textBox);
+                    setTextBoxStatus(Utilities.descriptionValidation(textBox.Text), textBox);
                     break;
                 case "textBox_userPass":
                 case "textBox_userPass2":
                     TextBox[] textBoxes = { textBox_userPass, textBox_userPass2 };
-                    bool valid = Utilites.passwordValidation(textBox.Text) && textBox_userPass.Text.Equals(textBox_userPass2.Text);
+                    bool valid = Utilities.passwordValidation(textBox.Text) && textBox_userPass.Text.Equals(textBox_userPass2.Text);
                     setTextBoxStatus(valid, textBoxes);
                     break;
             }
@@ -144,36 +95,55 @@ namespace NETime_WF_EF6
         //ACCiÖN DEL BOTÓN AÑADIR USUARIO.
         private void button_AddUser_Click(object sender, EventArgs e)
         {
-            //Obtenemos el byte[] del password y el salt[] antes de almacenarlo en el DB.
-            PasswordHash passGen = new PasswordHash(textBox_userPass.Text);
+            CreateUser();
+        }
+        private async void CreateUser()
+        {
+            using (netimeContainer context = new netimeContainer())
+            {
+                //Obtenemos el byte[] del password y el salt[] antes de almacenarlo en el DB.
+                PasswordHash passGen = new PasswordHash(textBox_userPass.Text);
 
-            //Creamos un objeto usuario con los datos del formulario
-            user usuario = new user()
-            {
-                name = textBox_userName.Text,
-                email = textBox_userEmail.Text,
-                password = passGen.GenerateSaltedHash(),
-                salt = passGen.Salt(),
-                surname = textBox_userSurname.Text,
-                phone = textBox_userPhone.Text,
-                //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
-                address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
-            };
+                //Creamos un objeto usuario con los datos del formulario
+                user usuario = new user()
+                {
+                    name = textBox_userName.Text,
+                    email = textBox_userEmail.Text,
+                    password = passGen.GenerateSaltedHash(),
+                    salt = passGen.Salt(),
+                    surname = textBox_userSurname.Text,
+                    phone = textBox_userPhone.Text,
+                    //Evalua la expresión "XXX.Length > 0" y asigna uno de los dos valores definidos a continuación
+                    address = textBox_userAddress.Text.Length > 0 ? textBox_userAddress.Text : "none"
+                };
 
-            int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
-            if (userExist > 0)
-            {
-                //MessageBox.Show("El usuario ya existe");
-                responseMsg($"Error: El email {usuario.email} ya existe en la base de datos.", Color.Red);
-                setTextBoxStatus(false, textBox_userEmail);
-            }
-            else
-            {
-                this.context.userSet.Add(usuario); //Le pasamos el objeto al context.
-                saveChanges("CREATE USER", responseMsg); //Solicitamos al context que guarde los cambios en la BD.
+                int userExist = (from u in context.userSet where u.email.Equals(usuario.email) select u).Count();
+                if (userExist > 0)
+                {
+                    //MessageBox.Show("El usuario ya existe");
+                    responseMsg($"Error: El email {usuario.email} ya existe en la base de datos.", Color.Red);
+                    setTextBoxStatus(false, textBox_userEmail);
+                }
+                else
+                {
+                    //Le pasamos el objeto al context.
+                    this.context.userSet.Add(usuario);
+                    //Solicitamos al context que guarde los cambios en la BD.
+                    //Context.saveChanges(this.context, this.label_msg, "CREATE USER",Exit);                
+                    await Context.saveChanges(context, label_msg, "CREATE USER", Exit);
+                }
             }
         }
-
+        private bool Exit(bool valid)
+        {            
+            if (valid) { this.Close(); return valid; }
+            responseMsg("Error insertando los datos", Color.Red);
+            return valid;
+        }
+        private void Exit()
+        {
+            this.Close();
+        }
         //RESPONSE
         private void responseMsg(string msg, Color color)
         {

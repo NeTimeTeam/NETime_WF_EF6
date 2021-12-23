@@ -5,10 +5,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Data;
 
 namespace NETime_WF_EF6
 {
-    class Utilites
+    static class CurrentUser
+    {
+        public static void SetUser(user user)
+        {
+            Id = user.Id;
+            name = user.name;
+            surname = user.surname;
+            address = user.address;
+            phone = user.phone;
+            email = user.email;
+            password = user.password;
+            salt = user.salt;
+        }
+        public static user GetUser()
+        {
+            user user = new user()
+            {
+                Id = Id,
+                name = name,
+                surname = surname,
+                address = address,
+                phone = phone,
+                email = email,
+                salt = salt,
+                password = password
+            };
+            return user;
+        }
+        public static int Id { get; set; }
+        public static string name { get; set; }
+        public static string surname { get; set; }
+        public static string address { get; set; }
+        public static string phone { get; set; }
+        public static string email { get; set; }
+        public static byte[] salt { get; set; }
+        public static byte[] password { get; set; }
+    }
+    static class Utilities
     {
         /*
             (?i) sets case-insensitive mode
@@ -29,13 +71,11 @@ namespace NETime_WF_EF6
             Regex rx = new Regex(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z");
             return rx.IsMatch(email.Length >0 ? email : "null");
         }
-
         static public bool phoneValidation(string phone)
         {
             Regex rx = new Regex(@"^\+[1-9]{1}[0-9]{9,14}");
             return rx.IsMatch(phone.Length > 0 ? phone : "null");
         }
-
         static public bool nameValidation(string name)
         {
             Regex rx = new Regex(@"[A-Z][A-Za-zÀ-ÿ\s]{3,26}$"); //Solo letras y mín 3 - máx 26.
@@ -68,8 +108,169 @@ namespace NETime_WF_EF6
             Regex rx = new Regex(rgx);
             return rx.IsMatch(pass.Length > 0 ? pass : "n");
         }
+        static public void setTextBoxStatus(bool valid, TextBox textbox)
+        {
+            Color color = valid ? Color.Black : Color.Red;
+            textbox.ForeColor = color;
+            textbox.CausesValidation = valid;
+        }
+        static public void setTextBoxStatus(bool valid, TextBox[] textBoxes)
+        {
+            foreach (TextBox tb in textBoxes)
+            {
+                setTextBoxStatus(valid, tb);
+            }
+        }
+        static public void checkTextboxStatus(TextBox[] textBoxes, Button btn)
+        {
+            foreach(TextBox tb in textBoxes)
+            {
+                btn.Enabled = tb.CausesValidation;
+            }            
+        }
+        static public bool checkTextboxStatus(TextBox[] textBoxes)
+        {
+            bool valid = false;
+            foreach (TextBox tb in textBoxes)
+            {
+                valid = tb.CausesValidation;
+            }
+            return valid;
+        }
     }
+    public class Context
+    {
+        //DELEGATES
+        public delegate void callback();        
+        public delegate void res(string msg, Color color);
+        public delegate bool response(bool valid);
 
+        public static async Task<bool> saveChanges(netimeContainer context, Label label, string fnDesc, callback callback)
+        {            
+            Messages.Message(label, "En proceso... espere.", Color.Black);
+            int task = await Context.saveChanges(context, fnDesc);
+            if (task > 0)
+            {
+                callback();
+                return true;
+            }
+            else
+            {
+                Messages.ErrorMessage(label, "Error de acceso a la base de datos.");
+                return false;
+            }
+        }
+        public static async Task<bool> saveChanges(netimeContainer context, Label label, string fnDesc)
+        {            
+            Messages.Message(label, "En proceso...espere.", Color.Black);
+            int task = await Context.saveChanges(context, fnDesc);  
+            if (task > 0)
+            {
+                Messages.Message(label, "Datos guardados.", Color.Black);
+                return true;
+            }
+            else
+            {
+                Messages.ErrorMessage(label, "Error de acceso a la base de datos.");
+                Console.WriteLine(task);
+                return false;
+            }
+        }
+        
+        public static async Task<int> saveChanges(netimeContainer context, string fnDesc)
+        {            
+            try
+            {
+                int task = await context.SaveChangesAsync();
+                return task;
+            }
+            catch (DbUpdateException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (DBConcurrencyException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (DbEntityValidationException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (NotSupportedException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (ObjectDisposedException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (InvalidOperationException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }                        
+            return 0;
+        }
+        public static async Task<int> saveChanges(netimeContainer context, string fnDesc, response callback)
+        {
+            try
+            {
+                int task = await context.SaveChangesAsync();
+                callback(true);
+                return task;
+            }
+            catch (DbUpdateException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (DBConcurrencyException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (DbEntityValidationException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (NotSupportedException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (ObjectDisposedException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }
+            catch (InvalidOperationException err)
+            {
+                MessageBox.Show(err.Message, fnDesc);
+            }            
+            callback(false);
+            return 0;
+        }
+    }
+    class ErrorObject
+    {
+        public ErrorObject(bool status, string message, string code = "")
+        {
+            this.status = status;
+            this.message = message;
+            this.code = code;
+        }
+        public string message { get; set; }
+        public bool status { get; set; }
+        public string code { get; set; }
+    }
+    class Messages
+    {
+        public static void ErrorMessage(Label label, string msg)
+        {
+            Message(label, msg, Color.Red);
+        }
+        public static void Message(Label label, string msg, Color color)
+        {            
+            label.Text = msg;
+            label.ForeColor = color;
+            label.Visible = true;
+        }
+    }
     class PasswordHash
     {
         /*
@@ -192,7 +393,6 @@ namespace NETime_WF_EF6
             return CompareByteArrays(GenerateSaltedHash(), storedPass);
         }
     }
-
     class Usuario
     {
         public Usuario(user user) {
@@ -227,15 +427,16 @@ namespace NETime_WF_EF6
         public string salt { get; set; }
 
     }
-
     public class Actividades
     {
+        public bool selector { get; set; }
         public int Id { get; set; }
         public string name { get; set; }
         public string description { get; set; }        
-        public string email { get; set; }
         public string category { get; set; }
-    }
+        public int userId { get; set; }
+        public string email { get; set; }
+    }    
     public class Balance
     {        
         public DateTime datetime { get; set; }

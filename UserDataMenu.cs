@@ -17,18 +17,10 @@ namespace NETime_WF_EF6
         public UserDataMenu()
         {
             InitializeComponent();
-        }
-        public UserDataMenu(int userId)
-        {
-            InitializeComponent();
-            this.user = updateUserData(userId);
-            updateUserDataInTextBox();
-            updateActivitiesCounter();
-            updateHoursCounter();
-            updateSelectedActivitiesCounter();
+            Load();
         }
 
-        public void reLoad()
+        public void Load()
         {
             updateUserDataInTextBox();
             updateActivitiesCounter();
@@ -37,23 +29,25 @@ namespace NETime_WF_EF6
         }
 
         //User data
-        private user user;
-
+        //private user user = CurrentUser.GetUser();
+                
         //DELEGATES
         public delegate void callback();
         //CONTEXT CLASS
-        private netimeContainer context = new netimeContainer();
-        private void saveChanges(string fnDesc, callback callback)
+        //private netimeContainer context = new netimeContainer();
+        /*
+        private async void saveChanges(string fnDesc, callback callback)
         {
-            if (!saveChanges(this.context, fnDesc))
+            if (await Context.saveChanges(fnDesc) > 0)
             {
                 callback();
             }
         }
-        private void saveChanges(string fnDesc)
+        private async void saveChanges(string fnDesc)
         {
-            saveChanges(this.context, fnDesc);
+           await Context.saveChanges(fnDesc);
         }
+        
         private bool saveChanges(netimeContainer context, string fnDesc)
         {
             try
@@ -87,24 +81,46 @@ namespace NETime_WF_EF6
             }
             return false;
         }
+        */
 
         //UPDATES DEL CONTROL
-        private user updateUserData(int id)
+        private async Task<user> updateUserData(int id)
         {
-            try
+            using (netimeContainer context = new netimeContainer())
             {
-                return context.userSet.Find(id);
-            } catch (Exception e)
+                try
+                {
+                    return await context.userSet.FindAsync(id);
+                }
+                catch (Exception e)
+                {
+                    label_Msg.Text = "Error de acceso a la base de datos.";
+                    label_Msg.ForeColor = Color.Red;
+                    Console.WriteLine(e.Message);
+                    return new user() { };
+                }
+            }
+        }
+        private async void updateUserData()
+        {
+            using (netimeContainer context = new netimeContainer())
             {
-                label_Msg.Text = "Error de acceso a la base de datos.";
-                label_Msg.ForeColor = Color.Red;
-                Console.WriteLine(e.Message);
-                return new user() { };                
-            }            
+                try
+                {
+                    CurrentUser.SetUser(await context.userSet.FindAsync(CurrentUser.Id));                    
+                }
+                catch (Exception e)
+                {
+                    label_Msg.Text = "Error de acceso a la base de datos.";
+                    label_Msg.ForeColor = Color.Red;
+                    Console.WriteLine(e.Message);
+                }
+            }
+            updateUserDataInTextBox();
         }
         private void updateUserDataInTextBox()
         {
-            updateUserDataInTextBox(this.user);
+            updateUserDataInTextBox(CurrentUser.GetUser());
         }
         private void updateUserDataInTextBox(user user)
         {
@@ -124,92 +140,111 @@ namespace NETime_WF_EF6
         
         
         //EDITAR DATOS DE USUARIO
-        private void updateUserAttribute(TextBox data)
+        private async void updateUserAttribute(TextBox data)
         {            
             bool valid = false;                //Variable de control.
             var msg = string.Empty;            //Mensaje de información
             
-            switch (data.Name)  //Determinamos que opración en función de la columna seleccionada.
+            using (netimeContainer context = new netimeContainer())
             {
-                case "textBox_userName":
-                    valid = !user.name.Equals(data.Text);
-                    this.user.name = data.Text;                    
-                    break;
-                case "textBox_user_Email":
-                    if (!user.email.Equals(data.Text))
-                    {
-                        try
+                user user = await context.userSet.FindAsync(CurrentUser.Id);
+                switch (data.Name)  //Determinamos que opración en función de la columna seleccionada.
+                {
+                    case "textBox_userName":
+                        valid = !user.name.Equals(data.Text);
+                        user.name = data.Text;
+                        break;
+                    case "textBox_userSurname":
+                        valid = !user.surname.Equals(data.Text);
+                        user.surname = data.Text;
+                        break;
+                    case "textBox_user_Email":
+                        if (!user.email.Equals(data.Text))
                         {
-                            if ((from u in context.userSet where u.email.Equals(data.Text) select u).Count() < 1)
+                            try
                             {
-                                this.user.email = data.Text;
-                                valid = true;
+                                if ((from u in context.userSet where u.email.Equals(data.Text) select u).Count() < 1)
+                                {
+                                    user.email = data.Text;
+                                    valid = true;
+                                }
+                                else
+                                {
+                                    msg = $"Error: el email {data.Text} ya existe en la base de datos.";
+                                }
                             }
-                            else
+                            catch (Exception e)
                             {
-                                msg = $"Error: el email {data.Text} ya existe en la base de datos.";
+                                Console.WriteLine(e.Message);
+                                msg = $"Error de acceso a la base de datos.";
                             }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Console.WriteLine(e.Message);
-                            msg = $"Error de acceso a la base de datos.";
+                            valid = false;
                         }
-                    }
-                    else
+                        break;
+                    case "textBox_userPass":
+                    case "textBox_userPass2":
+                        if (!data.Text.Equals(string.Empty))
+                        {
+                            byte[] salt = user.salt;
+                            PasswordHash ph = new PasswordHash(data.Text, salt); //Le pasamos la nueva password al objeto y el salt del usuario al objeto que la va a cifrar.                    
+                            user.password = ph.GenerateSaltedHash();             //Llamamos a la función que nos devolverá el nuevo password cifrado mediante el SALT.
+                            valid = true;
+                        }
+                        else
+                        {
+                            valid = false;
+                        }
+                        break;
+                    case "textBox_userTel":
+                        valid = !user.phone.Equals(data.Text);
+                        user.phone = data.Text;
+                        break;
+                    case "textBox_userAddress":
+                        valid = !user.address.Equals(data.Text);
+                        user.address = data.Text;
+                        break;
+                }
+
+                if (valid)
+                {                    
+                    context.Entry(user).CurrentValues.SetValues(user);                    
+                    if(await Context.saveChanges(context, label_Msg, "UPDATE USER", updateUserData))
                     {
-                        valid = false;
+                        updateUserMessage($"Se ha actualizado el dato: {data.Text}", true);
                     }                    
-                    break;
-                case "textBox_userPass":
-                    if(!data.Text.Equals(string.Empty)){
-                        byte[] salt = user.salt;
-                        PasswordHash ph = new PasswordHash(data.Text, salt); //Le pasamos la nueva password al objeto y el salt del usuario al objeto que la va a cifrar.                    
-                        user.password = ph.GenerateSaltedHash();             //Llamamos a la función que nos devolverá el nuevo password cifrado mediante el SALT.
-                        valid = true;
-                    }
-                    else
-                    {
-                        valid = false;
-                    }                    
-                    break;
-                case "textBox_userTel":
-                    valid = !user.phone.Equals(data.Text);
-                    this.user.phone = data.Text;
-                    break;
-                case "textBox_userAddress":
-                    valid = !user.address.Equals(data.Text);
-                    this.user.address = data.Text;
-                    break;
+                }
+                else
+                {
+                    updateUserDataInTextBox();
+                    updateUserMessage(msg, valid);
+                }                                
             }
-            if (valid)
-            {
-                this.context.Entry(user).CurrentValues.SetValues(user);
-                updateUserMessage($"Se ha actualizado el dato: {data.Text}", true);
-                saveChanges("UPDATE USER");
-            }
-            else
-            {
-                updateUserDataInTextBox();
-                label_Msg.ForeColor = Color.Red;
-            }
-            updateUserDataInTextBox();
-            label_Msg.Text = msg;
         }
         //EVENTO TEXTBOX LEAVE FOCUS. Al salir de la edidicón del campo textbox verifica si este cumple la condición "validado", actualizandolo en la DB si la cummple o devolviendolo a su valor origianl en caso contrario.
         private void userData_TextBoxLeave(object sender, EventArgs e)
         {
             TextBox data = sender as TextBox;
-            if (textBoxIsValidForUpdate(data.CausesValidation))
-            {                
-                Console.WriteLine("CausesValidation");
-                updateUserAttribute(data);
-            }
-            else
+            switch (data.Name)
             {
-                updateUserMessage($"El valor \"{data.Text}\" no cumple las condiciones del campo.", false);
-                updateUserDataInTextBox();                
+                case "textBox_userPass":
+                case "textBox_userPass2":
+                    break;
+                default:
+                    if (data.CausesValidation)
+                    {
+                        updateUserAttribute(data);
+                    }
+                    else
+                    {
+                        updateUserMessage($"El valor \"{data.Text}\" no cumple las condiciones del campo.", false);
+                        updateUserDataInTextBox();
+                    }
+                    break;
             }
+            
         }
         //EVENTO TEXTBOX CHANGED: cuando detecta el cambio en uno de los textbox, verifica que el nuevo texto sea válido, impidiendo la validación en caso contrario.
         private void userData_TextBoxChanged(object sender, EventArgs e)
@@ -218,25 +253,25 @@ namespace NETime_WF_EF6
             switch (data.Name)
             {
                 case "textBox_userName":
-                    textBoxIsValidWhileChange(Utilites.nameValidation(data.Text), data);
+                case "textBox_userSurname":
+                    textBoxIsValidWhileChange(Utilities.nameValidation(data.Text), data);
                     break;
                 case "textBox_user_Email":
-                    textBoxIsValidWhileChange(Utilites.emailValidation(data.Text), data);
+                    textBoxIsValidWhileChange(Utilities.emailValidation(data.Text), data);
                     break;
                 case "textBox_userPass":
-                    textBoxIsValidWhileChange(Utilites.passwordValidation(data.Text), data);
+                    textBoxIsValidWhileChange(Utilities.passwordValidation(data.Text), data);
                     break;
                 case "textBox_userPass2":
-                    textBoxIsValidWhileChange(textBox_userPass.Equals(data.Text), data);
+                    textBoxIsValidWhileChange((textBox_userPass.Text == data.Text), data);
                     break;
                 case "textBox_userTel":
-                    textBoxIsValidWhileChange(Utilites.phoneValidation(data.Text), data);
+                    textBoxIsValidWhileChange(Utilities.phoneValidation(data.Text), data);
                     break;
                 case "textBox_userAddress":
-                    textBoxIsValidWhileChange(Utilites.descriptionValidation(data.Text), data);
+                    textBoxIsValidWhileChange(Utilities.descriptionValidation(data.Text), data);
                     break;
             }
-            Console.WriteLine("TextBox {0} modificado.", data.Name);
         }
         private void textBoxIsValidWhileChange(bool valid, TextBox data)
         {            
@@ -250,39 +285,49 @@ namespace NETime_WF_EF6
             }
             data.CausesValidation = valid;
         }
-        private bool textBoxIsValidForUpdate(bool valid)
+        private void textBox_pass_ChangeValidation(object sender, EventArgs e)
         {
-            if (!valid)
-            {                
-                updateUserDataInTextBox();
-                return false;
-            }
-            return valid;
+            label_userPass2.Visible = textBox_userPass.CausesValidation;
+            textBox_userPass2.Visible = textBox_userPass.CausesValidation;
+            button_ChangePass.Visible = textBox_userPass2.Text.Equals(textBox_userPass.Text) & textBox_userPass2.Visible;
         }
-
 
         //CONTADORES        
         private void updateActivitiesCounter()
         {
-            int value = 0;
-            value = context.activitiesSet.Where(a => a.Id.Equals(user.Id)).Count();
-            label_ActivitiesCounter.Text = value.ToString();
+            using (netimeContainer context = new netimeContainer())
+            {
+                int value = 0;
+                value = context.activitiesSet.Where(a => a.userId.Equals(CurrentUser.Id)).Count();
+                label_ActivitiesCounter.Text = value.ToString();
+            }
         }        
         private void updateSelectedActivitiesCounter()
         {
-            int value = 0;
-            value = context.selected_activitiesSet.Where(sa => sa.userId.Equals(user.Id)).Count();
-            label_SelActivitiesCounter.Text = value.ToString();
+            using (netimeContainer context = new netimeContainer())
+            {
+                int value = 0;
+                value = context.selected_activitiesSet.Where(sa => sa.userId.Equals(CurrentUser.Id)).Count();
+                label_SelActivitiesCounter.Text = value.ToString();
+            }
         }        
         private void updateHoursCounter()
         {
             int value = 0;
-            if(context.balanceSet.Any(b => b.userId.Equals(user.Id)))
+            using (netimeContainer context = new netimeContainer())
             {
-                value = context.balanceSet.Where(b => b.userId.Equals(user.Id)).Sum(sb => sb.qtty);
-            }            
-            label_HoursCounter.Text = value.ToString();
-            label_HoursCounter.ForeColor = value < 0 ? Color.Red : Color.Black;
-        }        
+                if (context.balanceSet.Any(b => b.userId.Equals(CurrentUser.Id)))
+                {
+                    value = context.balanceSet.Where(b => b.userId.Equals(CurrentUser.Id)).Sum(sb => sb.qtty);
+                }
+                label_HoursCounter.Text = value.ToString();
+                label_HoursCounter.ForeColor = value < 0 ? Color.Red : Color.Black;
+            }
+        }
+
+        private void button_ChangePass_Click(object sender, EventArgs e)
+        {
+            updateUserAttribute(textBox_userPass);
+        }
     }
 }

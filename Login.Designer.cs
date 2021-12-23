@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace NETime_WF_EF6
 {
     partial class Login
@@ -29,6 +31,7 @@ namespace NETime_WF_EF6
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUser = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
@@ -38,6 +41,7 @@ namespace NETime_WF_EF6
             this.button2 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label_response = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -109,8 +113,9 @@ namespace NETime_WF_EF6
             // 
             this.linkLabel1.ActiveLinkColor = System.Drawing.Color.DarkSlateBlue;
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel1.BackColor = System.Drawing.Color.White;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.linkLabel1.Location = new System.Drawing.Point(349, 332);
             this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel1.Name = "linkLabel1";
@@ -129,6 +134,11 @@ namespace NETime_WF_EF6
             this.label_response.Size = new System.Drawing.Size(50, 13);
             this.label_response.TabIndex = 8;
             this.label_response.Text = "response";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Login
             // 
@@ -156,7 +166,7 @@ namespace NETime_WF_EF6
         }
 
         #endregion
-
+        
         private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -165,5 +175,7 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label_response;
+
+        private System.Windows.Forms.Timer timer1;
     }
 }

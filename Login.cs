@@ -141,12 +141,15 @@ namespace NETime_WF_EF6
             }
         }        
         private void userLogged(user user)
-        {            
-            Form_main form_main = new Form_main(user.Id);            
+        {
+            CurrentUser.SetUser(user);
+            Form_main form_main = new Form_main(user.Id);
             this.Hide();
             form_main.ShowDialog();
             this.Close();
         }
+
+        //RESPONSE MSG
         private void response(string res, Color color)
         {
             label_response.ForeColor = color;
@@ -157,11 +160,11 @@ namespace NETime_WF_EF6
         {
             linkLabel1.Visible = true;
             response("El usuario y la contraseña no coinciden.", Color.Red);
+            blink_start();
         }
 
         //DELEGATES
         public delegate bool callback(user user);        
-        
 
         //ASYNCCALLBACK EXPLORATION
         public bool passMatchAsync(user user, IAsyncResult result)
@@ -181,6 +184,35 @@ namespace NETime_WF_EF6
             }
             return valid;
         }
+
+        //BLINK REGISTER ALERT
+        private int blinks = 3;
+        private void blink_label(LinkLabel label)
+        {
+            if(this.blinks > -1)
+            {
+                Color backColor = label.BackColor;
+                label.BackColor = label.LinkColor;
+                label.LinkColor = backColor;
+                this.blinks -= 1;
+            }
+            else
+            {
+                this.timer1.Stop();
+                this.blinks = 3;
+            }
+                  
+        }
+        private void blink_start()
+        {            
+            this.timer1.Start();            
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine(blinks);
+            blink_label(linkLabel1);
+        }
+              
 
         //DEPRECATED
         private void deprecated_login()

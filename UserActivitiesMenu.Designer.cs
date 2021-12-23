@@ -30,6 +30,7 @@ namespace NETime_WF_EF6
         private void InitializeComponent()
         {
             this.groupBox_ActivitiesForm = new System.Windows.Forms.GroupBox();
+            this.label_msg = new System.Windows.Forms.Label();
             this.button_AddActivity = new System.Windows.Forms.Button();
             this.comboBox_Category = new System.Windows.Forms.ComboBox();
             this.textBox_ActivityDesc = new System.Windows.Forms.TextBox();
@@ -47,6 +48,7 @@ namespace NETime_WF_EF6
             // 
             // groupBox_ActivitiesForm
             // 
+            this.groupBox_ActivitiesForm.Controls.Add(this.label_msg);
             this.groupBox_ActivitiesForm.Controls.Add(this.button_AddActivity);
             this.groupBox_ActivitiesForm.Controls.Add(this.comboBox_Category);
             this.groupBox_ActivitiesForm.Controls.Add(this.textBox_ActivityDesc);
@@ -56,19 +58,31 @@ namespace NETime_WF_EF6
             this.groupBox_ActivitiesForm.Controls.Add(this.textBox_name);
             this.groupBox_ActivitiesForm.Location = new System.Drawing.Point(3, 366);
             this.groupBox_ActivitiesForm.Name = "groupBox_ActivitiesForm";
-            this.groupBox_ActivitiesForm.Size = new System.Drawing.Size(496, 242);
+            this.groupBox_ActivitiesForm.Size = new System.Drawing.Size(496, 259);
             this.groupBox_ActivitiesForm.TabIndex = 0;
             this.groupBox_ActivitiesForm.TabStop = false;
             this.groupBox_ActivitiesForm.Text = "Crear actividades";
             // 
+            // label_msg
+            // 
+            this.label_msg.AutoSize = true;
+            this.label_msg.Location = new System.Drawing.Point(9, 229);
+            this.label_msg.Name = "label_msg";
+            this.label_msg.Size = new System.Drawing.Size(49, 13);
+            this.label_msg.TabIndex = 8;
+            this.label_msg.Text = "message";
+            this.label_msg.Visible = false;
+            // 
             // button_AddActivity
             // 
-            this.button_AddActivity.Location = new System.Drawing.Point(6, 200);
+            this.button_AddActivity.Enabled = false;
+            this.button_AddActivity.Location = new System.Drawing.Point(109, 175);
             this.button_AddActivity.Name = "button_AddActivity";
-            this.button_AddActivity.Size = new System.Drawing.Size(487, 36);
+            this.button_AddActivity.Size = new System.Drawing.Size(237, 28);
             this.button_AddActivity.TabIndex = 7;
             this.button_AddActivity.Text = "Crear actividad";
             this.button_AddActivity.UseVisualStyleBackColor = true;
+            this.button_AddActivity.Click += new System.EventHandler(this.button_AddActivity_Click);
             // 
             // comboBox_Category
             // 
@@ -80,11 +94,13 @@ namespace NETime_WF_EF6
             // 
             // textBox_ActivityDesc
             // 
-            this.textBox_ActivityDesc.Location = new System.Drawing.Point(9, 95);
+            this.textBox_ActivityDesc.Location = new System.Drawing.Point(6, 95);
             this.textBox_ActivityDesc.Multiline = true;
             this.textBox_ActivityDesc.Name = "textBox_ActivityDesc";
-            this.textBox_ActivityDesc.Size = new System.Drawing.Size(484, 99);
+            this.textBox_ActivityDesc.Size = new System.Drawing.Size(484, 74);
             this.textBox_ActivityDesc.TabIndex = 5;
+            this.textBox_ActivityDesc.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_ActivityDesc.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // label_Description
             // 
@@ -119,7 +135,8 @@ namespace NETime_WF_EF6
             this.textBox_name.Name = "textBox_name";
             this.textBox_name.Size = new System.Drawing.Size(161, 20);
             this.textBox_name.TabIndex = 0;
-            this.textBox_name.Text = "Nombre de la actividad";
+            this.textBox_name.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
+            this.textBox_name.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // groupBox_UserActivities
             // 
@@ -136,10 +153,11 @@ namespace NETime_WF_EF6
             // 
             this.button_DeleteActivity.Location = new System.Drawing.Point(6, 320);
             this.button_DeleteActivity.Name = "button_DeleteActivity";
-            this.button_DeleteActivity.Size = new System.Drawing.Size(161, 23);
+            this.button_DeleteActivity.Size = new System.Drawing.Size(92, 23);
             this.button_DeleteActivity.TabIndex = 1;
             this.button_DeleteActivity.Text = "Borrar actividad";
             this.button_DeleteActivity.UseVisualStyleBackColor = true;
+            this.button_DeleteActivity.Click += new System.EventHandler(this.button_DeleteActivity_Click);
             // 
             // dataGridView_Activities
             // 
@@ -147,9 +165,15 @@ namespace NETime_WF_EF6
             this.dataGridView_Activities.AllowUserToDeleteRows = false;
             this.dataGridView_Activities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Activities.Location = new System.Drawing.Point(6, 19);
+            this.dataGridView_Activities.MultiSelect = false;
             this.dataGridView_Activities.Name = "dataGridView_Activities";
+            this.dataGridView_Activities.RowHeadersVisible = false;
+            this.dataGridView_Activities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView_Activities.Size = new System.Drawing.Size(484, 295);
             this.dataGridView_Activities.TabIndex = 0;
+            this.dataGridView_Activities.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Activities_CellEnter);
+            this.dataGridView_Activities.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Activities_CellLeave);
+            this.dataGridView_Activities.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Activities_CellValueChanged);
             // 
             // UserActivitiesMenu
             // 
@@ -160,7 +184,7 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.groupBox_ActivitiesForm);
             this.Name = "UserActivitiesMenu";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(505, 614);
+            this.Size = new System.Drawing.Size(505, 631);
             this.groupBox_ActivitiesForm.ResumeLayout(false);
             this.groupBox_ActivitiesForm.PerformLayout();
             this.groupBox_UserActivities.ResumeLayout(false);
@@ -182,5 +206,6 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.ComboBox comboBox_Category;
         private System.Windows.Forms.Button button_AddActivity;
         private System.Windows.Forms.Button button_DeleteActivity;
+        private System.Windows.Forms.Label label_msg;
     }
 }
