@@ -123,19 +123,19 @@ namespace NETime_WF_EF6
         }
         static public void checkTextboxStatus(TextBox[] textBoxes, Button btn)
         {
+            btn.Enabled = true;
             foreach(TextBox tb in textBoxes)
-            {
-                btn.Enabled = tb.CausesValidation;
-            }            
+            {                
+                if (!tb.CausesValidation) { btn.Enabled = false; break; }
+            }
         }
         static public bool checkTextboxStatus(TextBox[] textBoxes)
-        {
-            bool valid = false;
+        {            
             foreach (TextBox tb in textBoxes)
             {
-                valid = tb.CausesValidation;
+                if (!tb.CausesValidation) { return false; }
             }
-            return valid;
+            return true;
         }
     }
     public class Context
@@ -176,8 +176,7 @@ namespace NETime_WF_EF6
                 Console.WriteLine(task);
                 return false;
             }
-        }
-        
+        }        
         public static async Task<int> saveChanges(netimeContainer context, string fnDesc)
         {            
             try
@@ -187,7 +186,7 @@ namespace NETime_WF_EF6
             }
             catch (DbUpdateException err)
             {
-                MessageBox.Show(err.Message, fnDesc);
+                MessageBox.Show(err.InnerException.ToString(), fnDesc);
             }
             catch (DBConcurrencyException err)
             {
@@ -221,7 +220,7 @@ namespace NETime_WF_EF6
             }
             catch (DbUpdateException err)
             {
-                MessageBox.Show(err.Message, fnDesc);
+                MessageBox.Show(err.InnerException.ToString(), fnDesc);
             }
             catch (DBConcurrencyException err)
             {

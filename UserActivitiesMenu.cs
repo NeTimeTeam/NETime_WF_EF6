@@ -27,6 +27,10 @@ namespace NETime_WF_EF6
         //CONTEXT AND SAVECHANGES
         //netimeContainer context = new netimeContainer();
 
+        //LIST OF CATEGORIES AND ACTIVITIES
+        private List<Actividades> activitiesList;
+        private List<categories> categoriesList;
+
 
         //RESPONSE MSG
         private void Response(string msg, Color color)
@@ -75,9 +79,9 @@ namespace NETime_WF_EF6
             }
             return categories;
         }
-        private List<Object> getListOfActivities()
+        private List<Actividades> getListOfActivities()
         {
-            List<Object> activities;
+            List<Actividades> activities;
             try
             {
                 using (netimeContainer context = new netimeContainer())
@@ -89,13 +93,13 @@ namespace NETime_WF_EF6
                         //
                         .Where(a => a.userId == CurrentUser.Id)
                         .Join(context.categoriesSet, a => a.categoriesId, c => c.Id,
-                        (a, c) => new { a.Id, a.name, category = c.name, a.description })
-                        .Select(s => s).ToList<Object>();
+                        (a, c) => new Actividades{ selector = false, Id = a.Id, name = a.name, category = c.name, description = a.description, userId = 0, email = "none" })
+                        .ToList<Actividades>();
                 }                    
             }
             catch (Exception e)
             {
-                activities = new List<Object>();
+                activities = new List<Actividades>();
                 ErrMsg("Horror. La conexión a la base de datos ha fallado.");
                 Console.WriteLine(e.Message);                
             }
@@ -209,7 +213,8 @@ namespace NETime_WF_EF6
             }            
         }
         private void textBox_CausesValidationChanged(object sender, EventArgs e)
-        {            
+        {
+            //button_AddActivity.Enabled = this.textBox_ActivityDesc.CausesValidation & this.textBox_name.CausesValidation;
             TextBox[] textboxes = { this.textBox_name, this.textBox_ActivityDesc };
             Utilities.checkTextboxStatus(textboxes, button_AddActivity);            
         }
@@ -330,24 +335,33 @@ namespace NETime_WF_EF6
         private void dataGridView_Activities_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView data = sender as DataGridView;
-            if(e.RowIndex >= 0)
+            if(e.RowIndex >= 0 & e.ColumnIndex > 0)
             {
                 int Id = Convert.ToInt32(data[1, e.RowIndex].Value);
                 string value = data[e.ColumnIndex, e.RowIndex].Value.ToString();
+                string attribute = data.Columns[e.ColumnIndex].Name;
+                DataGridViewRow row = data.Rows[e.RowIndex];
+                
+                string name = row.Cells[2].Value.ToString();
+                string cat = row.Cells[4].Value.ToString();
+                string desc = row.Cells[3].Value.ToString();
 
-                Console.WriteLine("dataGridView_Activities_CellValueChanged " + Id + " " + e.ColumnIndex + " " + value);
+                Console.WriteLine($"dataGridView_Activities_CellValueChanged: {Id} {value} {attribute}");
 
                 ErrorObject res = IsValidNewTextInCell(e.ColumnIndex, value);
+
                 if (res.status)
                 {
                     Messages.ErrorMessage(label_msg, res.message);
+                    UpdataDataGridView();
                 }
                 else
                 {
-                    UpdataActivityAttribute(value, Id);
-                }
+                    UpdataActivityAttribute(Id, name, cat, desc);
+                }                
             }            
         }
+
         private void dataGridView_Activities_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
         {
             Console.WriteLine("dataGridView_Activities_CellErrorTextChanged");
@@ -355,7 +369,16 @@ namespace NETime_WF_EF6
         private void dataGridView_Activities_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
         }
-
+        private bool IsValidCategoryName(string value)
+        {
+            if(value == null) { return false; }
+            var categories = getListOfCategories();
+            foreach (categories c in categories)
+            {
+                if (c.name.Equals(value)) { return true; }
+            }
+            return false;
+        }
         private ErrorObject IsValidNewTextInCell(int col, string value)
         {
             ErrorObject err = new ErrorObject(false, $"Error: \"{value}\" no coumple los requisitos del campo.");
@@ -370,19 +393,22 @@ namespace NETime_WF_EF6
                         return err;
                     }
                     //Verifica si el nombre ya existe recorriendo todos los valores de colomna 1.
-                    foreach (DataGridViewRow row in dataGridView_Activities.Rows)
+                    var list = getListOfActivities();                    
+                    foreach (Actividades a in list)
                     {
-                        if (row.Cells[2].Value.Equals(value))
+                        if (a.name.Equals(value))
                         {
                             err.message = $"Error: Ya dispone de una actividad con el nombre \"{value}\".";
                             err.status = true;
                             return err;
                         }
-                    }
+                    }                    
                     return err;
                 case 4: //Category
-                    if (!Utilities.nameValidation(value))
+                    ;
+                    if (!IsValidCategoryName(value))
                     {
+                        err.message = $"Error: \"{value}\" no es una categoría valida.";
                         err.status = true;
                     }
                     //TODO: solo permitir las categorias listadas.
@@ -396,9 +422,59 @@ namespace NETime_WF_EF6
             }
             return err;
         }        
-        private void UpdataActivityAttribute(string value,  int Id)
+        private async Task<ErrorObject> UpdataActivityAttribute(int Id, string name, string category, string description)
         {
-            //TODO: update attribute
+            ErrorObject res = new ErrorObject(false, string.Empty);
+            using(netimeContainer context = new netimeContainer())
+            {
+                activities activity;
+                int categoriesId;
+                try
+                {
+                    activity = context.activitiesSet.Find(Id);
+                    categoriesId = context.categoriesSet.Where<categories>(c => c.name == category).Select(s => s.Id).FirstOrDefault();
+                }
+                catch (InvalidOperationException e)
+                {
+                    res.status = true;
+                    res.message = "Error de acceso a la base de datos. Transacción cancelada.";
+                    Console.WriteLine(e.Message);
+                    return res;
+                }
+                
+                activity.name = name;
+                activity.categoriesId = categoriesId;
+                activity.description = description;
+                
+                await Context.saveChanges(context, label_msg, "UPDATE ATTRIBUTE", UpdataDataGridView);                
+            }
+            return res;
+        }
+        private async Task<ErrorObject> UpdataActivityAttribute(int Id, string name, int category, string description)
+        {
+            ErrorObject res = new ErrorObject(false, string.Empty);
+            using (netimeContainer context = new netimeContainer())
+            {
+                activities activity;
+                try
+                {
+                    activity = context.activitiesSet.Find(Id);                    
+                }
+                catch (InvalidOperationException e)
+                {
+                    res.status = true;
+                    res.message = "Error de acceso a la base de datos. Transacción cancelada.";
+                    Console.WriteLine(e.Message);
+                    return res;
+                }
+
+                activity.name = name;
+                activity.categoriesId = category;
+                activity.description = description;
+
+                await Context.saveChanges(context, label_msg, "UPDATE ATTRIBUTE", UpdataDataGridView);
+            }
+            return res;
         }
         private bool IsSelectedCell()
         {
