@@ -17,11 +17,11 @@ namespace NETime_WF_EF6
         {
             InitializeComponent();
             Load();
-        }        
+        }
         new public async void Load()
         {
-            UpdateCategoriesComboBox();
-            UpdataDataGridView();
+            await UpdateCategoriesComboBox();
+            await UpdataDataGridView();
 
         }
         //CONTEXT AND SAVECHANGES
@@ -31,6 +31,19 @@ namespace NETime_WF_EF6
         private List<Actividades> activitiesList;
         private List<categories> categoriesList;
 
+        //TASK
+        private TaskScheduler ts;
+        private void RunTask(TaskScheduler ts, Task task)
+        {
+            try { task.Start(ts); }
+            catch (ArgumentNullException err) { Console.WriteLine(err.Message); }
+            catch (InvalidOperationException err) { Console.WriteLine(err.Message); }
+            catch (TaskSchedulerException err) { Console.WriteLine(err.Message); }
+        }
+        private void RunTask(Task task)
+        {
+            RunTask(this.ts, task);
+        }
 
         //RESPONSE MSG
         private void Response(string msg, Color color)
@@ -50,10 +63,10 @@ namespace NETime_WF_EF6
             List<categories> categories = new List<categories>();
             try
             {
-                using(netimeContainer context = new netimeContainer())
+                using (netimeContainer context = new netimeContainer())
                 {
                     categories = context.categoriesSet.ToList<categories>();
-                }                
+                }
             }
             catch (Exception e)
             {
@@ -67,10 +80,10 @@ namespace NETime_WF_EF6
             List<categories> categories = new List<categories>();
             try
             {
-                using(netimeContainer context = new netimeContainer())
+                using (netimeContainer context = new netimeContainer())
                 {
                     categories = await context.categoriesSet.ToListAsync<categories>();
-                }                
+                }
             }
             catch (Exception e)
             {
@@ -93,15 +106,15 @@ namespace NETime_WF_EF6
                         //
                         .Where(a => a.userId == CurrentUser.Id)
                         .Join(context.categoriesSet, a => a.categoriesId, c => c.Id,
-                        (a, c) => new Actividades{ selector = false, Id = a.Id, name = a.name, category = c.name, description = a.description, userId = 0, email = "none" })
+                        (a, c) => new Actividades { selector = false, Id = a.Id, name = a.name, category = c.name, description = a.description, userId = 0, email = "none" })
                         .ToList<Actividades>();
-                }                    
+                }
             }
             catch (Exception e)
             {
                 activities = new List<Actividades>();
                 ErrMsg("Horror. La conexión a la base de datos ha fallado.");
-                Console.WriteLine(e.Message);                
+                Console.WriteLine(e.Message);
             }
             return activities;
         }
@@ -110,13 +123,13 @@ namespace NETime_WF_EF6
             List<Actividades> activities;
             try
             {
-                using(netimeContainer context = new netimeContainer())
+                using (netimeContainer context = new netimeContainer())
                 {
                     activities = await (from a in context.activitiesSet
                                         join c in context.categoriesSet on a.categoriesId equals c.Id
                                         where a.userId == CurrentUser.Id
-                                        select new Actividades { selector = false, Id= a.Id, name = a.name, category = c.name, description = a.description, userId =  0, email = "none" }).ToListAsync<Actividades>();
-                }                
+                                        select new Actividades { selector = false, Id = a.Id, name = a.name, category = c.name, description = a.description, userId = 0, email = "none" }).ToListAsync<Actividades>();
+                }
             }
             catch (Exception e)
             {
@@ -128,33 +141,35 @@ namespace NETime_WF_EF6
         }
 
         //COMBOBOX
-        private async void UpdateCategoriesComboBox()
+        private async Task<int> UpdateCategoriesComboBox()
         {
             comboBox_Category.DataSource = await getListOfCategoriesAsync();
             comboBox_Category.DisplayMember = "name";
             comboBox_Category.ValueMember = "Id";
+            return 1;
         }
 
         //DataGridView
-        private async void UpdataDataGridView()
+        private async Task<bool> UpdataDataGridView()
         {
             dataGridView_Activities.DataSource = await getListOfActivitiesAsync();
 
             if (dataGridView_Activities.Rows.Count > 0)
             {
                 SetDataGridViewProperties(dataGridView_Activities.Columns);
-                
+
             }
+            return true;
         }
         private void SetDataGridViewProperties(DataGridViewColumnCollection columnList)
         {
-            foreach(DataGridViewColumn col in columnList)
+            foreach (DataGridViewColumn col in columnList)
             {
                 //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 //Console.WriteLine(col.Name);
-                
+
                 switch (col.Index)
-                {   
+                {
                     case 2: //name                           
                         dataGridView_Activities.Columns[col.Index].Visible = true;
                         dataGridView_Activities.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -187,7 +202,7 @@ namespace NETime_WF_EF6
                 }
             }
             dataGridView_Activities.Refresh();
-            foreach(DataGridViewColumn c in columnList)
+            foreach (DataGridViewColumn c in columnList)
             {
                 Console.WriteLine($"Nombre: {c.Name} - Index: {c.Index}");
             }
@@ -210,15 +225,15 @@ namespace NETime_WF_EF6
                 case "textBox_ActivityDesc":
                     Utilities.setTextBoxStatus(Utilities.descriptionValidation(textBox.Text), textBox);
                     break;
-            }            
+            }
         }
         private void textBox_CausesValidationChanged(object sender, EventArgs e)
         {
             //button_AddActivity.Enabled = this.textBox_ActivityDesc.CausesValidation & this.textBox_name.CausesValidation;
             TextBox[] textboxes = { this.textBox_name, this.textBox_ActivityDesc };
-            Utilities.checkTextboxStatus(textboxes, button_AddActivity);            
+            Utilities.checkTextboxStatus(textboxes, button_AddActivity);
         }
-        private async void CreateActivity()
+        private async Task<bool> CreateActivity()
         {
             using (netimeContainer context = new netimeContainer())
             {
@@ -253,8 +268,10 @@ namespace NETime_WF_EF6
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                    return false;
                 }
-            }                        
+            }
+            return true;
         }
         private void ActivityCreated()
         {
@@ -267,13 +284,13 @@ namespace NETime_WF_EF6
             textBox_name.Text = string.Empty;
             textBox_ActivityDesc.Text = string.Empty;
         }
-        private void button_AddActivity_Click(Object sender, EventArgs e)
+        private async void button_AddActivity_Click(Object sender, EventArgs e)
         {
-            CreateActivity();
+            await CreateActivity();
         }
 
         //BORRAR ACTIVIDADES
-        private void button_DeleteActivity_Click(object sender, EventArgs e)
+        private async void button_DeleteActivity_Click(object sender, EventArgs e)
         {
             List<int> activitiesId = new List<int>();
             DataGridViewRowCollection rowList = dataGridView_Activities.Rows;
@@ -283,8 +300,8 @@ namespace NETime_WF_EF6
                 {
                     activitiesId.Add(Convert.ToInt32(row.Cells[1].Value));
                 }                
-            }            
-            DeleteActivities(activitiesId);            
+            }
+            await DeleteActivities(activitiesId);            
         }        
         private async void DeleteActivities(int activityId)
         {
@@ -303,7 +320,7 @@ namespace NETime_WF_EF6
                 }
             }
         }
-        private async void DeleteActivities(List<int> activitiesId)
+        private async Task<bool> DeleteActivities(List<int> activitiesId)
         {
             using (netimeContainer context = new netimeContainer())
             {
@@ -319,7 +336,9 @@ namespace NETime_WF_EF6
                 {
                     Messages.ErrorMessage(label_msg, $"Error accediendo a la base de datos. Borrado cancelado.");
                     Console.WriteLine(e.Message);
+                    return false;
                 }
+                return true;
             }
         }
 
@@ -332,16 +351,24 @@ namespace NETime_WF_EF6
         {
             Console.WriteLine("ataGridView_Activities_CellLeave");
         }
-        private void dataGridView_Activities_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView_Activities_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            Console.WriteLine("dataGridView_Activities_CellErrorTextChanged");
+        }
+        private void dataGridView_Activities_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+        }
+        //EVENTO QUE LANZA LA ACTUALIZACIÖN DE LOS ATRIBUTOS.
+        private async void dataGridView_Activities_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView data = sender as DataGridView;
-            if(e.RowIndex >= 0 & e.ColumnIndex > 0)
+            if (e.RowIndex >= 0 & e.ColumnIndex > 0)
             {
                 int Id = Convert.ToInt32(data[1, e.RowIndex].Value);
                 string value = data[e.ColumnIndex, e.RowIndex].Value.ToString();
                 string attribute = data.Columns[e.ColumnIndex].Name;
                 DataGridViewRow row = data.Rows[e.RowIndex];
-                
+
                 string name = row.Cells[2].Value.ToString();
                 string cat = row.Cells[4].Value.ToString();
                 string desc = row.Cells[3].Value.ToString();
@@ -353,22 +380,16 @@ namespace NETime_WF_EF6
                 if (res.status)
                 {
                     Messages.ErrorMessage(label_msg, res.message);
-                    UpdataDataGridView();
+                    await UpdataDataGridView();
                 }
                 else
                 {
-                    UpdataActivityAttribute(Id, name, cat, desc);
-                }                
-            }            
+                    await UpdataActivityAttribute(Id, name, cat, desc);                    
+                }
+            }
         }
 
-        private void dataGridView_Activities_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            Console.WriteLine("dataGridView_Activities_CellErrorTextChanged");
-        }
-        private void dataGridView_Activities_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-        }
+        //ACTUALIZAR ATRIBUTOS
         private bool IsValidCategoryName(string value)
         {
             if(value == null) { return false; }

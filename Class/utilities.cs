@@ -144,7 +144,24 @@ namespace NETime_WF_EF6
         public delegate void callback();        
         public delegate void res(string msg, Color color);
         public delegate bool response(bool valid);
+        public delegate Task<bool> asyncCallback();
 
+        public static async Task<bool> saveChanges(netimeContainer context, Label label, string fnDesc, asyncCallback callback)
+        {
+            Messages.Message(label, "En proceso... espere.", Color.Black);
+            int task = await Context.saveChanges(context, fnDesc);
+            if (task > 0)
+            {
+                Messages.Message(label, "Finalizado.", Color.Black);
+                await callback();
+                return true;
+            }
+            else
+            {
+                Messages.ErrorMessage(label, "Error de acceso a la base de datos.");
+                return false;
+            }
+        }
         public static async Task<bool> saveChanges(netimeContainer context, Label label, string fnDesc, callback callback)
         {            
             Messages.Message(label, "En proceso... espere.", Color.Black);
