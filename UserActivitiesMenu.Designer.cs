@@ -94,6 +94,7 @@ namespace NETime_WF_EF6
             // 
             // textBox_ActivityDesc
             // 
+            this.textBox_ActivityDesc.CausesValidation = false;
             this.textBox_ActivityDesc.Location = new System.Drawing.Point(6, 95);
             this.textBox_ActivityDesc.Multiline = true;
             this.textBox_ActivityDesc.Name = "textBox_ActivityDesc";
@@ -131,6 +132,7 @@ namespace NETime_WF_EF6
             // 
             // textBox_name
             // 
+            this.textBox_name.CausesValidation = false;
             this.textBox_name.Location = new System.Drawing.Point(9, 44);
             this.textBox_name.Name = "textBox_name";
             this.textBox_name.Size = new System.Drawing.Size(161, 20);

@@ -56,7 +56,7 @@ namespace NETime_WF_EF6
             this.panel_ContainerInterface.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_ContainerInterface.Location = new System.Drawing.Point(95, 73);
             this.panel_ContainerInterface.Name = "panel_ContainerInterface";
-            this.panel_ContainerInterface.Size = new System.Drawing.Size(657, 784);
+            this.panel_ContainerInterface.Size = new System.Drawing.Size(649, 700);
             this.panel_ContainerInterface.TabIndex = 1;
             // 
             // panel_ContainerMenu
@@ -71,7 +71,7 @@ namespace NETime_WF_EF6
             this.panel_ContainerMenu.Controls.Add(this.pictureBox_UserData);
             this.panel_ContainerMenu.Location = new System.Drawing.Point(12, 12);
             this.panel_ContainerMenu.Name = "panel_ContainerMenu";
-            this.panel_ContainerMenu.Size = new System.Drawing.Size(80, 845);
+            this.panel_ContainerMenu.Size = new System.Drawing.Size(80, 761);
             this.panel_ContainerMenu.TabIndex = 0;
             // 
             // pictureBox_Logout
@@ -79,7 +79,7 @@ namespace NETime_WF_EF6
             this.pictureBox_Logout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_Logout.Image = global::NETime_WF_EF6.Properties.Resources.logout;
-            this.pictureBox_Logout.Location = new System.Drawing.Point(3, 789);
+            this.pictureBox_Logout.Location = new System.Drawing.Point(3, 705);
             this.pictureBox_Logout.Name = "pictureBox_Logout";
             this.pictureBox_Logout.Size = new System.Drawing.Size(69, 50);
             this.pictureBox_Logout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -146,7 +146,7 @@ namespace NETime_WF_EF6
             this.panel_titulo.Controls.Add(this.label_title);
             this.panel_titulo.Location = new System.Drawing.Point(95, 12);
             this.panel_titulo.Name = "panel_titulo";
-            this.panel_titulo.Size = new System.Drawing.Size(657, 56);
+            this.panel_titulo.Size = new System.Drawing.Size(649, 56);
             this.panel_titulo.TabIndex = 2;
             // 
             // label_title
@@ -168,7 +168,7 @@ namespace NETime_WF_EF6
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(764, 860);
+            this.ClientSize = new System.Drawing.Size(756, 776);
             this.Controls.Add(this.panel_titulo);
             this.Controls.Add(this.panel_ContainerInterface);
             this.Controls.Add(this.panel_ContainerMenu);

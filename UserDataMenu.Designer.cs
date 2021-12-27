@@ -30,6 +30,7 @@ namespace NETime_WF_EF6
         private void InitializeComponent()
         {
             this.groupBox_userDataForm = new System.Windows.Forms.GroupBox();
+            this.button_ChangePass = new System.Windows.Forms.Button();
             this.label_userPass2 = new System.Windows.Forms.Label();
             this.textBox_userPass2 = new System.Windows.Forms.TextBox();
             this.label_userTel = new System.Windows.Forms.Label();
@@ -51,9 +52,8 @@ namespace NETime_WF_EF6
             this.label_HoursCounterLabel = new System.Windows.Forms.Label();
             this.label_SelActivitiesCounterLabel = new System.Windows.Forms.Label();
             this.label_ActivitiesCounterLabel = new System.Windows.Forms.Label();
-            this.panel_Message = new System.Windows.Forms.Panel();
             this.label_Msg = new System.Windows.Forms.Label();
-            this.button_ChangePass = new System.Windows.Forms.Button();
+            this.panel_Message = new System.Windows.Forms.Panel();
             this.groupBox_userDataForm.SuspendLayout();
             this.groupBox_userCounters.SuspendLayout();
             this.panel_Message.SuspendLayout();
@@ -83,6 +83,20 @@ namespace NETime_WF_EF6
             this.groupBox_userDataForm.TabStop = false;
             this.groupBox_userDataForm.Tag = "UserForm";
             this.groupBox_userDataForm.Text = "Edición de datos de usaurio";
+            // 
+            // button_ChangePass
+            // 
+            this.button_ChangePass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.button_ChangePass.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_ChangePass.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_ChangePass.Location = new System.Drawing.Point(203, 156);
+            this.button_ChangePass.Name = "button_ChangePass";
+            this.button_ChangePass.Size = new System.Drawing.Size(50, 59);
+            this.button_ChangePass.TabIndex = 14;
+            this.button_ChangePass.Text = "Cambiar";
+            this.button_ChangePass.UseVisualStyleBackColor = true;
+            this.button_ChangePass.Visible = false;
+            this.button_ChangePass.Click += new System.EventHandler(this.button_ChangePass_Click);
             // 
             // label_userPass2
             // 
@@ -314,6 +328,17 @@ namespace NETime_WF_EF6
             this.label_ActivitiesCounterLabel.Tag = "UserCounters";
             this.label_ActivitiesCounterLabel.Text = "Actividades";
             // 
+            // label_Msg
+            // 
+            this.label_Msg.AutoSize = true;
+            this.label_Msg.Location = new System.Drawing.Point(21, 27);
+            this.label_Msg.Name = "label_Msg";
+            this.label_Msg.Size = new System.Drawing.Size(49, 13);
+            this.label_Msg.TabIndex = 0;
+            this.label_Msg.Tag = "UserMsg";
+            this.label_Msg.Text = "message";
+            this.label_Msg.Visible = false;
+            // 
             // panel_Message
             // 
             this.panel_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -325,30 +350,6 @@ namespace NETime_WF_EF6
             this.panel_Message.Size = new System.Drawing.Size(494, 66);
             this.panel_Message.TabIndex = 5;
             this.panel_Message.Tag = "UserMsg";
-            // 
-            // label_Msg
-            // 
-            this.label_Msg.AutoSize = true;
-            this.label_Msg.Location = new System.Drawing.Point(21, 27);
-            this.label_Msg.Name = "label_Msg";
-            this.label_Msg.Size = new System.Drawing.Size(49, 13);
-            this.label_Msg.TabIndex = 0;
-            this.label_Msg.Tag = "UserMsg";
-            this.label_Msg.Text = "message";
-            // 
-            // button_ChangePass
-            // 
-            this.button_ChangePass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.button_ChangePass.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_ChangePass.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_ChangePass.Location = new System.Drawing.Point(203, 156);
-            this.button_ChangePass.Name = "button_ChangePass";
-            this.button_ChangePass.Size = new System.Drawing.Size(50, 59);
-            this.button_ChangePass.TabIndex = 14;
-            this.button_ChangePass.Text = "Cambiar";
-            this.button_ChangePass.UseVisualStyleBackColor = true;
-            this.button_ChangePass.Visible = false;
-            this.button_ChangePass.Click += new System.EventHandler(this.button_ChangePass_Click);
             // 
             // UserDataMenu
             // 
@@ -391,10 +392,10 @@ namespace NETime_WF_EF6
         private System.Windows.Forms.Label label_HoursCounterLabel;
         private System.Windows.Forms.Label label_SelActivitiesCounterLabel;
         private System.Windows.Forms.Label label_ActivitiesCounterLabel;
-        private System.Windows.Forms.Panel panel_Message;
-        public System.Windows.Forms.Label label_Msg;
         private System.Windows.Forms.Label label_userPass2;
         private System.Windows.Forms.TextBox textBox_userPass2;
         private System.Windows.Forms.Button button_ChangePass;
+        public System.Windows.Forms.Label label_Msg;
+        private System.Windows.Forms.Panel panel_Message;
     }
 }
