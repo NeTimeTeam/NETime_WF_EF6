@@ -16,35 +16,14 @@ namespace NETime_WF_EF6
         public UserActivitiesMenu()
         {
             InitializeComponent();
-            Load();
+            ReLoad();
         }
-        new public async void Load()
+        public async void ReLoad()
         {
             await UpdateCategoriesComboBox();
             await UpdataDataGridView();
 
         }
-        //CONTEXT AND SAVECHANGES
-        //netimeContainer context = new netimeContainer();
-
-        //LIST OF CATEGORIES AND ACTIVITIES
-        private List<Actividades> activitiesList;
-        private List<categories> categoriesList;
-
-        //TASK
-        private TaskScheduler ts;
-        private void RunTask(TaskScheduler ts, Task task)
-        {
-            try { task.Start(ts); }
-            catch (ArgumentNullException err) { Console.WriteLine(err.Message); }
-            catch (InvalidOperationException err) { Console.WriteLine(err.Message); }
-            catch (TaskSchedulerException err) { Console.WriteLine(err.Message); }
-        }
-        private void RunTask(Task task)
-        {
-            RunTask(this.ts, task);
-        }
-
         //RESPONSE MSG
         private void Response(string msg, Color color)
         {
@@ -273,11 +252,11 @@ namespace NETime_WF_EF6
             }
             return true;
         }
-        private void ActivityCreated()
+        private async void ActivityCreated()
         {
             Messages.Message(label_msg, $"Actividad {this.textBox_name.Text} creada.", Color.Black);
             CleanTextBoxes();
-            UpdataDataGridView();
+            await UpdataDataGridView();
         }
         private void CleanTextBoxes()
         {

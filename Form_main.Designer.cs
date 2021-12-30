@@ -49,14 +49,11 @@ namespace NETime_WF_EF6
             // 
             // panel_ContainerInterface
             // 
-            this.panel_ContainerInterface.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_ContainerInterface.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel_ContainerInterface.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_ContainerInterface.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_ContainerInterface.Location = new System.Drawing.Point(95, 73);
+            this.panel_ContainerInterface.Location = new System.Drawing.Point(98, 73);
             this.panel_ContainerInterface.Name = "panel_ContainerInterface";
-            this.panel_ContainerInterface.Size = new System.Drawing.Size(649, 700);
+            this.panel_ContainerInterface.Size = new System.Drawing.Size(646, 691);
             this.panel_ContainerInterface.TabIndex = 1;
             // 
             // panel_ContainerMenu
@@ -71,7 +68,7 @@ namespace NETime_WF_EF6
             this.panel_ContainerMenu.Controls.Add(this.pictureBox_UserData);
             this.panel_ContainerMenu.Location = new System.Drawing.Point(12, 12);
             this.panel_ContainerMenu.Name = "panel_ContainerMenu";
-            this.panel_ContainerMenu.Size = new System.Drawing.Size(80, 761);
+            this.panel_ContainerMenu.Size = new System.Drawing.Size(80, 756);
             this.panel_ContainerMenu.TabIndex = 0;
             // 
             // pictureBox_Logout
@@ -79,7 +76,7 @@ namespace NETime_WF_EF6
             this.pictureBox_Logout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_Logout.Image = global::NETime_WF_EF6.Properties.Resources.logout;
-            this.pictureBox_Logout.Location = new System.Drawing.Point(3, 705);
+            this.pictureBox_Logout.Location = new System.Drawing.Point(3, 700);
             this.pictureBox_Logout.Name = "pictureBox_Logout";
             this.pictureBox_Logout.Size = new System.Drawing.Size(69, 50);
             this.pictureBox_Logout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -98,6 +95,7 @@ namespace NETime_WF_EF6
             this.pictureBox_Transactions.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox_Transactions.TabIndex = 3;
             this.pictureBox_Transactions.TabStop = false;
+            this.pictureBox_Transactions.Click += new System.EventHandler(this.pictureBox_Transactions_Click);
             // 
             // pictureBox_SelectActivities
             // 
@@ -110,6 +108,7 @@ namespace NETime_WF_EF6
             this.pictureBox_SelectActivities.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox_SelectActivities.TabIndex = 2;
             this.pictureBox_SelectActivities.TabStop = false;
+            this.pictureBox_SelectActivities.Click += new System.EventHandler(this.pictureBox_SelectActivities_Click);
             // 
             // pictureBox_Activities
             // 
@@ -141,22 +140,19 @@ namespace NETime_WF_EF6
             // 
             this.panel_titulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_titulo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel_titulo.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel_titulo.Controls.Add(this.label_title);
-            this.panel_titulo.Location = new System.Drawing.Point(95, 12);
+            this.panel_titulo.Location = new System.Drawing.Point(98, 12);
             this.panel_titulo.Name = "panel_titulo";
-            this.panel_titulo.Size = new System.Drawing.Size(649, 56);
+            this.panel_titulo.Size = new System.Drawing.Size(646, 56);
             this.panel_titulo.TabIndex = 2;
             // 
             // label_title
             // 
-            this.label_title.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_title.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label_title.AutoSize = true;
             this.label_title.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_title.Location = new System.Drawing.Point(3, 15);
+            this.label_title.Location = new System.Drawing.Point(0, 15);
             this.label_title.Name = "label_title";
             this.label_title.Size = new System.Drawing.Size(244, 24);
             this.label_title.TabIndex = 0;
@@ -166,8 +162,6 @@ namespace NETime_WF_EF6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(756, 776);
             this.Controls.Add(this.panel_titulo);
             this.Controls.Add(this.panel_ContainerInterface);

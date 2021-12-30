@@ -17,10 +17,10 @@ namespace NETime_WF_EF6
         public UserDataMenu()
         {
             InitializeComponent();
-            Load();
+            ReLoad();
         }
 
-        public void Load()
+        public void ReLoad()
         {
             updateUserDataInTextBox();
             updateActivitiesCounter();
@@ -101,7 +101,7 @@ namespace NETime_WF_EF6
                 }
             }
         }
-        private async void updateUserData()
+        private async Task updateUserData()
         {
             using (netimeContainer context = new netimeContainer())
             {
@@ -140,7 +140,7 @@ namespace NETime_WF_EF6
         
         
         //EDITAR DATOS DE USUARIO
-        private async void updateUserAttribute(TextBox data)
+        private async Task updateUserAttribute(TextBox data)
         {            
             bool valid = false;                //Variable de control.
             var msg = string.Empty;            //Mensaje de información
@@ -224,7 +224,7 @@ namespace NETime_WF_EF6
             }
         }
         //EVENTO TEXTBOX LEAVE FOCUS. Al salir de la edidicón del campo textbox verifica si este cumple la condición "validado", actualizandolo en la DB si la cummple o devolviendolo a su valor origianl en caso contrario.
-        private void userData_TextBoxLeave(object sender, EventArgs e)
+        private async Task userData_TextBoxLeave(object sender, EventArgs e)
         {
             TextBox data = sender as TextBox;
             switch (data.Name)
@@ -235,7 +235,7 @@ namespace NETime_WF_EF6
                 default:
                     if (data.CausesValidation)
                     {
-                        updateUserAttribute(data);
+                       updateUserAttribute(data);
                     }
                     else
                     {
@@ -325,9 +325,9 @@ namespace NETime_WF_EF6
             }
         }
 
-        private void button_ChangePass_Click(object sender, EventArgs e)
+        private async Task button_ChangePass_Click(object sender, EventArgs e)
         {
-            updateUserAttribute(textBox_userPass);
+            await updateUserAttribute(textBox_userPass);
         }
     }
 }
