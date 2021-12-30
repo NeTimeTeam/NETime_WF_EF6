@@ -224,7 +224,7 @@ namespace NETime_WF_EF6
             }
         }
         //EVENTO TEXTBOX LEAVE FOCUS. Al salir de la edidicón del campo textbox verifica si este cumple la condición "validado", actualizandolo en la DB si la cummple o devolviendolo a su valor origianl en caso contrario.
-        private void userData_TextBoxLeave(object sender, EventArgs e)
+        private async void userData_TextBoxLeave(object sender, EventArgs e)
         {
             TextBox data = sender as TextBox;
             switch (data.Name)
@@ -235,7 +235,7 @@ namespace NETime_WF_EF6
                 default:
                     if (data.CausesValidation)
                     {
-                       updateUserAttribute(data);
+                       await updateUserAttribute(data);
                     }
                     else
                     {
@@ -325,9 +325,9 @@ namespace NETime_WF_EF6
             }
         }
 
-        private void button_ChangePass_Click(object sender, EventArgs e)
+        private async void button_ChangePass_Click(object sender, EventArgs e)
         {
-            updateUserAttribute(textBox_userPass);
+            await updateUserAttribute(textBox_userPass);
         }
     }
 }

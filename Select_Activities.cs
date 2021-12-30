@@ -153,33 +153,33 @@ namespace NETime_WF_EF6
         }
         
         //EVENTS
-        private void button_Select_Click(object sender, EventArgs e)
+        private async void button_Select_Click(object sender, EventArgs e)
         {
             Console.WriteLine("button_Select");
             int Id = Convert.ToInt32(dataGridView_Available.SelectedRows[0].Cells[1].Value);
-            AddActivity(Id);
+            await AddActivity(Id);
         }
-        private void button_Dismiss_Click(object sender, EventArgs e)
+        private async void button_Dismiss_Click(object sender, EventArgs e)
         {
             Console.WriteLine("button_Dismiss");
             int Id = Convert.ToInt32(dataGridView_Selected.SelectedRows[0].Cells[1].Value);
-            RemoveActivity(Id);
+            await RemoveActivity(Id);
         }
-        private void dataGridView_Selected_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView_Selected_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Console.WriteLine("s_CellContentDoubleClick");
             DataGridView data = sender as DataGridView;
             int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[1].Value);
             Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
-            RemoveActivity(Id);
+            await RemoveActivity(Id);
         }
-        private void dataGridView_Available_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView_Available_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Console.WriteLine("a_CellContentDoubleClick");
             DataGridView data = sender as DataGridView;
             int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[1].Value);
             Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
-            AddActivity(Id);
+            await AddActivity(Id);
         }
         private void dataGridView_Selected_SelectionChanged(object sender, EventArgs e)
         {
