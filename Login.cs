@@ -54,7 +54,7 @@ namespace NETime_WF_EF6
                     deleteMe();
                 }
                 //USUARIO PREDETERMINADO PARA EL LOGIN (TESTING)
-                txtUser.Text = "nrovira@uoc.com";
+                txtUser.Text = "ocosmen@uoc.com";
                 txtPass.Text = "a1234567890";                
             }
         }

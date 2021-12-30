@@ -15,9 +15,6 @@ namespace NETime_WF_EF6
         {
             InitializeComponent();
             start();
-            //SetGridProperties(dataGridView_Available);
-            //SetGridProperties(dataGridView_Selected);
-
         }
 
         private async void start()
@@ -25,18 +22,7 @@ namespace NETime_WF_EF6
             await UpdateLists();
         }
 
-        //C# winform How To Remove Screen Flickering Issue
-        //https://www.youtube.com/watch?v=HQ0UYIuzucI
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams handleparam = base.CreateParams;
-                handleparam.ExStyle |= 0x02000000;
-                return handleparam;
-            }
-        }
-
+        
         private List<Actividades> selectedActivities;
         private List<Actividades> availableActivities;
 
@@ -120,10 +106,7 @@ namespace NETime_WF_EF6
                 }
                 data.RowHeadersVisible = false;
                 data.Refresh();
-                foreach (DataGridViewColumn c in columnList)
-                {
-                    Console.WriteLine($"Nombre: {c.Name} - Index: {c.Index}");
-                }
+                //foreach (DataGridViewColumn c in columnList) { Console.WriteLine($"Nombre: {c.Name} - Index: {c.Index}");}
             }
         }
         //DATA GATHER
@@ -168,14 +151,12 @@ namespace NETime_WF_EF6
             }
             return list;
         }
-
-
-
+        
+        //EVENTS
         private void button_Select_Click(object sender, EventArgs e)
         {
             Console.WriteLine("button_Dismiss");
         }
-
         private void button_Dismiss_Click(object sender, EventArgs e)
         {
             Console.WriteLine("button_Dismiss");
@@ -184,17 +165,17 @@ namespace NETime_WF_EF6
         {
             Console.WriteLine("s_CellContentDoubleClick");
             DataGridView data = sender as DataGridView;
-            int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[0].Value);
+            int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[1].Value);
             Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
-            //RemoveActivity(Id);
+            RemoveActivity(Id);
         }
         private void dataGridView_Available_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Console.WriteLine("a_CellContentDoubleClick");
             DataGridView data = sender as DataGridView;
-            int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[0].Value);
+            int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[1].Value);
             Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
-            //AddActivity(Id);
+            AddActivity(Id);
         }
         /*
                 private void dataGridView_Selected_SelectionChanged(object sender, EventArgs e)
