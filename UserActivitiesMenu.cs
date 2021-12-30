@@ -282,7 +282,7 @@ namespace NETime_WF_EF6
             }
             await DeleteActivities(activitiesId);            
         }        
-        private async void DeleteActivities(int activityId)
+        private async Task DeleteActivities(int activityId)
         {
             using(netimeContainer context = new netimeContainer())
             {
@@ -299,25 +299,28 @@ namespace NETime_WF_EF6
                 }
             }
         }
-        private async Task<bool> DeleteActivities(List<int> activitiesId)
+        private async Task DeleteActivities(List<int> activitiesId)
         {
             using (netimeContainer context = new netimeContainer())
             {
                 try
-                {
+                {                    
                     foreach(int Id in activitiesId)
                     {
-                        activities activity = context.activitiesSet.Find(Id);
+                        List<selected_activities> selActToDelete = context.selected_activitiesSet.Where(s => s.activitiesId == Id).ToList<selected_activities>();
+                        foreach(selected_activities sa in selActToDelete)
+                        {
+                            context.selected_activitiesSet.Remove(sa);
+                        }
+                        activities activity = context.activitiesSet.Find(Id);                        
                         context.activitiesSet.Remove(activity);
-                    }
+                    }                    
                     await Context.saveChanges(context, label_msg, "DELETE ACTIVITIES", UpdataDataGridView);
                 }catch(Exception e)
                 {
                     Messages.ErrorMessage(label_msg, $"Error accediendo a la base de datos. Borrado cancelado.");
-                    Console.WriteLine(e.Message);
-                    return false;
+                    Console.WriteLine(e.Message);                    
                 }
-                return true;
             }
         }
 
