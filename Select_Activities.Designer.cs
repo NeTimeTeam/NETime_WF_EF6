@@ -49,7 +49,7 @@ namespace NETime_WF_EF6
             this.groupBox_availables.Controls.Add(this.dataGridView_Available);
             this.groupBox_availables.Location = new System.Drawing.Point(3, 0);
             this.groupBox_availables.Name = "groupBox_availables";
-            this.groupBox_availables.Size = new System.Drawing.Size(499, 294);
+            this.groupBox_availables.Size = new System.Drawing.Size(499, 332);
             this.groupBox_availables.TabIndex = 0;
             this.groupBox_availables.TabStop = false;
             this.groupBox_availables.Text = "Actividades disponibles";
@@ -67,9 +67,10 @@ namespace NETime_WF_EF6
             this.dataGridView_Available.Name = "dataGridView_Available";
             this.dataGridView_Available.ReadOnly = true;
             this.dataGridView_Available.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView_Available.Size = new System.Drawing.Size(487, 269);
+            this.dataGridView_Available.Size = new System.Drawing.Size(487, 307);
             this.dataGridView_Available.TabIndex = 0;
             this.dataGridView_Available.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Available_CellContentDoubleClick);
+            this.dataGridView_Available.SelectionChanged += new System.EventHandler(this.dataGridView_Available_SelectionChanged);
             // 
             // groupBox_selected
             // 
@@ -97,21 +98,23 @@ namespace NETime_WF_EF6
             this.dataGridView_Selected.Size = new System.Drawing.Size(487, 201);
             this.dataGridView_Selected.TabIndex = 0;
             this.dataGridView_Selected.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Selected_CellContentDoubleClick);
+            this.dataGridView_Selected.SelectionChanged += new System.EventHandler(this.dataGridView_Selected_SelectionChanged);
             // 
             // panel_Control
             // 
             this.panel_Control.Controls.Add(this.button_Dismiss);
             this.panel_Control.Controls.Add(this.button_Select);
-            this.panel_Control.Location = new System.Drawing.Point(3, 300);
+            this.panel_Control.Location = new System.Drawing.Point(3, 338);
             this.panel_Control.Name = "panel_Control";
-            this.panel_Control.Size = new System.Drawing.Size(496, 69);
+            this.panel_Control.Size = new System.Drawing.Size(496, 31);
             this.panel_Control.TabIndex = 2;
             // 
             // button_Dismiss
             // 
-            this.button_Dismiss.Location = new System.Drawing.Point(277, 3);
+            this.button_Dismiss.Enabled = false;
+            this.button_Dismiss.Location = new System.Drawing.Point(237, 3);
             this.button_Dismiss.Name = "button_Dismiss";
-            this.button_Dismiss.Size = new System.Drawing.Size(103, 63);
+            this.button_Dismiss.Size = new System.Drawing.Size(76, 24);
             this.button_Dismiss.TabIndex = 1;
             this.button_Dismiss.Text = "Quitar";
             this.button_Dismiss.UseVisualStyleBackColor = true;
@@ -119,9 +122,10 @@ namespace NETime_WF_EF6
             // 
             // button_Select
             // 
-            this.button_Select.Location = new System.Drawing.Point(78, 3);
+            this.button_Select.Enabled = false;
+            this.button_Select.Location = new System.Drawing.Point(161, 3);
             this.button_Select.Name = "button_Select";
-            this.button_Select.Size = new System.Drawing.Size(108, 63);
+            this.button_Select.Size = new System.Drawing.Size(70, 24);
             this.button_Select.TabIndex = 0;
             this.button_Select.Text = "Añadir";
             this.button_Select.UseVisualStyleBackColor = true;

@@ -155,11 +155,15 @@ namespace NETime_WF_EF6
         //EVENTS
         private void button_Select_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("button_Dismiss");
+            Console.WriteLine("button_Select");
+            int Id = Convert.ToInt32(dataGridView_Available.SelectedRows[0].Cells[1].Value);
+            AddActivity(Id);
         }
         private void button_Dismiss_Click(object sender, EventArgs e)
         {
             Console.WriteLine("button_Dismiss");
+            int Id = Convert.ToInt32(dataGridView_Selected.SelectedRows[0].Cells[1].Value);
+            RemoveActivity(Id);
         }
         private void dataGridView_Selected_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -177,16 +181,33 @@ namespace NETime_WF_EF6
             Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
             AddActivity(Id);
         }
-        /*
-                private void dataGridView_Selected_SelectionChanged(object sender, EventArgs e)
-                {
-                    Console.WriteLine("S__SelectionChanged");
-                }
-                private void dataGridView_Available_SelectionChanged(object sender, EventArgs e)
-                {
-                    Console.WriteLine("a_SelectionChanged");
-                }
-        */
+        private void dataGridView_Selected_SelectionChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("S__SelectionChanged");
+            DataGridView data = sender as DataGridView;
+            if (data.SelectedRows.Count > 0)
+            {
+                button_Dismiss.Enabled = true;
+            }
+            else
+            {
+                button_Dismiss.Enabled = false;
+            }
+        }
+        private void dataGridView_Available_SelectionChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("a_SelectionChanged");
+            DataGridView data = sender as DataGridView;
+            if (data.SelectedRows.Count > 0)
+            {
+                button_Select.Enabled = true;
+            }
+            else
+            {
+                button_Select.Enabled = false;
+            }            
+        }
+        
         //ADD-REMOVE SEL.ACTIVITIES
         private async Task<bool> AddActivity(int Id)
         {
