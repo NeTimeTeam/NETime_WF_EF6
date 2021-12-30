@@ -147,7 +147,7 @@ namespace NETime_WF_EF6
             
             using (netimeContainer context = new netimeContainer())
             {
-                user user = await context.userSet.FindAsync(CurrentUser.Id);
+                user user =context.userSet.Find(CurrentUser.Id);
                 switch (data.Name)  //Determinamos que opración en función de la columna seleccionada.
                 {
                     case "textBox_userName":
@@ -224,7 +224,7 @@ namespace NETime_WF_EF6
             }
         }
         //EVENTO TEXTBOX LEAVE FOCUS. Al salir de la edidicón del campo textbox verifica si este cumple la condición "validado", actualizandolo en la DB si la cummple o devolviendolo a su valor origianl en caso contrario.
-        private async Task userData_TextBoxLeave(object sender, EventArgs e)
+        private void userData_TextBoxLeave(object sender, EventArgs e)
         {
             TextBox data = sender as TextBox;
             switch (data.Name)
@@ -325,9 +325,9 @@ namespace NETime_WF_EF6
             }
         }
 
-        private async Task button_ChangePass_Click(object sender, EventArgs e)
+        private void button_ChangePass_Click(object sender, EventArgs e)
         {
-            await updateUserAttribute(textBox_userPass);
+            updateUserAttribute(textBox_userPass);
         }
     }
 }
