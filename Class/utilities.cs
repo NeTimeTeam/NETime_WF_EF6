@@ -181,8 +181,8 @@ namespace NETime_WF_EF6
         public static async Task<bool> saveChanges(netimeContainer context, Label label, string fnDesc, callback callback)
         {            
             Messages.Message(label, "En proceso... espere.", Color.Black);
-            int task = await Context.saveChanges(context, fnDesc);
-            if (task > 0)
+            Task<int> task = Context.saveChanges(context, fnDesc);
+            if (await task > 0)
             {
                 Messages.Message(label, "Finalizado.", Color.Black);
                 callback();
@@ -197,8 +197,8 @@ namespace NETime_WF_EF6
         public static async Task<bool> saveChanges(netimeContainer context, Label label, string fnDesc)
         {            
             Messages.Message(label, "En proceso...espere.", Color.Black);
-            int task = await Context.saveChanges(context, fnDesc);  
-            if (task > 0)
+            Task<int> task = Context.saveChanges(context, fnDesc);
+            if (await task > 0)
             {
                 Messages.Message(label, "Datos guardados.", Color.Black);
                 return true;
@@ -213,9 +213,8 @@ namespace NETime_WF_EF6
         public static async Task<int> saveChanges(netimeContainer context, string fnDesc)
         {            
             try
-            {
-                int task = await context.SaveChangesAsync();
-                return task;
+            {                   
+                return await context.SaveChangesAsync();
             }
             catch (DbUpdateException err)
             {

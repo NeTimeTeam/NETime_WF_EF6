@@ -20,9 +20,6 @@ namespace NETime_WF_EF6
             InitializeComponent();
         }
 
-        //CONTEXT CLASS
-        private netimeContainer context = new netimeContainer();  
-
         //DELEGATES
         public delegate void callback();
         public delegate void res(string msg, Color color);
@@ -127,7 +124,7 @@ namespace NETime_WF_EF6
                 else
                 {
                     //Le pasamos el objeto al context.
-                    this.context.userSet.Add(usuario);
+                    context.userSet.Add(usuario);
                     //Solicitamos al context que guarde los cambios en la BD.
                     //Context.saveChanges(this.context, this.label_msg, "CREATE USER",Exit);                
                     await Context.saveChanges(context, label_msg, "CREATE USER", Exit);

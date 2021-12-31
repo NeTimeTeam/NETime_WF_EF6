@@ -43,7 +43,7 @@ namespace NETime_WF_EF6
                         password = pg.GenerateSaltedHash()
                     };
                     context.userSet.Add(u);
-                    context.SaveChanges();
+                    int valor = context.SaveChanges();
                     Console.WriteLine("Usuario {0} creado", u.email);                    
                 }
                 else
