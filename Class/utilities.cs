@@ -469,7 +469,8 @@ namespace NETime_WF_EF6
         public string category { get; set; }
         public int userId { get; set; }
         public string email { get; set; }
-    }    
+        public int activityId { get; set; }
+}    
     public class Balance
     {        
         public DateTime datetime { get; set; }

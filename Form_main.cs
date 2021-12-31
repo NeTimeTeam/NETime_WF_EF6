@@ -46,6 +46,7 @@ namespace NETime_WF_EF6
         private UserDataMenu udm;
         private UserActivitiesMenu uam;
         private Select_Activities sa;
+        private transacciones ut;
         
         //Función de inicio.
         private void SetPanelUser()
@@ -63,7 +64,8 @@ namespace NETime_WF_EF6
         
         private void UserDataInf()
         {
-            panel_ContainerInterface.Controls.Clear();
+            //panel_ContainerInterface.Controls.Clear();
+            RemoveControl();
             udm = new UserDataMenu();
             panel_ContainerInterface.Controls.Add(this.udm);
             udm.ReLoad();
@@ -72,7 +74,8 @@ namespace NETime_WF_EF6
         }
         private void ActivitiesDataInf()
         {
-            panel_ContainerInterface.Controls.Clear();
+            //panel_ContainerInterface.Controls.Clear();
+            RemoveControl();
             uam = new UserActivitiesMenu();
             panel_ContainerInterface.Controls.Add(this.uam);
             uam.ReLoad();
@@ -81,13 +84,23 @@ namespace NETime_WF_EF6
         }        
         private void SelActivitiesDataInf() 
         {
-            panel_ContainerInterface.Controls.Clear();
+            //panel_ContainerInterface.Controls.Clear();
+            RemoveControl();
             sa = new Select_Activities();
             panel_ContainerInterface.Controls.Add(this.sa);
             //sa.Load();
             //this.sa.Show();
             this.label_title.Text = "Seleccion de actividades";
         }
+        private void TransactionsDataInf()
+        {
+            //panel_ContainerInterface.Controls.Clear();
+            RemoveControl();
+            ut = new transacciones();
+            panel_ContainerInterface.Controls.Add(ut);
+            this.label_title.Text = "Transacciones";
+        }
+
         //CLICK EVENTS
         private void pictureBox_UserData_Click(object sender, EventArgs e)
         {
@@ -106,26 +119,21 @@ namespace NETime_WF_EF6
         }
         private void pictureBox_Transactions_Click(object sender, EventArgs e)
         {
-            //ACCIONES AQUÍ
+            Console.WriteLine("click transacciones");
+            TransactionsDataInf();
         }
         private void pictureBox_Logout_Click(object sender, EventArgs e)
         {
             Login login = new Login();
             login.ShowDialog();
             this.Close();
-        }
-        
-        //HIDE/REMOVE Controls
-        private void hideAllUserContro()
-        {
-            this.udm.Hide();
-            this.uam.Hide();            
-        }
+        }        
+       
         private void RemoveControl()
         {
-            foreach(ControlCollection c in panel_ContainerInterface.Controls)
-            {
-                Console.WriteLine(c);
+            foreach(Control c in panel_ContainerInterface.Controls)
+            {                
+                c.Dispose();
             }
         }
 

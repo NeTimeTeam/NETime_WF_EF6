@@ -145,6 +145,12 @@
     <Compile Include="Select_Activities.Designer.cs">
       <DependentUpon>Select_Activities.cs</DependentUpon>
     </Compile>
+    <Compile Include="transacciones.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transacciones.Designer.cs">
+      <DependentUpon>transacciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="user.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
@@ -187,6 +193,9 @@
     </Compile>
     <EmbeddedResource Include="Select_Activities.resx">
       <DependentUpon>Select_Activities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transacciones.resx">
+      <DependentUpon>transacciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserActivitiesMenu.resx">
       <DependentUpon>UserActivitiesMenu.cs</DependentUpon>
