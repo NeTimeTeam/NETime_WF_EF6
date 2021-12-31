@@ -54,7 +54,7 @@ namespace NETime_WF_EF6
                     deleteMe();
                 }
                 //USUARIO PREDETERMINADO PARA EL LOGIN (TESTING)
-                txtUser.Text = "ocosmen@uoc.com";
+                txtUser.Text = "iroviraro@uoc.edu";
                 txtPass.Text = "a1234567890";                
             }
         }
@@ -84,12 +84,19 @@ namespace NETime_WF_EF6
                 errMsg();
             }            
         }
-
+        
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AltaUsuario regiserForm = new AltaUsuario();
+            regiserForm.Disposed += new EventHandler(this.registerForm_Disposed);
             regiserForm.Show();
+            this.Enabled = false;         
         }
+        private void registerForm_Disposed(object sender, EventArgs e)
+        {
+            this.Enabled = true;
+        }
+
 
         //LOGIN: funciones
         private bool notEmptyStrings()
