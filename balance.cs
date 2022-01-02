@@ -17,8 +17,7 @@ namespace NETime_WF_EF6
         public int Id { get; set; }
         public System.DateTime datetime { get; set; }
         public int qtty { get; set; }
-        public bool sing { get; set; }
         public int userId { get; set; }
-        public int activitiesId { get; set; }
+        public string activityName { get; set; }
     }
 }

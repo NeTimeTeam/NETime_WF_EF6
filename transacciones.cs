@@ -49,11 +49,10 @@ namespace NETime_WF_EF6
             {
                 try
                 {
-                    list = await (from b in context.balanceSet
-                                  join a in context.activitiesSet on b.activitiesId equals a.Id
+                    list = await (from b in context.balanceSet                                  
                                   join u in context.userSet on b.userId equals u.Id
                                   where b.userId == CurrentUser.Id
-                                  select new Balance { datetime = b.datetime, activity = a.name, qtty = b.qtty }).ToListAsync<Balance>();
+                                  select new Balance { datetime = b.datetime, activity = b.activityName, qtty = b.qtty }).ToListAsync<Balance>();
                 }catch(Exception e)
                 {
                     Console.WriteLine($"Balance List: {e.Message}");
@@ -245,16 +244,14 @@ namespace NETime_WF_EF6
                     datetime = dt,
                     userId = this.selectedActivityUserId,
                     qtty = qtty,
-                    activitiesId = this.selectedActivityId,
-                    sing = true
+                    activityName = this.selectedActivityId,                    
                 };
                 balance credit = new balance()
                 {
                     datetime = dt,
                     userId = CurrentUser.Id,
                     qtty = -1*qtty,
-                    activitiesId = this.selectedActivityId,
-                    sing = false,
+                    activityName = this.selectedActivityId,
                 };
                 try
                 {
@@ -270,7 +267,7 @@ namespace NETime_WF_EF6
             }
         }
         private int selectedActivityUserId;
-        private int selectedActivityId;
+        private string selectedActivityId;
 
         //EVENTOS DEL FORMULARIO
         private void button_pay_Click(object sender, EventArgs e)
@@ -292,7 +289,7 @@ namespace NETime_WF_EF6
 
                 label_email.Visible = label_name.Visible = label_category.Visible = true;
 
-                selectedActivityId = Convert.ToInt32(data["activityId"].Value);
+                selectedActivityId = data["activityId"].Value.ToString();
                 selectedActivityUserId = Convert.ToInt32(data["userId"].Value);
             }
             //selector = 0, Id = 1, name = 2, category = 3, description = 4, userId = 5, email = 6 , activityId=7
