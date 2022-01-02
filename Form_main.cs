@@ -63,64 +63,61 @@ namespace NETime_WF_EF6
         }
         
         private void UserDataInf()
-        {
-            //panel_ContainerInterface.Controls.Clear();
+        {            
             RemoveControl();
             udm = new UserDataMenu();
             panel_ContainerInterface.Controls.Add(this.udm);
-            udm.ReLoad();
-            //this.udm.Show();
+            udm.ReLoad();            
             this.label_title.Text = "Datos de cuenta del usuario";
+            IconsStatusChanger(pictureBox_UserData);
         }
         private void ActivitiesDataInf()
-        {
-            //panel_ContainerInterface.Controls.Clear();
+        {            
             RemoveControl();
             uam = new UserActivitiesMenu();
             panel_ContainerInterface.Controls.Add(this.uam);
-            uam.ReLoad();
-            //this.uam.Show();
+            uam.ReLoad();         
             this.label_title.Text = "Actividades del usuario";
+            IconsStatusChanger(pictureBox_Activities);
         }        
         private void SelActivitiesDataInf() 
-        {
-            //panel_ContainerInterface.Controls.Clear();
+        {            
             RemoveControl();
             sa = new Select_Activities();
-            panel_ContainerInterface.Controls.Add(this.sa);
-            //sa.Load();
-            //this.sa.Show();
+            panel_ContainerInterface.Controls.Add(this.sa);            
             this.label_title.Text = "Seleccion de actividades";
+            IconsStatusChanger(pictureBox_SelectActivities);
         }
         private void TransactionsDataInf()
         {
-            //panel_ContainerInterface.Controls.Clear();
             RemoveControl();
             ut = new transacciones();
             panel_ContainerInterface.Controls.Add(ut);
             this.label_title.Text = "Transacciones";
+            IconsStatusChanger(pictureBox_Transactions);
         }
 
         //CLICK EVENTS
         private void pictureBox_UserData_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("click userData");
+        {            
             UserDataInf();
         }
         private void pictureBox_Activities_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("click userActivities");
+        {            
             ActivitiesDataInf();
         }
         private void pictureBox_SelectActivities_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("click userActivities");
             SelActivitiesDataInf();
         }
         private void pictureBox_Transactions_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("click transacciones");
             TransactionsDataInf();
+        }
+        private void pictureBox_XML_Click(object sender, EventArgs e)
+        {
+            //Interfaz XML
+            Console.WriteLine("pictureBox_XML_Click");
         }
         private void pictureBox_Logout_Click(object sender, EventArgs e)
         {                        
@@ -132,6 +129,71 @@ namespace NETime_WF_EF6
             {                
                 c.Dispose();
             }
-        }        
+        }
+
+        //XML LINK VISBLE & ENABLED TIMEOUT        
+        private void label2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //Desactivar label2 y Avtivar vinculo XML; Iniciar timer.
+            ShowXMLIcon();            
+        }
+        private void ShowXMLIcon()
+        {
+            ChangeIconStatus(this.pictureBox_XML);
+            ChangeIconStatus(this.label2, 2);
+            this.timer1.Start();
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //Desactivar vinculo XML; Avtivar label2; Parar el timer.
+            ChangeIconStatus(this.pictureBox_XML);
+            ChangeIconStatus(label2, 2);
+            this.timer1.Stop();
+        }
+
+        //ICON STATUS CTRL
+        private void ChangeIconStatus(Label item)
+        {
+            item.Enabled = !item.Enabled;
+            item.Visible = !item.Visible;
+        }
+        private void ChangeIconStatus(Label item, int mode)
+        {
+            if (mode == 0) { ChangeIconStatus(item); }
+
+            if (mode == 1) { item.Visible = !item.Visible; }
+
+            if (mode == 2) { item.Enabled = !item.Enabled; }
+        }
+        private void ChangeIconStatus(PictureBox item)
+        {
+            item.Enabled = !item.Enabled;
+            item.Visible = !item.Visible;
+        }
+        private void ChangeIconStatus(PictureBox item, int mode)
+        {
+            if (mode == 0) { ChangeIconStatus(item); }
+
+            if (mode == 1) { item.Visible = !item.Visible; }
+
+            if (mode == 2) { item.Enabled = !item.Enabled; }
+        }
+        private void IconsStatusChanger(PictureBox item)
+        {
+            var ctrls = this.panel_MainMenuItems.Controls.GetEnumerator();
+            while (ctrls.MoveNext())
+            {                
+                if ((ctrls.Current as PictureBox).Name.Equals(item.Name))
+                {                    
+                    ChangeIconStatus(item, 2);
+                    item.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else
+                {
+                    (ctrls.Current as PictureBox).Enabled = true;
+                    (ctrls.Current as PictureBox).BorderStyle = BorderStyle.None;
+                }
+            }                
+        }
     }
 }
