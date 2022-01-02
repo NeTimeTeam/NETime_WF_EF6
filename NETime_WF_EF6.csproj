@@ -166,11 +166,11 @@
     <Compile Include="uc_UserDataMenu.Designer.cs">
       <DependentUpon>uc_UserDataMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="uc_xml.cs">
+    <Compile Include="uc_appManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="uc_xml.Designer.cs">
-      <DependentUpon>uc_xml.cs</DependentUpon>
+    <Compile Include="uc_appManager.Designer.cs">
+      <DependentUpon>uc_appManager.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="form_AltaUsuario.resx">
       <DependentUpon>form_AltaUsuario.cs</DependentUpon>
@@ -209,8 +209,8 @@
     <EmbeddedResource Include="uc_UserDataMenu.resx">
       <DependentUpon>uc_UserDataMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="uc_xml.resx">
-      <DependentUpon>uc_xml.cs</DependentUpon>
+    <EmbeddedResource Include="uc_appManager.resx">
+      <DependentUpon>uc_appManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -39,29 +39,22 @@ namespace NETime_WF_EF6
             }
         }
 
-        //UserVar
+        //UserVar (deprecated)
         private int userId;
 
-        //UserControlForms
+        // INIT USER CONTROL FORMS
         private UserDataMenu udm;
         private UserActivitiesMenu uam;
         private Select_Activities sa;
         private transacciones ut;
-        
-        //Función de inicio.
+        private appManager appM;
+
+        //STARTUP METHOD
         private void SetPanelUser()
         {
-            //udm = new UserDataMenu();
-            //uam = new UserActivitiesMenu();
-
-            //hideAllUserContro();
-            //panel_ContainerInterface.Controls.Add(this.uam);
-            //panel_ContainerInterface.Controls.Add(this.udm);
-            //this.udm.Show();
-            //this.label_title.Text = "Datos de cuenta del usuario";
             UserDataInf();
-        }
-        
+        }        
+        //INTERFACE UPDATE METHODS
         private void UserDataInf()
         {            
             RemoveControl();
@@ -96,7 +89,14 @@ namespace NETime_WF_EF6
             this.label_title.Text = "Transacciones";
             IconsStatusChanger(pictureBox_Transactions);
         }
-
+        private void appManagerInf()
+        {
+            RemoveControl();
+            appM = new appManager();
+            panel_ContainerInterface.Controls.Add(appM);
+            this.label_title.Text = "Gestión de la aplicación";
+            IconsStatusChanger(pictureBox_Logout); //Activará todos los iconos.
+        }
         //CLICK EVENTS
         private void pictureBox_UserData_Click(object sender, EventArgs e)
         {            
@@ -116,8 +116,7 @@ namespace NETime_WF_EF6
         }
         private void pictureBox_XML_Click(object sender, EventArgs e)
         {
-            //Interfaz XML
-            Console.WriteLine("pictureBox_XML_Click");
+            appManagerInf();
         }
         private void pictureBox_Logout_Click(object sender, EventArgs e)
         {                        
