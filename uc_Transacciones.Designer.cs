@@ -72,11 +72,12 @@ namespace NETime_WF_EF6
             // groupBox_TransLog
             // 
             this.groupBox_TransLog.Controls.Add(this.dataGridView_TransLog);
-            this.groupBox_TransLog.Location = new System.Drawing.Point(488, 23);
+            this.groupBox_TransLog.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_TransLog.Location = new System.Drawing.Point(263, 6);
             this.groupBox_TransLog.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_TransLog.Name = "groupBox_TransLog";
             this.groupBox_TransLog.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox_TransLog.Size = new System.Drawing.Size(516, 684);
+            this.groupBox_TransLog.Size = new System.Drawing.Size(349, 483);
             this.groupBox_TransLog.TabIndex = 0;
             this.groupBox_TransLog.TabStop = false;
             this.groupBox_TransLog.Text = "Histórico de transacciones";
@@ -86,30 +87,27 @@ namespace NETime_WF_EF6
             this.dataGridView_TransLog.AllowUserToAddRows = false;
             this.dataGridView_TransLog.AllowUserToDeleteRows = false;
             this.dataGridView_TransLog.AllowUserToOrderColumns = true;
-            this.dataGridView_TransLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView_TransLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_TransLog.Location = new System.Drawing.Point(12, 34);
             this.dataGridView_TransLog.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView_TransLog.Name = "dataGridView_TransLog";
             this.dataGridView_TransLog.ReadOnly = true;
+            this.dataGridView_TransLog.RowHeadersVisible = false;
             this.dataGridView_TransLog.RowHeadersWidth = 82;
             this.dataGridView_TransLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView_TransLog.Size = new System.Drawing.Size(492, 640);
+            this.dataGridView_TransLog.Size = new System.Drawing.Size(325, 437);
             this.dataGridView_TransLog.TabIndex = 0;
             this.dataGridView_TransLog.SelectionChanged += new System.EventHandler(this.dataGridView_TransLog_SelectionChanged);
             // 
             // groupBox_Activities
             // 
-            this.groupBox_Activities.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox_Activities.Controls.Add(this.dataGridView_activities);
-            this.groupBox_Activities.Location = new System.Drawing.Point(6, 719);
+            this.groupBox_Activities.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_Activities.Location = new System.Drawing.Point(10, 501);
             this.groupBox_Activities.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_Activities.Name = "groupBox_Activities";
             this.groupBox_Activities.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox_Activities.Size = new System.Drawing.Size(998, 393);
+            this.groupBox_Activities.Size = new System.Drawing.Size(602, 231);
             this.groupBox_Activities.TabIndex = 1;
             this.groupBox_Activities.TabStop = false;
             this.groupBox_Activities.Text = "Actividades";
@@ -119,9 +117,6 @@ namespace NETime_WF_EF6
             this.dataGridView_activities.AllowUserToAddRows = false;
             this.dataGridView_activities.AllowUserToDeleteRows = false;
             this.dataGridView_activities.AllowUserToOrderColumns = true;
-            this.dataGridView_activities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView_activities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_activities.Location = new System.Drawing.Point(12, 34);
             this.dataGridView_activities.Margin = new System.Windows.Forms.Padding(6);
@@ -130,15 +125,12 @@ namespace NETime_WF_EF6
             this.dataGridView_activities.RowHeadersVisible = false;
             this.dataGridView_activities.RowHeadersWidth = 82;
             this.dataGridView_activities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView_activities.Size = new System.Drawing.Size(974, 349);
+            this.dataGridView_activities.Size = new System.Drawing.Size(578, 185);
             this.dataGridView_activities.TabIndex = 0;
             this.dataGridView_activities.SelectionChanged += new System.EventHandler(this.dataGridView_activities_SelectionChanged);
             // 
             // groupBox_transcForm
             // 
-            this.groupBox_transcForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox_transcForm.Controls.Add(this.panel_email);
             this.groupBox_transcForm.Controls.Add(this.panel_category);
             this.groupBox_transcForm.Controls.Add(this.panel_name);
@@ -148,11 +140,12 @@ namespace NETime_WF_EF6
             this.groupBox_transcForm.Controls.Add(this.label_userTitle);
             this.groupBox_transcForm.Controls.Add(this.label_nameTitle);
             this.groupBox_transcForm.Controls.Add(this.button_pay);
-            this.groupBox_transcForm.Location = new System.Drawing.Point(6, 142);
+            this.groupBox_transcForm.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_transcForm.Location = new System.Drawing.Point(10, 95);
             this.groupBox_transcForm.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_transcForm.Name = "groupBox_transcForm";
             this.groupBox_transcForm.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox_transcForm.Size = new System.Drawing.Size(470, 426);
+            this.groupBox_transcForm.Size = new System.Drawing.Size(241, 304);
             this.groupBox_transcForm.TabIndex = 2;
             this.groupBox_transcForm.TabStop = false;
             this.groupBox_transcForm.Text = "Formulario de pago";
@@ -161,19 +154,20 @@ namespace NETime_WF_EF6
             // 
             this.panel_email.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel_email.Controls.Add(this.label_email);
-            this.panel_email.Location = new System.Drawing.Point(172, 200);
+            this.panel_email.Location = new System.Drawing.Point(86, 103);
             this.panel_email.Margin = new System.Windows.Forms.Padding(6);
             this.panel_email.Name = "panel_email";
-            this.panel_email.Size = new System.Drawing.Size(282, 44);
+            this.panel_email.Size = new System.Drawing.Size(142, 20);
             this.panel_email.TabIndex = 12;
             // 
             // label_email
             // 
             this.label_email.AutoSize = true;
-            this.label_email.Location = new System.Drawing.Point(6, 9);
+            this.label_email.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_email.Location = new System.Drawing.Point(3, 2);
             this.label_email.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_email.Name = "label_email";
-            this.label_email.Size = new System.Drawing.Size(113, 23);
+            this.label_email.Size = new System.Drawing.Size(61, 13);
             this.label_email.TabIndex = 6;
             this.label_email.Text = "User email";
             this.label_email.Visible = false;
@@ -182,19 +176,20 @@ namespace NETime_WF_EF6
             // 
             this.panel_category.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel_category.Controls.Add(this.label_category);
-            this.panel_category.Location = new System.Drawing.Point(172, 131);
+            this.panel_category.Location = new System.Drawing.Point(86, 71);
             this.panel_category.Margin = new System.Windows.Forms.Padding(6);
             this.panel_category.Name = "panel_category";
-            this.panel_category.Size = new System.Drawing.Size(282, 44);
+            this.panel_category.Size = new System.Drawing.Size(142, 20);
             this.panel_category.TabIndex = 11;
             // 
             // label_category
             // 
             this.label_category.AutoSize = true;
-            this.label_category.Location = new System.Drawing.Point(6, 9);
+            this.label_category.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_category.Location = new System.Drawing.Point(2, 2);
             this.label_category.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_category.Name = "label_category";
-            this.label_category.Size = new System.Drawing.Size(101, 23);
+            this.label_category.Size = new System.Drawing.Size(54, 13);
             this.label_category.TabIndex = 7;
             this.label_category.Text = "Category";
             this.label_category.Visible = false;
@@ -203,19 +198,20 @@ namespace NETime_WF_EF6
             // 
             this.panel_name.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel_name.Controls.Add(this.label_name);
-            this.panel_name.Location = new System.Drawing.Point(172, 62);
+            this.panel_name.Location = new System.Drawing.Point(86, 39);
             this.panel_name.Margin = new System.Windows.Forms.Padding(6);
             this.panel_name.Name = "panel_name";
-            this.panel_name.Size = new System.Drawing.Size(282, 44);
+            this.panel_name.Size = new System.Drawing.Size(142, 20);
             this.panel_name.TabIndex = 10;
             // 
             // label_name
             // 
             this.label_name.AutoSize = true;
-            this.label_name.Location = new System.Drawing.Point(6, 9);
+            this.label_name.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_name.Location = new System.Drawing.Point(3, 0);
             this.label_name.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_name.Name = "label_name";
-            this.label_name.Size = new System.Drawing.Size(141, 23);
+            this.label_name.Size = new System.Drawing.Size(76, 13);
             this.label_name.TabIndex = 9;
             this.label_name.Text = "Activity name";
             this.label_name.Visible = false;
@@ -223,11 +219,11 @@ namespace NETime_WF_EF6
             // label_qttyTitle
             // 
             this.label_qttyTitle.AutoSize = true;
-            this.label_qttyTitle.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_qttyTitle.Location = new System.Drawing.Point(58, 280);
+            this.label_qttyTitle.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_qttyTitle.Location = new System.Drawing.Point(34, 229);
             this.label_qttyTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_qttyTitle.Name = "label_qttyTitle";
-            this.label_qttyTitle.Size = new System.Drawing.Size(79, 25);
+            this.label_qttyTitle.Size = new System.Drawing.Size(40, 13);
             this.label_qttyTitle.TabIndex = 9;
             this.label_qttyTitle.Text = "Horas:";
             this.label_qttyTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -235,21 +231,21 @@ namespace NETime_WF_EF6
             // label_categoryTitle
             // 
             this.label_categoryTitle.AutoSize = true;
-            this.label_categoryTitle.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_categoryTitle.Location = new System.Drawing.Point(12, 144);
+            this.label_categoryTitle.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_categoryTitle.Location = new System.Drawing.Point(14, 71);
             this.label_categoryTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_categoryTitle.Name = "label_categoryTitle";
-            this.label_categoryTitle.Size = new System.Drawing.Size(119, 25);
+            this.label_categoryTitle.Size = new System.Drawing.Size(60, 13);
             this.label_categoryTitle.TabIndex = 5;
             this.label_categoryTitle.Text = "Categoría:";
             this.label_categoryTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // numericUpDown_qtty
             // 
-            this.numericUpDown_qtty.Location = new System.Drawing.Point(172, 276);
+            this.numericUpDown_qtty.Location = new System.Drawing.Point(86, 226);
             this.numericUpDown_qtty.Margin = new System.Windows.Forms.Padding(6);
             this.numericUpDown_qtty.Name = "numericUpDown_qtty";
-            this.numericUpDown_qtty.Size = new System.Drawing.Size(286, 32);
+            this.numericUpDown_qtty.Size = new System.Drawing.Size(142, 23);
             this.numericUpDown_qtty.TabIndex = 0;
             this.numericUpDown_qtty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown_qtty.ThousandsSeparator = true;
@@ -258,11 +254,11 @@ namespace NETime_WF_EF6
             // label_userTitle
             // 
             this.label_userTitle.AutoSize = true;
-            this.label_userTitle.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_userTitle.Location = new System.Drawing.Point(38, 213);
+            this.label_userTitle.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_userTitle.Location = new System.Drawing.Point(26, 107);
             this.label_userTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_userTitle.Name = "label_userTitle";
-            this.label_userTitle.Size = new System.Drawing.Size(97, 25);
+            this.label_userTitle.Size = new System.Drawing.Size(48, 13);
             this.label_userTitle.TabIndex = 3;
             this.label_userTitle.Text = "Usuario:";
             this.label_userTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -270,11 +266,11 @@ namespace NETime_WF_EF6
             // label_nameTitle
             // 
             this.label_nameTitle.AutoSize = true;
-            this.label_nameTitle.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_nameTitle.Location = new System.Drawing.Point(18, 75);
+            this.label_nameTitle.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_nameTitle.Location = new System.Drawing.Point(15, 41);
             this.label_nameTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_nameTitle.Name = "label_nameTitle";
-            this.label_nameTitle.Size = new System.Drawing.Size(117, 25);
+            this.label_nameTitle.Size = new System.Drawing.Size(59, 13);
             this.label_nameTitle.TabIndex = 2;
             this.label_nameTitle.Text = "Actividad:";
             this.label_nameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -284,11 +280,12 @@ namespace NETime_WF_EF6
             this.button_pay.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
             this.button_pay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button_pay.Enabled = false;
+            this.button_pay.Font = new System.Drawing.Font("Rockwell", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_pay.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button_pay.Location = new System.Drawing.Point(18, 372);
+            this.button_pay.Location = new System.Drawing.Point(10, 263);
             this.button_pay.Margin = new System.Windows.Forms.Padding(6);
             this.button_pay.Name = "button_pay";
-            this.button_pay.Size = new System.Drawing.Size(414, 37);
+            this.button_pay.Size = new System.Drawing.Size(216, 29);
             this.button_pay.TabIndex = 1;
             this.button_pay.Text = "Pagar";
             this.button_pay.UseVisualStyleBackColor = true;
@@ -296,25 +293,22 @@ namespace NETime_WF_EF6
             // 
             // panel_msg
             // 
-            this.panel_msg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_msg.AutoSize = true;
             this.panel_msg.Controls.Add(this.label_msg);
             this.panel_msg.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel_msg.Location = new System.Drawing.Point(6, 579);
+            this.panel_msg.Location = new System.Drawing.Point(10, 411);
             this.panel_msg.Margin = new System.Windows.Forms.Padding(6);
             this.panel_msg.Name = "panel_msg";
-            this.panel_msg.Size = new System.Drawing.Size(470, 119);
+            this.panel_msg.Size = new System.Drawing.Size(241, 78);
             this.panel_msg.TabIndex = 3;
             // 
             // label_msg
             // 
             this.label_msg.AutoSize = true;
-            this.label_msg.Location = new System.Drawing.Point(10, 35);
+            this.label_msg.Location = new System.Drawing.Point(6, 30);
             this.label_msg.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_msg.Name = "label_msg";
-            this.label_msg.Size = new System.Drawing.Size(144, 36);
+            this.label_msg.Size = new System.Drawing.Size(72, 19);
             this.label_msg.TabIndex = 0;
             this.label_msg.Text = "messges";
             this.label_msg.Visible = false;
@@ -322,11 +316,12 @@ namespace NETime_WF_EF6
             // groupBox_payed
             // 
             this.groupBox_payed.Controls.Add(this.label_payed);
-            this.groupBox_payed.Location = new System.Drawing.Point(20, 23);
+            this.groupBox_payed.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_payed.Location = new System.Drawing.Point(10, 12);
             this.groupBox_payed.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_payed.Name = "groupBox_payed";
             this.groupBox_payed.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox_payed.Size = new System.Drawing.Size(136, 108);
+            this.groupBox_payed.Size = new System.Drawing.Size(74, 71);
             this.groupBox_payed.TabIndex = 4;
             this.groupBox_payed.TabStop = false;
             this.groupBox_payed.Text = "Pagadas";
@@ -334,10 +329,11 @@ namespace NETime_WF_EF6
             // label_payed
             // 
             this.label_payed.AutoSize = true;
-            this.label_payed.Location = new System.Drawing.Point(32, 52);
+            this.label_payed.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_payed.Location = new System.Drawing.Point(23, 34);
             this.label_payed.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_payed.Name = "label_payed";
-            this.label_payed.Size = new System.Drawing.Size(21, 23);
+            this.label_payed.Size = new System.Drawing.Size(18, 19);
             this.label_payed.TabIndex = 0;
             this.label_payed.Text = "0";
             this.label_payed.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -345,11 +341,12 @@ namespace NETime_WF_EF6
             // groupBox_charged
             // 
             this.groupBox_charged.Controls.Add(this.label_charged);
-            this.groupBox_charged.Location = new System.Drawing.Point(178, 23);
+            this.groupBox_charged.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_charged.Location = new System.Drawing.Point(96, 12);
             this.groupBox_charged.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_charged.Name = "groupBox_charged";
             this.groupBox_charged.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox_charged.Size = new System.Drawing.Size(136, 108);
+            this.groupBox_charged.Size = new System.Drawing.Size(84, 71);
             this.groupBox_charged.TabIndex = 5;
             this.groupBox_charged.TabStop = false;
             this.groupBox_charged.Text = "Recibidas";
@@ -357,10 +354,11 @@ namespace NETime_WF_EF6
             // label_charged
             // 
             this.label_charged.AutoSize = true;
-            this.label_charged.Location = new System.Drawing.Point(32, 52);
+            this.label_charged.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_charged.Location = new System.Drawing.Point(33, 34);
             this.label_charged.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_charged.Name = "label_charged";
-            this.label_charged.Size = new System.Drawing.Size(21, 23);
+            this.label_charged.Size = new System.Drawing.Size(18, 19);
             this.label_charged.TabIndex = 1;
             this.label_charged.Text = "0";
             this.label_charged.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -368,11 +366,12 @@ namespace NETime_WF_EF6
             // groupBox_total
             // 
             this.groupBox_total.Controls.Add(this.label_total);
-            this.groupBox_total.Location = new System.Drawing.Point(332, 23);
+            this.groupBox_total.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_total.Location = new System.Drawing.Point(192, 12);
             this.groupBox_total.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_total.Name = "groupBox_total";
             this.groupBox_total.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox_total.Size = new System.Drawing.Size(136, 108);
+            this.groupBox_total.Size = new System.Drawing.Size(59, 72);
             this.groupBox_total.TabIndex = 5;
             this.groupBox_total.TabStop = false;
             this.groupBox_total.Text = "Total";
@@ -380,10 +379,11 @@ namespace NETime_WF_EF6
             // label_total
             // 
             this.label_total.AutoSize = true;
-            this.label_total.Location = new System.Drawing.Point(32, 52);
+            this.label_total.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_total.Location = new System.Drawing.Point(15, 35);
             this.label_total.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label_total.Name = "label_total";
-            this.label_total.Size = new System.Drawing.Size(21, 23);
+            this.label_total.Size = new System.Drawing.Size(18, 19);
             this.label_total.TabIndex = 2;
             this.label_total.Text = "0";
             this.label_total.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -391,9 +391,8 @@ namespace NETime_WF_EF6
             // 
             // transacciones
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.groupBox_total);
@@ -403,11 +402,13 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.groupBox_transcForm);
             this.Controls.Add(this.groupBox_Activities);
             this.Controls.Add(this.groupBox_TransLog);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Navy;
-            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "transacciones";
-            this.Size = new System.Drawing.Size(1010, 1116);
+            this.Size = new System.Drawing.Size(618, 760);
+            this.Load += new System.EventHandler(this.transacciones_Load);
             this.groupBox_TransLog.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_TransLog)).EndInit();
             this.groupBox_Activities.ResumeLayout(false);

@@ -308,5 +308,10 @@ namespace NETime_WF_EF6
         {
             Button_payStatus();
         }
+
+        private void transacciones_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

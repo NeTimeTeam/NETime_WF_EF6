@@ -33,36 +33,38 @@ namespace NETime_WF_EF6
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_main));
             this.panel_ContainerInterface = new System.Windows.Forms.Panel();
             this.panel_ContainerMenu = new System.Windows.Forms.Panel();
-            this.pictureBox_XML = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox_Logout = new System.Windows.Forms.PictureBox();
+            this.panel_MainMenuItems = new System.Windows.Forms.Panel();
             this.pictureBox_Transactions = new System.Windows.Forms.PictureBox();
             this.pictureBox_SelectActivities = new System.Windows.Forms.PictureBox();
             this.pictureBox_Activities = new System.Windows.Forms.PictureBox();
             this.pictureBox_UserData = new System.Windows.Forms.PictureBox();
+            this.pictureBox_XML = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox_Logout = new System.Windows.Forms.PictureBox();
             this.panel_titulo = new System.Windows.Forms.Panel();
             this.label_title = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.panel_MainMenuItems = new System.Windows.Forms.Panel();
             this.panel_ContainerMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_XML)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Logout)).BeginInit();
+            this.panel_MainMenuItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Transactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectActivities)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Activities)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_UserData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_XML)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Logout)).BeginInit();
             this.panel_titulo.SuspendLayout();
-            this.panel_MainMenuItems.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_ContainerInterface
             // 
-            this.panel_ContainerInterface.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_ContainerInterface.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_ContainerInterface.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel_ContainerInterface.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel_ContainerInterface.Location = new System.Drawing.Point(95, 73);
             this.panel_ContainerInterface.Name = "panel_ContainerInterface";
-            this.panel_ContainerInterface.Size = new System.Drawing.Size(525, 663);
+            this.panel_ContainerInterface.Size = new System.Drawing.Size(620, 776);
             this.panel_ContainerInterface.TabIndex = 1;
             // 
             // panel_ContainerMenu
@@ -78,55 +80,20 @@ namespace NETime_WF_EF6
             this.panel_ContainerMenu.Controls.Add(this.pictureBox_Logout);
             this.panel_ContainerMenu.Location = new System.Drawing.Point(12, 12);
             this.panel_ContainerMenu.Name = "panel_ContainerMenu";
-            this.panel_ContainerMenu.Size = new System.Drawing.Size(80, 724);
+            this.panel_ContainerMenu.Size = new System.Drawing.Size(80, 837);
             this.panel_ContainerMenu.TabIndex = 0;
             // 
-            // pictureBox_XML
+            // panel_MainMenuItems
             // 
-            this.pictureBox_XML.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox_XML.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_XML.Enabled = false;
-            this.pictureBox_XML.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_XML.Image")));
-            this.pictureBox_XML.Location = new System.Drawing.Point(6, 575);
-            this.pictureBox_XML.Name = "pictureBox_XML";
-            this.pictureBox_XML.Size = new System.Drawing.Size(39, 39);
-            this.pictureBox_XML.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox_XML.TabIndex = 37;
-            this.pictureBox_XML.TabStop = false;
-            this.pictureBox_XML.Visible = false;
-            this.pictureBox_XML.Click += new System.EventHandler(this.pictureBox_XML_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Rockwell Extra Bold", 10F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label2.Location = new System.Drawing.Point(3, 635);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label2.Size = new System.Drawing.Size(73, 16);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "NeTime";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.UseMnemonic = false;
-            this.label2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.label2_MouseDoubleClick);
-            // 
-            // pictureBox_Logout
-            // 
-            this.pictureBox_Logout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox_Logout.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Logout.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_Logout.Image")));
-            this.pictureBox_Logout.Location = new System.Drawing.Point(10, 668);
-            this.pictureBox_Logout.Name = "pictureBox_Logout";
-            this.pictureBox_Logout.Size = new System.Drawing.Size(62, 38);
-            this.pictureBox_Logout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox_Logout.TabIndex = 4;
-            this.pictureBox_Logout.TabStop = false;
-            this.pictureBox_Logout.Click += new System.EventHandler(this.pictureBox_Logout_Click);
+            this.panel_MainMenuItems.BackColor = System.Drawing.Color.Transparent;
+            this.panel_MainMenuItems.Controls.Add(this.pictureBox_Transactions);
+            this.panel_MainMenuItems.Controls.Add(this.pictureBox_SelectActivities);
+            this.panel_MainMenuItems.Controls.Add(this.pictureBox_Activities);
+            this.panel_MainMenuItems.Controls.Add(this.pictureBox_UserData);
+            this.panel_MainMenuItems.Location = new System.Drawing.Point(2, 3);
+            this.panel_MainMenuItems.Name = "panel_MainMenuItems";
+            this.panel_MainMenuItems.Size = new System.Drawing.Size(73, 533);
+            this.panel_MainMenuItems.TabIndex = 38;
             // 
             // pictureBox_Transactions
             // 
@@ -188,6 +155,53 @@ namespace NETime_WF_EF6
             this.pictureBox_UserData.TabStop = false;
             this.pictureBox_UserData.Click += new System.EventHandler(this.pictureBox_UserData_Click);
             // 
+            // pictureBox_XML
+            // 
+            this.pictureBox_XML.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_XML.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_XML.Enabled = false;
+            this.pictureBox_XML.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_XML.Image")));
+            this.pictureBox_XML.Location = new System.Drawing.Point(6, 575);
+            this.pictureBox_XML.Name = "pictureBox_XML";
+            this.pictureBox_XML.Size = new System.Drawing.Size(39, 39);
+            this.pictureBox_XML.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_XML.TabIndex = 37;
+            this.pictureBox_XML.TabStop = false;
+            this.pictureBox_XML.Visible = false;
+            this.pictureBox_XML.Click += new System.EventHandler(this.pictureBox_XML_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Rockwell Extra Bold", 10F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.Color.AliceBlue;
+            this.label2.Location = new System.Drawing.Point(3, 635);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label2.Size = new System.Drawing.Size(73, 16);
+            this.label2.TabIndex = 36;
+            this.label2.Text = "NeTime";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.UseMnemonic = false;
+            this.label2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.label2_MouseDoubleClick);
+            // 
+            // pictureBox_Logout
+            // 
+            this.pictureBox_Logout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_Logout.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_Logout.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_Logout.Image")));
+            this.pictureBox_Logout.Location = new System.Drawing.Point(10, 781);
+            this.pictureBox_Logout.Name = "pictureBox_Logout";
+            this.pictureBox_Logout.Size = new System.Drawing.Size(62, 38);
+            this.pictureBox_Logout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_Logout.TabIndex = 4;
+            this.pictureBox_Logout.TabStop = false;
+            this.pictureBox_Logout.Click += new System.EventHandler(this.pictureBox_Logout_Click);
+            // 
             // panel_titulo
             // 
             this.panel_titulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -198,7 +212,7 @@ namespace NETime_WF_EF6
             this.panel_titulo.Controls.Add(this.label_title);
             this.panel_titulo.Location = new System.Drawing.Point(95, 12);
             this.panel_titulo.Name = "panel_titulo";
-            this.panel_titulo.Size = new System.Drawing.Size(525, 56);
+            this.panel_titulo.Size = new System.Drawing.Size(620, 56);
             this.panel_titulo.TabIndex = 2;
             // 
             // label_title
@@ -208,7 +222,7 @@ namespace NETime_WF_EF6
             this.label_title.BackColor = System.Drawing.Color.Transparent;
             this.label_title.Font = new System.Drawing.Font("Rockwell", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_title.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label_title.Location = new System.Drawing.Point(40, 15);
+            this.label_title.Location = new System.Drawing.Point(135, 15);
             this.label_title.Name = "label_title";
             this.label_title.Size = new System.Drawing.Size(273, 23);
             this.label_title.TabIndex = 0;
@@ -219,18 +233,6 @@ namespace NETime_WF_EF6
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // panel_MainMenuItems
-            // 
-            this.panel_MainMenuItems.BackColor = System.Drawing.Color.Transparent;
-            this.panel_MainMenuItems.Controls.Add(this.pictureBox_Transactions);
-            this.panel_MainMenuItems.Controls.Add(this.pictureBox_SelectActivities);
-            this.panel_MainMenuItems.Controls.Add(this.pictureBox_Activities);
-            this.panel_MainMenuItems.Controls.Add(this.pictureBox_UserData);
-            this.panel_MainMenuItems.Location = new System.Drawing.Point(2, 3);
-            this.panel_MainMenuItems.Name = "panel_MainMenuItems";
-            this.panel_MainMenuItems.Size = new System.Drawing.Size(73, 533);
-            this.panel_MainMenuItems.TabIndex = 38;
-            // 
             // Form_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,25 +241,26 @@ namespace NETime_WF_EF6
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(633, 748);
+            this.ClientSize = new System.Drawing.Size(727, 861);
             this.Controls.Add(this.panel_titulo);
             this.Controls.Add(this.panel_ContainerInterface);
             this.Controls.Add(this.panel_ContainerMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form_main";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "NeTime";
             this.Load += new System.EventHandler(this.Form_main_Load);
             this.panel_ContainerMenu.ResumeLayout(false);
             this.panel_ContainerMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_XML)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Logout)).EndInit();
+            this.panel_MainMenuItems.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Transactions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectActivities)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Activities)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_UserData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_XML)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Logout)).EndInit();
             this.panel_titulo.ResumeLayout(false);
             this.panel_titulo.PerformLayout();
-            this.panel_MainMenuItems.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
