@@ -245,6 +245,8 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.panel_ContainerInterface);
             this.Controls.Add(this.panel_ContainerMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form_main";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "NeTime";
