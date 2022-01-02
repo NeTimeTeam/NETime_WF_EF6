@@ -191,6 +191,7 @@ namespace NETime_WF_EF6
         {
             this.txtUser.Clear();
             this.txtPass.Clear();
+            this.label_response.Text = String.Empty;
         }
 
         //RESPONSE MSG

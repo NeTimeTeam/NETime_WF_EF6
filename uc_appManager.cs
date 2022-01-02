@@ -89,9 +89,9 @@ namespace NETime_WF_EF6
             try
             {
                 using(netimeContainer context = new netimeContainer())
-                {                    
-                    var value = await Task.Run(() => (from b in context.balanceSet select new { b.datetime, b.qtty }).Distinct().Sum(s => s.qtty));
-                    if(value != null) { res = value; }
+                {
+                    res = await Task.Run(() => (from b in context.balanceSet where b.qtty > 0 select b.qtty)
+                    .DefaultIfEmpty(0).Sum());
                 }
             }catch(Exception ex)
             {
@@ -257,7 +257,7 @@ namespace NETime_WF_EF6
         }
 
         //USER DELETION METHODS & PROPERTIES        
-        private void DeleteUserBalance(int Id)
+        private async Task DeleteUserBalance(int Id)
         {
             using(netimeContainer context = new netimeContainer())
             {
@@ -270,10 +270,10 @@ namespace NETime_WF_EF6
                 {
                     Console.Write(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETE USER BALANCE").GetAwaiter();
+                await Context.saveChanges(context, "APP MANAGER DELETE USER BALANCE");
             }
         }
-        private void DeleteUserSelection(int Id)
+        private async Task DeleteUserSelection(int Id)
         {
             using (netimeContainer context = new netimeContainer())
             {
@@ -286,11 +286,11 @@ namespace NETime_WF_EF6
                 {
                     Console.Write(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETE USER SELECTION").GetAwaiter();
+                await Context.saveChanges(context, "APP MANAGER DELETE USER SELECTION");
             }
 
         }
-        private void DeleteUserActivities(int Id)
+        private async Task DeleteUserActivities(int Id)
         {
             using(netimeContainer context = new netimeContainer())
             {
@@ -308,27 +308,40 @@ namespace NETime_WF_EF6
                 {
                     Console.Write(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETE USER ACTIVITIES").GetAwaiter();
+                await Context.saveChanges(context, "APP MANAGER DELETE USER ACTIVITIES");
             }
         }
-        private void DeleteUser(int Id)
+        private async Task DeleteUser(int Id)
         {
-            DeleteUserBalance(Id);
-            DeleteUserSelection(Id);
-            DeleteUserActivities(Id);
+            await DeleteUserBalance(Id);
+            await DeleteUserSelection(Id);
+            await DeleteUserActivities(Id);
 
             using (netimeContainer context = new netimeContainer())
             {
                 try
-                {                    
-                    context.userSet.Remove(context.userSet.Find(Id));
+                {
+                    var u = context.userSet.Find(Id);
+                    if (u != null)
+                    {
+                        context.userSet.Remove(u);
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.Write(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETE USER").GetAwaiter();
+                await Context.saveChanges(context, "APP MANAGER DELETE USER");
             }
+            if (GetSelectedUserId() == CurrentUser.Id)
+            {
+                CurrentUser.RemoveUser();
+                this.Dispose(true);
+            }
+            else
+            {
+                UpdateUserListController();
+            }            
         }
         private int GetSelectedUserId()
         {
@@ -346,24 +359,23 @@ namespace NETime_WF_EF6
         //BUTTON USER DELETION EVENTS
         private void button_delete_balance_Click(object sender, EventArgs e)
         {
-            DeleteUserBalance(GetSelectedUserId());
+            DeleteUserBalance(GetSelectedUserId()).GetAwaiter();
         }
         private void button_delete_selAct_Click(object sender, EventArgs e)
         {
-            DeleteUserSelection(GetSelectedUserId());
+            DeleteUserSelection(GetSelectedUserId()).GetAwaiter();
         }
         private void button_delete_activities_Click(object sender, EventArgs e)
         {
-            DeleteUserActivities(GetSelectedUserId());
+            DeleteUserActivities(GetSelectedUserId()).GetAwaiter();
         }
         private void button_delete_user_Click(object sender, EventArgs e)
         {
-            DeleteUser(GetSelectedUserId());            
-            //TODO: LogOut
+            DeleteUser(GetSelectedUserId()).GetAwaiter();            
         }
 
         //DB DELETION METHODS
-        private void DeleteAllBalances()
+        private async Task DeleteAllBalances()
         {
             using(netimeContainer context = new netimeContainer())
             {
@@ -376,10 +388,10 @@ namespace NETime_WF_EF6
                 {
                     Console.WriteLine(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETE ALL BALANCES").Wait();                
+                await Context.saveChanges(context, "APP MANAGER DELETE ALL BALANCES");
             }
         }
-        private void DeleteAllSelections()
+        private async Task DeleteAllSelections()
         {
             using(netimeContainer context = new netimeContainer())
             {
@@ -391,12 +403,12 @@ namespace NETime_WF_EF6
                 {
                     Console.WriteLine(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETE ALL SELECTION").Wait();
+                await Context.saveChanges(context, "APP MANAGER DELETE ALL SELECTION");
             }
         }
-        private void DeleteAllActivities()
+        private async Task DeleteAllActivities()
         {
-            DeleteAllSelections();
+            await DeleteAllSelections();
             using(netimeContainer context = new netimeContainer())
             {
                 try
@@ -407,12 +419,12 @@ namespace NETime_WF_EF6
                 {
                     Console.WriteLine(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETION ALL ACTIVITIES").Wait();
+                await Context.saveChanges(context, "APP MANAGER DELETION ALL ACTIVITIES");
             }
         }
-        private void DeleteAllCategories() 
+        private async Task DeleteAllCategories() 
         {
-            DeleteAllActivities();
+            await DeleteAllActivities();
             using (netimeContainer context = new netimeContainer())
             {
                 try
@@ -420,13 +432,13 @@ namespace NETime_WF_EF6
                     List<categories> catList = context.categoriesSet.ToList<categories>();
                     context.categoriesSet.RemoveRange(catList);
                 }catch ( Exception ex) { Console.WriteLine(ex.InnerException); }
-                Context.saveChanges(context, "APP MANAGER DELETION ALL CATEGORIES").Wait();
+                await Context.saveChanges(context, "APP MANAGER DELETION ALL CATEGORIES");
             }
         }
-        private void DeleteAllUsers()
+        private async Task DeleteAllUsers()
         {
-            DeleteAllBalances();
-            DeleteAllCategories();
+            await DeleteAllBalances();
+            await DeleteAllCategories();
             using(netimeContainer context = new netimeContainer())
             {
                 try
@@ -437,35 +449,36 @@ namespace NETime_WF_EF6
                 {
                     Console.WriteLine(ex.InnerException);
                 }
-                Context.saveChanges(context, "APP MANAGER DELETION ALL USERS").Wait();
+                await Context.saveChanges(context, "APP MANAGER DELETION ALL USERS");
             }
-            //TODO: logout
+            CurrentUser.RemoveUser();
+            this.Dispose(true);
         }
 
         //BUTTON DB DELETION EVENTS
         private void button_db_balance_Click(object sender, EventArgs e)
         {
-            DeleteAllBalances();
+            DeleteAllBalances().GetAwaiter();
         }
         private void button_db_selAct_Click(object sender, EventArgs e)
         {
-            DeleteAllSelections();
+            DeleteAllSelections().GetAwaiter();
         }
         private void button_db_activities_Click(object sender, EventArgs e)
         {
-            DeleteAllActivities();
+            DeleteAllActivities().GetAwaiter();
         }
         private void button_db_users_Click(object sender, EventArgs e)
         {
-            DeleteAllUsers();
+            DeleteAllUsers().GetAwaiter();
         }
         private void button_db_categories_Click(object sender, EventArgs e)
         {
-            DeleteAllCategories();
+            DeleteAllCategories().GetAwaiter();
         }
         private void button_delete_all_Click(object sender, EventArgs e)
         {
-            DeleteAllUsers();
+            DeleteAllUsers().GetAwaiter();
         }
         
         //COUNTERS METHODS
@@ -492,6 +505,7 @@ namespace NETime_WF_EF6
         {
             this.toolStripStatusLabel_selection.Text = $"Selecciones: { Convert.ToString(await GetSelectedActivitesCounter())}";
         }
+        
         //TIMER
         private void timer_counters_Tick(object sender, EventArgs e)
         {

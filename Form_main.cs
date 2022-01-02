@@ -49,6 +49,12 @@ namespace NETime_WF_EF6
         private transacciones ut;
         private appManager appM;
 
+        //DISPOSED EVENTS
+        private void appM_Disposed(object sender, EventArgs e)
+        {
+            if(CurrentUser.Id == 0) { pictureBox_Logout_Click(sender, e); }            
+        }
+
         //STARTUP METHOD
         private void SetPanelUser()
         {
@@ -96,6 +102,7 @@ namespace NETime_WF_EF6
             panel_ContainerInterface.Controls.Add(appM);
             this.label_title.Text = "Gestión de la aplicación";
             IconsStatusChanger(pictureBox_Logout); //Activará todos los iconos.
+            appM.Disposed += new EventHandler(appM_Disposed);
         }
         //CLICK EVENTS
         private void pictureBox_UserData_Click(object sender, EventArgs e)
