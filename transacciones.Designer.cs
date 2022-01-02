@@ -231,7 +231,7 @@ namespace NETime_WF_EF6
             this.numericUpDown_qtty.Location = new System.Drawing.Point(86, 156);
             this.numericUpDown_qtty.Name = "numericUpDown_qtty";
             this.numericUpDown_qtty.Size = new System.Drawing.Size(143, 20);
-            this.numericUpDown_qtty.TabIndex = 4;
+            this.numericUpDown_qtty.TabIndex = 0;
             this.numericUpDown_qtty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown_qtty.ThousandsSeparator = true;
             this.numericUpDown_qtty.ValueChanged += new System.EventHandler(this.numericUpDown_qtty_ValueChanged);
@@ -264,7 +264,7 @@ namespace NETime_WF_EF6
             this.button_pay.Location = new System.Drawing.Point(9, 210);
             this.button_pay.Name = "button_pay";
             this.button_pay.Size = new System.Drawing.Size(207, 21);
-            this.button_pay.TabIndex = 0;
+            this.button_pay.TabIndex = 1;
             this.button_pay.Text = "Pagar";
             this.button_pay.UseVisualStyleBackColor = true;
             this.button_pay.Click += new System.EventHandler(this.button_pay_Click);

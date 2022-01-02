@@ -92,7 +92,7 @@ namespace NETime_WF_EF6
             this.button_ChangePass.Location = new System.Drawing.Point(203, 156);
             this.button_ChangePass.Name = "button_ChangePass";
             this.button_ChangePass.Size = new System.Drawing.Size(50, 59);
-            this.button_ChangePass.TabIndex = 14;
+            this.button_ChangePass.TabIndex = 7;
             this.button_ChangePass.Text = "Cambiar";
             this.button_ChangePass.UseVisualStyleBackColor = true;
             this.button_ChangePass.Visible = false;
@@ -117,7 +117,7 @@ namespace NETime_WF_EF6
             this.textBox_userPass2.Name = "textBox_userPass2";
             this.textBox_userPass2.PasswordChar = '-';
             this.textBox_userPass2.Size = new System.Drawing.Size(170, 20);
-            this.textBox_userPass2.TabIndex = 12;
+            this.textBox_userPass2.TabIndex = 6;
             this.textBox_userPass2.Tag = "UserForm";
             this.textBox_userPass2.UseSystemPasswordChar = true;
             this.textBox_userPass2.Visible = false;
@@ -139,7 +139,7 @@ namespace NETime_WF_EF6
             this.textBox_userTel.Location = new System.Drawing.Point(24, 234);
             this.textBox_userTel.Name = "textBox_userTel";
             this.textBox_userTel.Size = new System.Drawing.Size(170, 20);
-            this.textBox_userTel.TabIndex = 10;
+            this.textBox_userTel.TabIndex = 3;
             this.textBox_userTel.Tag = "UserForm";
             this.textBox_userTel.Text = "+34555222555";
             this.textBox_userTel.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
@@ -161,7 +161,7 @@ namespace NETime_WF_EF6
             this.textBox_userAddress.Multiline = true;
             this.textBox_userAddress.Name = "textBox_userAddress";
             this.textBox_userAddress.Size = new System.Drawing.Size(170, 56);
-            this.textBox_userAddress.TabIndex = 8;
+            this.textBox_userAddress.TabIndex = 4;
             this.textBox_userAddress.Tag = "UserForm";
             this.textBox_userAddress.Text = "C\\Banco de tiempo 2, 4B";
             this.textBox_userAddress.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
@@ -182,7 +182,7 @@ namespace NETime_WF_EF6
             this.textBox_userSurname.Location = new System.Drawing.Point(24, 78);
             this.textBox_userSurname.Name = "textBox_userSurname";
             this.textBox_userSurname.Size = new System.Drawing.Size(170, 20);
-            this.textBox_userSurname.TabIndex = 6;
+            this.textBox_userSurname.TabIndex = 1;
             this.textBox_userSurname.Tag = "UserForm";
             this.textBox_userSurname.Text = "Apellidos";
             this.textBox_userSurname.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
@@ -203,7 +203,7 @@ namespace NETime_WF_EF6
             this.textBox_user_Email.Location = new System.Drawing.Point(24, 117);
             this.textBox_user_Email.Name = "textBox_user_Email";
             this.textBox_user_Email.Size = new System.Drawing.Size(170, 20);
-            this.textBox_user_Email.TabIndex = 4;
+            this.textBox_user_Email.TabIndex = 2;
             this.textBox_user_Email.Tag = "UserForm";
             this.textBox_user_Email.Text = "johnDoe@dominio.com";
             this.textBox_user_Email.TextChanged += new System.EventHandler(this.userData_TextBoxChanged);
@@ -225,7 +225,7 @@ namespace NETime_WF_EF6
             this.textBox_userPass.Name = "textBox_userPass";
             this.textBox_userPass.PasswordChar = '-';
             this.textBox_userPass.Size = new System.Drawing.Size(170, 20);
-            this.textBox_userPass.TabIndex = 2;
+            this.textBox_userPass.TabIndex = 5;
             this.textBox_userPass.Tag = "UserForm";
             this.textBox_userPass.UseSystemPasswordChar = true;
             this.textBox_userPass.CausesValidationChanged += new System.EventHandler(this.textBox_pass_ChangeValidation);

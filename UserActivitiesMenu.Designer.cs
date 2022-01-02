@@ -79,7 +79,7 @@ namespace NETime_WF_EF6
             this.button_AddActivity.Location = new System.Drawing.Point(109, 175);
             this.button_AddActivity.Name = "button_AddActivity";
             this.button_AddActivity.Size = new System.Drawing.Size(237, 28);
-            this.button_AddActivity.TabIndex = 7;
+            this.button_AddActivity.TabIndex = 3;
             this.button_AddActivity.Text = "Crear actividad";
             this.button_AddActivity.UseVisualStyleBackColor = true;
             this.button_AddActivity.Click += new System.EventHandler(this.button_AddActivity_Click);
@@ -90,7 +90,7 @@ namespace NETime_WF_EF6
             this.comboBox_Category.Location = new System.Drawing.Point(216, 43);
             this.comboBox_Category.Name = "comboBox_Category";
             this.comboBox_Category.Size = new System.Drawing.Size(161, 21);
-            this.comboBox_Category.TabIndex = 6;
+            this.comboBox_Category.TabIndex = 2;
             // 
             // textBox_ActivityDesc
             // 
@@ -99,7 +99,7 @@ namespace NETime_WF_EF6
             this.textBox_ActivityDesc.Multiline = true;
             this.textBox_ActivityDesc.Name = "textBox_ActivityDesc";
             this.textBox_ActivityDesc.Size = new System.Drawing.Size(484, 74);
-            this.textBox_ActivityDesc.TabIndex = 5;
+            this.textBox_ActivityDesc.TabIndex = 1;
             this.textBox_ActivityDesc.CausesValidationChanged += new System.EventHandler(this.textBox_CausesValidationChanged);
             this.textBox_ActivityDesc.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
