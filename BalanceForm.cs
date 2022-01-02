@@ -196,23 +196,22 @@ namespace NETime_WF_EF6
             int activityId = (int)comboBox_Activity.SelectedValue;
             int qtty = (int)numericUpDown_qtty.Value;            
             int receiverUserId = getUserIdByActivityId(activityId);
+            string activityName = comboBox_Activity.ValueMember;
             DateTime datetime = DateTime.Now;
 
             balance credit = new balance
             {
                 datetime = datetime,
                 userId = payerUserId,
-                activitiesId = activityId,
+                activityName = activityName,
                 qtty = qtty*-1,
-                sing = true
             };
             balance debit = new balance
             {
                 datetime = datetime,
                 userId = receiverUserId,
-                activitiesId = activityId,
+                activityName = activityName,
                 qtty = qtty,
-                sing = false
             };
             this.context.balanceSet.Add(credit);
             this.context.balanceSet.Add(debit);            

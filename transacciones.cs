@@ -130,8 +130,8 @@ namespace NETime_WF_EF6
         }
         private void UpdateAll()
         {
-            UpdateCounters().GetAwaiter();            
-            UpdateGrids().GetAwaiter();
+            UpdateCounters().GetAwaiter().OnCompleted(new Action(SetNumericControlParameters));
+            UpdateGrids().GetAwaiter();            
         }
 
         //DATAGRIDVIEW PARAMETERIZATION
@@ -216,16 +216,17 @@ namespace NETime_WF_EF6
         //NUMERIC UP/DOWN PARAMETERIZATION        
         private int totHours;
         private void SetNumericControlParameters()
-        {
+        {   
             numericUpDown_qtty.Maximum = totHours + 5;            
             numericUpDown_qtty.Minimum = 0;
             numericUpDown_qtty.Increment = 1;
+            numericUpDown_qtty.Value = 0;
         }
 
         //BUTTON STATUS CHECK
         private void Button_payStatus()
         {
-            button_pay.Enabled = totHours >= -5;
+            button_pay.Enabled = numericUpDown_qtty.Value > 0;
         }
         private void test_worker()
         {
@@ -289,7 +290,7 @@ namespace NETime_WF_EF6
 
                 label_email.Visible = label_name.Visible = label_category.Visible = true;
 
-                selectedActivityId = data["activityId"].Value.ToString();
+                selectedActivityId = data["name"].Value.ToString();
                 selectedActivityUserId = Convert.ToInt32(data["userId"].Value);
             }
             //selector = 0, Id = 1, name = 2, category = 3, description = 4, userId = 5, email = 6 , activityId=7
@@ -302,6 +303,10 @@ namespace NETime_WF_EF6
         {
             Button_payStatus();
             label_total.ForeColor = totHours < 0 ? Color.Red : Color.Black;            
+        }        
+        private void numericUpDown_qtty_ValueChanged(object sender, EventArgs e)
+        {
+            Button_payStatus();
         }
     }
 }

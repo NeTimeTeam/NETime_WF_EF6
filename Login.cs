@@ -144,6 +144,7 @@ namespace NETime_WF_EF6
             else
             {
                 errMsg();
+                txtPass.Clear();
                 return false;
             }
         }        
@@ -310,7 +311,5 @@ namespace NETime_WF_EF6
                 }
             }
         }
-        
-        //TODO: Eliminar el texto del formulario si falla el login.
     }
 }

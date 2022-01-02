@@ -234,6 +234,7 @@ namespace NETime_WF_EF6
             this.numericUpDown_qtty.TabIndex = 4;
             this.numericUpDown_qtty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown_qtty.ThousandsSeparator = true;
+            this.numericUpDown_qtty.ValueChanged += new System.EventHandler(this.numericUpDown_qtty_ValueChanged);
             // 
             // label_userTitle
             // 
