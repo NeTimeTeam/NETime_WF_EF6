@@ -15,8 +15,91 @@ namespace NETime_WF_EF6
         public appManager()
         {
             InitializeComponent();
-            UpdateUserListController();
+            UpdateCounters().GetAwaiter();
+            UpdateUserListController();            
+            this.timer_counters.Start();
         }
+
+        //DATA GATHERS
+        private List<user> GetUsers()
+        {
+            List<user> users = new List<user>();
+            using (netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    users = context.userSet.OrderBy(u => u.email).ToList<user>();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.InnerException);
+                }
+            }
+            return users;
+        }
+        private async Task<int> GetActivitiesCounter()
+        {
+            int res = -1;
+            try
+            {
+                using(netimeContainer context = new netimeContainer())
+                {
+                    res = await Task.Run(() => context.activitiesSet.Count());
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.InnerException);
+            }
+            return res;
+        }
+        private async Task<int> GetUsersCounter()
+        {
+            int res = -1;
+            try
+            {
+                using(netimeContainer context = new netimeContainer())
+                {
+                    res = await Task.Run(() => context.userSet.Count());
+                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+            }
+            return res;
+        }
+        private async Task<int> GetSelectedActivitesCounter()
+        {
+            int res = -1;
+            try
+            {
+                using(netimeContainer context = new netimeContainer())
+                {
+                    res = await Task.Run(()=> context.selected_activitiesSet.Count());
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+            }
+            return res;
+        }
+        private async Task<int> GetTotalExchangedHours()
+        {
+            int res = -1;
+            try
+            {
+                using(netimeContainer context = new netimeContainer())
+                {
+                    res = await Task.Run(() => (from b in context.balanceSet select new { b.datetime, b.qtty }).Distinct().Sum(s => s.qtty));
+                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+                res = 0;
+            }
+            return res;
+        }
+
         //XML EXPORT/IMPORT METHODS
         private bool VerifyCategoryImportData(categories entity)
         {
@@ -146,11 +229,7 @@ namespace NETime_WF_EF6
             }            
         }
 
-        //BUTTON EVENTS IMPORT-EXPORT
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //botón_db_categories
-        }
+        //BUTTON EVENTS IMPORT-EXPORT        
         private void button_export_users_Click(object sender, EventArgs e)
         {
             ExportData(0);
@@ -177,29 +256,83 @@ namespace NETime_WF_EF6
         }
 
         //USER DELETION METHODS & PROPERTIES        
-        private void DeleteUserBalance(int Id) { }
-        private void DeleteUserSelectio(int Id) { }
-        private void DeleteUserActivities(int Id) { }
-        private void DeleteUser(int Id) { }
-        private int GetSelectedUserId()
+        private void DeleteUserBalance(int Id)
         {
-            return (int)this.comboBox_users_list.SelectedValue;
-        }
-        private List<user> GetUsers()
-        {
-            List<user> users = new List<user>();
             using(netimeContainer context = new netimeContainer())
             {
                 try
                 {
-                    users = context.userSet.OrderBy(u => u.email).ToList<user>();
-                }catch (Exception ex)
-                {
-                    Console.WriteLine(ex.InnerException);
+                    List<balance> entities= context.balanceSet.Where(b => b.userId == Id).ToList<balance>();
+                    context.balanceSet.RemoveRange(entities);
                 }
+                catch(Exception ex)
+                {
+                    Console.Write(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETE USER BALANCE").GetAwaiter();
             }
-            return users;
         }
+        private void DeleteUserSelection(int Id)
+        {
+            using (netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<selected_activities> entities = context.selected_activitiesSet.Where(sa => sa.userId == Id).ToList<selected_activities>();
+                    context.selected_activitiesSet.RemoveRange(entities);
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETE USER SELECTION").GetAwaiter();
+            }
+
+        }
+        private void DeleteUserActivities(int Id)
+        {
+            using(netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<selected_activities> selected_Activities = (from sa in context.selected_activitiesSet join
+                                                                     a in context.activitiesSet on sa.activitiesId equals a.Id
+                                                                     where a.userId == Id select sa).ToList<selected_activities>();
+                    selected_Activities.ForEach(sa => context.selected_activitiesSet.Remove(sa));
+                    
+                    List < activities > entities = context.activitiesSet.Where(a => a.userId == Id).ToList<activities>();
+                    context.activitiesSet.RemoveRange(entities);
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETE USER ACTIVITIES").GetAwaiter();
+            }
+        }
+        private void DeleteUser(int Id)
+        {
+            DeleteUserBalance(Id);
+            DeleteUserSelection(Id);
+            DeleteUserActivities(Id);
+
+            using (netimeContainer context = new netimeContainer())
+            {
+                try
+                {                    
+                    context.userSet.Remove(context.userSet.Find(Id));
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETE USER").GetAwaiter();
+            }
+        }
+        private int GetSelectedUserId()
+        {
+            return (int)this.comboBox_users_list.SelectedValue;
+        }        
         private void UpdateUserListController()
         {
             this.comboBox_users_list.DataSource = GetUsers();
@@ -209,23 +342,159 @@ namespace NETime_WF_EF6
             this.comboBox_users_list.SelectedValue = CurrentUser.Id;        
         }
 
-        //BUTTON EVENTS USER DELETION
+        //BUTTON USER DELETION EVENTS
         private void button_delete_balance_Click(object sender, EventArgs e)
         {
-
+            DeleteUserBalance(GetSelectedUserId());
         }
         private void button_delete_selAct_Click(object sender, EventArgs e)
         {
-
+            DeleteUserSelection(GetSelectedUserId());
         }
         private void button_delete_activities_Click(object sender, EventArgs e)
         {
-
+            DeleteUserActivities(GetSelectedUserId());
         }
         private void button_delete_user_Click(object sender, EventArgs e)
         {
-
+            DeleteUser(GetSelectedUserId());            
+            //TODO: LogOut
         }
 
+        //DB DELETION METHODS
+        private void DeleteAllBalances()
+        {
+            using(netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<balance> balances = context.balanceSet.ToList<balance>();
+                    context.balanceSet.RemoveRange(balances);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETE ALL BALANCES").Wait();                
+            }
+        }
+        private void DeleteAllSelections()
+        {
+            using(netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<selected_activities> selected_Activities = context.selected_activitiesSet.ToList<selected_activities>();
+                    context.selected_activitiesSet.RemoveRange(selected_Activities);
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETE ALL SELECTION").Wait();
+            }
+        }
+        private void DeleteAllActivities()
+        {
+            DeleteAllSelections();
+            using(netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<activities> activitiesList = context.activitiesSet.ToList<activities>();
+                    context.activitiesSet.RemoveRange(activitiesList);
+                }catch( Exception ex)
+                {
+                    Console.WriteLine(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETION ALL ACTIVITIES").Wait();
+            }
+        }
+        private void DeleteAllCategories() 
+        {
+            DeleteAllActivities();
+            using (netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<categories> catList = context.categoriesSet.ToList<categories>();
+                    context.categoriesSet.RemoveRange(catList);
+                }catch ( Exception ex) { Console.WriteLine(ex.InnerException); }
+                Context.saveChanges(context, "APP MANAGER DELETION ALL CATEGORIES").Wait();
+            }
+        }
+        private void DeleteAllUsers()
+        {
+            DeleteAllBalances();
+            DeleteAllCategories();
+            using(netimeContainer context = new netimeContainer())
+            {
+                try
+                {
+                    List<user> users = context.userSet.ToList<user>();
+                    context.userSet.RemoveRange(users);
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.InnerException);
+                }
+                Context.saveChanges(context, "APP MANAGER DELETION ALL USERS").Wait();
+            }
+            //TODO: logout
+        }
+
+        //BUTTON DB DELETION EVENTS
+        private void button_db_balance_Click(object sender, EventArgs e)
+        {
+            DeleteAllBalances();
+        }
+        private void button_db_selAct_Click(object sender, EventArgs e)
+        {
+            DeleteAllSelections();
+        }
+        private void button_db_activities_Click(object sender, EventArgs e)
+        {
+            DeleteAllActivities();
+        }
+        private void button_db_users_Click(object sender, EventArgs e)
+        {
+            DeleteAllUsers();
+        }
+        private void button_db_categories_Click(object sender, EventArgs e)
+        {
+            DeleteAllCategories();
+        }
+        private void button_delete_all_Click(object sender, EventArgs e)
+        {
+            DeleteAllUsers();
+        }
+        
+        //COUNTERS METHODS
+        private async Task UpdateCounters()
+        {
+            await UpdateActivitiesCounter();
+            await UpdateBalanceCounter();
+            await UpdateSelectionCounter();
+            await UpdateUsersCounter();
+        }
+        private async Task UpdateUsersCounter()
+        {
+            this.toolStripStatusLabel_user.Text = $"Usuarios: {Convert.ToString(await GetUsersCounter())}";
+        }
+        private async Task UpdateActivitiesCounter()
+        {
+            this.toolStripStatusLabel_activities.Text = $"Actividades: {Convert.ToString(await GetActivitiesCounter())}";
+        }
+        private async Task UpdateBalanceCounter()
+        {
+            this.toolStripStatusLabel_balance.Text = $"Horas: {Convert.ToString(await GetTotalExchangedHours())}";
+        }
+        private async Task UpdateSelectionCounter()
+        {
+            this.toolStripStatusLabel_selection.Text = $"Selecciones: { Convert.ToString(await GetSelectedActivitesCounter())}";
+        }
+        //TIMER
+        private void timer_counters_Tick(object sender, EventArgs e)
+        {
+            UpdateCounters().GetAwaiter();
+        }
     }
 }

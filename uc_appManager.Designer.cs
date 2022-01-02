@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox_menu = new System.Windows.Forms.GroupBox();
             this.groupBox_delete = new System.Windows.Forms.GroupBox();
             this.groupBox_db = new System.Windows.Forms.GroupBox();
@@ -38,6 +39,7 @@
             this.button_db_users = new System.Windows.Forms.Button();
             this.button_delete_all = new System.Windows.Forms.Button();
             this.groupBox_user = new System.Windows.Forms.GroupBox();
+            this.comboBox_users_list = new System.Windows.Forms.ComboBox();
             this.button_delete_balance = new System.Windows.Forms.Button();
             this.button_delete_selAct = new System.Windows.Forms.Button();
             this.button_delete_user = new System.Windows.Forms.Button();
@@ -53,11 +55,11 @@
             this.groupBox_info = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.comboBox_users_list = new System.Windows.Forms.ComboBox();
+            this.toolStripStatusLabel_user = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_activities = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_selection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_balance = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timer_counters = new System.Windows.Forms.Timer(this.components);
             this.groupBox_menu.SuspendLayout();
             this.groupBox_delete.SuspendLayout();
             this.groupBox_db.SuspendLayout();
@@ -114,7 +116,7 @@
             this.button_db_categories.TabIndex = 13;
             this.button_db_categories.Text = "Categorias";
             this.button_db_categories.UseVisualStyleBackColor = true;
-            this.button_db_categories.Click += new System.EventHandler(this.button1_Click);
+            this.button_db_categories.Click += new System.EventHandler(this.button_db_categories_Click);
             // 
             // button_db_selAct
             // 
@@ -124,6 +126,7 @@
             this.button_db_selAct.TabIndex = 12;
             this.button_db_selAct.Text = "Selección";
             this.button_db_selAct.UseVisualStyleBackColor = true;
+            this.button_db_selAct.Click += new System.EventHandler(this.button_db_selAct_Click);
             // 
             // button_db_balance
             // 
@@ -133,6 +136,7 @@
             this.button_db_balance.TabIndex = 11;
             this.button_db_balance.Text = "Balances";
             this.button_db_balance.UseVisualStyleBackColor = true;
+            this.button_db_balance.Click += new System.EventHandler(this.button_db_balance_Click);
             // 
             // button_db_activities
             // 
@@ -142,6 +146,7 @@
             this.button_db_activities.TabIndex = 10;
             this.button_db_activities.Text = "Actividades";
             this.button_db_activities.UseVisualStyleBackColor = true;
+            this.button_db_activities.Click += new System.EventHandler(this.button_db_activities_Click);
             // 
             // button_db_users
             // 
@@ -151,6 +156,7 @@
             this.button_db_users.TabIndex = 9;
             this.button_db_users.Text = "Usuarios";
             this.button_db_users.UseVisualStyleBackColor = true;
+            this.button_db_users.Click += new System.EventHandler(this.button_db_users_Click);
             // 
             // button_delete_all
             // 
@@ -160,6 +166,7 @@
             this.button_delete_all.TabIndex = 7;
             this.button_delete_all.Text = "Borrado total";
             this.button_delete_all.UseVisualStyleBackColor = true;
+            this.button_delete_all.Click += new System.EventHandler(this.button_delete_all_Click);
             // 
             // groupBox_user
             // 
@@ -174,6 +181,14 @@
             this.groupBox_user.TabIndex = 9;
             this.groupBox_user.TabStop = false;
             this.groupBox_user.Text = "Usuario";
+            // 
+            // comboBox_users_list
+            // 
+            this.comboBox_users_list.FormattingEnabled = true;
+            this.comboBox_users_list.Location = new System.Drawing.Point(6, 25);
+            this.comboBox_users_list.Name = "comboBox_users_list";
+            this.comboBox_users_list.Size = new System.Drawing.Size(184, 21);
+            this.comboBox_users_list.TabIndex = 9;
             // 
             // button_delete_balance
             // 
@@ -321,46 +336,44 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
-            this.toolStripStatusLabel3,
-            this.toolStripProgressBar1});
+            this.toolStripStatusLabel_user,
+            this.toolStripStatusLabel_activities,
+            this.toolStripStatusLabel_selection,
+            this.toolStripStatusLabel_balance});
             this.statusStrip1.Location = new System.Drawing.Point(0, 386);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(509, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // toolStripStatusLabel_user
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel_user.Name = "toolStripStatusLabel_user";
+            this.toolStripStatusLabel_user.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel_user.Text = "toolStripStatusLabel1";
             // 
-            // toolStripStatusLabel2
+            // toolStripStatusLabel_activities
             // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            this.toolStripStatusLabel_activities.Name = "toolStripStatusLabel_activities";
+            this.toolStripStatusLabel_activities.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel_activities.Text = "toolStripStatusLabel2";
             // 
-            // toolStripStatusLabel3
+            // toolStripStatusLabel_selection
             // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
+            this.toolStripStatusLabel_selection.Name = "toolStripStatusLabel_selection";
+            this.toolStripStatusLabel_selection.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel_selection.Text = "toolStripStatusLabel3";
             // 
-            // toolStripProgressBar1
+            // toolStripStatusLabel_balance
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            this.toolStripStatusLabel_balance.Name = "toolStripStatusLabel_balance";
+            this.toolStripStatusLabel_balance.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel_balance.Text = "toolStripStatusLabel1";
             // 
-            // comboBox_users_list
+            // timer_counters
             // 
-            this.comboBox_users_list.FormattingEnabled = true;
-            this.comboBox_users_list.Location = new System.Drawing.Point(6, 25);
-            this.comboBox_users_list.Name = "comboBox_users_list";
-            this.comboBox_users_list.Size = new System.Drawing.Size(184, 21);
-            this.comboBox_users_list.TabIndex = 9;
+            this.timer_counters.Interval = 2000;
+            this.timer_counters.Tick += new System.EventHandler(this.timer_counters_Tick);
             // 
             // appManager
             // 
@@ -411,12 +424,13 @@
         private System.Windows.Forms.Button button_import_categories;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_user;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_activities;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_selection;
         private System.Windows.Forms.Button button_export_users;
         private System.Windows.Forms.Button button_import_users;
         private System.Windows.Forms.ComboBox comboBox_users_list;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_balance;
+        private System.Windows.Forms.Timer timer_counters;
     }
 }
