@@ -49,6 +49,17 @@ namespace NETime_WF_EF6
         public static string email { get; set; }
         public static byte[] salt { get; set; }
         public static byte[] password { get; set; }
+        public static void RemoveUser()
+        {
+            Id = 0;
+            name = string.Empty;
+            surname = string.Empty;
+            address = String.Empty;
+            phone = String.Empty;
+            email = String.Empty;
+            password = null;
+            salt = null;
+        }
     }
     static class Utilities
     {

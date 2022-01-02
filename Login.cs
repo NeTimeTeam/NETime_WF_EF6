@@ -149,11 +149,47 @@ namespace NETime_WF_EF6
         }        
         private void userLogged(user user)
         {
-            CurrentUser.SetUser(user);
-            Form_main form_main = new Form_main(user.Id);
+            CurrentUser.SetUser(user);            
+            this.Enabled = false;
             this.Hide();
+            RemoveDataFromTextBoxes();
+            Form_main form_main = new Form_main(user.Id);            
             form_main.ShowDialog();
-            this.Close();
+            //form_main.Disposed += new EventHandler(form_main_Disposed);
+            //form_main.FormClosed += new FormClosedEventHandler(form_main_Closed);
+            //form_main.FormClosing += new FormClosingEventHandler(form_main_Closed);
+            if (form_main.IsDisposed)
+            {
+                CurrentUser.RemoveUser();
+                this.Show();
+                this.Enabled = true;
+            }
+            else
+            {
+                this.Close();
+            }            
+        }
+        private void form_main_Disposed(object sender, EventArgs e)
+        {
+            Console.WriteLine(DateTime.Now.ToString());
+            CurrentUser.RemoveUser();
+            this.Enabled = true;
+            this.Show();
+        }
+        private void form_main_Closed(object sender, FormClosedEventArgs e)
+        {
+            Console.WriteLine(DateTime.Now.ToString());
+            this.Dispose(true);
+        }
+        private void form_main_Closed(object sender, FormClosingEventArgs e)
+        {
+            Console.WriteLine(DateTime.Now.ToString());
+            this.Dispose(true);
+        }
+        private void RemoveDataFromTextBoxes()
+        {
+            this.txtUser.Clear();
+            this.txtPass.Clear();
         }
 
         //RESPONSE MSG

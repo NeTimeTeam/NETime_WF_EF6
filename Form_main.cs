@@ -123,21 +123,15 @@ namespace NETime_WF_EF6
             TransactionsDataInf();
         }
         private void pictureBox_Logout_Click(object sender, EventArgs e)
-        {
-            Login login = new Login();
-            login.ShowDialog();
-            this.Close();
-        }        
-       
+        {                        
+            this.Dispose();
+        }       
         private void RemoveControl()
         {
             foreach(Control c in panel_ContainerInterface.Controls)
             {                
                 c.Dispose();
             }
-        }
-
-        
-        
+        }        
     }
 }
