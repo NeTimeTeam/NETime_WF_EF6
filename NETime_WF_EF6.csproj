@@ -81,11 +81,11 @@
     <Compile Include="activities.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
-    <Compile Include="AltaUsuario.cs">
+    <Compile Include="form_AltaUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AltaUsuario.Designer.cs">
-      <DependentUpon>AltaUsuario.cs</DependentUpon>
+    <Compile Include="form_AltaUsuario.Designer.cs">
+      <DependentUpon>form_AltaUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="balance.cs">
       <DependentUpon>netime.tt</DependentUpon>
@@ -106,17 +106,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_main.cs">
+    <Compile Include="form_main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_main.Designer.cs">
-      <DependentUpon>Form_main.cs</DependentUpon>
+    <Compile Include="form_main.Designer.cs">
+      <DependentUpon>form_main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs">
+    <Compile Include="form_Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
+    <Compile Include="form_Login.Designer.cs">
+      <DependentUpon>form_Login.cs</DependentUpon>
     </Compile>
     <Compile Include="netime.Context.cs">
       <AutoGen>True</AutoGen>
@@ -139,35 +139,41 @@
     <Compile Include="selected_activities.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
-    <Compile Include="Select_Activities.cs">
+    <Compile Include="uc_Select_Activities.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Select_Activities.Designer.cs">
-      <DependentUpon>Select_Activities.cs</DependentUpon>
+    <Compile Include="uc_Select_Activities.Designer.cs">
+      <DependentUpon>uc_Select_Activities.cs</DependentUpon>
     </Compile>
-    <Compile Include="transacciones.cs">
+    <Compile Include="uc_Transacciones.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="transacciones.Designer.cs">
-      <DependentUpon>transacciones.cs</DependentUpon>
+    <Compile Include="uc_Transacciones.Designer.cs">
+      <DependentUpon>uc_Transacciones.cs</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserActivitiesMenu.cs">
+    <Compile Include="uc_UserActivitiesMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserActivitiesMenu.Designer.cs">
-      <DependentUpon>UserActivitiesMenu.cs</DependentUpon>
+    <Compile Include="uc_UserActivitiesMenu.Designer.cs">
+      <DependentUpon>uc_UserActivitiesMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserDataMenu.cs">
+    <Compile Include="uc_UserDataMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserDataMenu.Designer.cs">
-      <DependentUpon>UserDataMenu.cs</DependentUpon>
+    <Compile Include="uc_UserDataMenu.Designer.cs">
+      <DependentUpon>uc_UserDataMenu.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AltaUsuario.resx">
-      <DependentUpon>AltaUsuario.cs</DependentUpon>
+    <Compile Include="uc_xml.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uc_xml.Designer.cs">
+      <DependentUpon>uc_xml.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="form_AltaUsuario.resx">
+      <DependentUpon>form_AltaUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BalanceForm.resx">
       <DependentUpon>BalanceForm.cs</DependentUpon>
@@ -175,11 +181,11 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_main.resx">
-      <DependentUpon>Form_main.cs</DependentUpon>
+    <EmbeddedResource Include="form_main.resx">
+      <DependentUpon>form_main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
+    <EmbeddedResource Include="form_Login.resx">
+      <DependentUpon>form_Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -191,17 +197,20 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Select_Activities.resx">
-      <DependentUpon>Select_Activities.cs</DependentUpon>
+    <EmbeddedResource Include="uc_Select_Activities.resx">
+      <DependentUpon>uc_Select_Activities.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="transacciones.resx">
-      <DependentUpon>transacciones.cs</DependentUpon>
+    <EmbeddedResource Include="uc_Transacciones.resx">
+      <DependentUpon>uc_Transacciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserActivitiesMenu.resx">
-      <DependentUpon>UserActivitiesMenu.cs</DependentUpon>
+    <EmbeddedResource Include="uc_UserActivitiesMenu.resx">
+      <DependentUpon>uc_UserActivitiesMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserDataMenu.resx">
-      <DependentUpon>UserDataMenu.cs</DependentUpon>
+    <EmbeddedResource Include="uc_UserDataMenu.resx">
+      <DependentUpon>uc_UserDataMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="uc_xml.resx">
+      <DependentUpon>uc_xml.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
