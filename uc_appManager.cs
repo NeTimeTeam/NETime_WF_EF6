@@ -89,8 +89,9 @@ namespace NETime_WF_EF6
             try
             {
                 using(netimeContainer context = new netimeContainer())
-                {
-                    res = await Task.Run(() => (from b in context.balanceSet select new { b.datetime, b.qtty }).Distinct().Sum(s => s.qtty));
+                {                    
+                    var value = await Task.Run(() => (from b in context.balanceSet select new { b.datetime, b.qtty }).Distinct().Sum(s => s.qtty));
+                    if(value != null) { res = value; }
                 }
             }catch(Exception ex)
             {
