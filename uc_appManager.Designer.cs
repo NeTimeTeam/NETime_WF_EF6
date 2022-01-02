@@ -38,6 +38,7 @@
             this.button_db_users = new System.Windows.Forms.Button();
             this.button_delete_all = new System.Windows.Forms.Button();
             this.groupBox_user = new System.Windows.Forms.GroupBox();
+            this.comboBox_users_list = new System.Windows.Forms.ComboBox();
             this.button_delete_balance = new System.Windows.Forms.Button();
             this.button_delete_selAct = new System.Windows.Forms.Button();
             this.button_delete_user = new System.Windows.Forms.Button();
@@ -57,7 +58,6 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.comboBox_users_list = new System.Windows.Forms.ComboBox();
             this.groupBox_menu.SuspendLayout();
             this.groupBox_delete.SuspendLayout();
             this.groupBox_db.SuspendLayout();
@@ -70,23 +70,32 @@
             // 
             // groupBox_menu
             // 
+            this.groupBox_menu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.groupBox_menu.Controls.Add(this.groupBox_delete);
             this.groupBox_menu.Controls.Add(this.groupBox_export);
             this.groupBox_menu.Controls.Add(this.groupBox_import);
-            this.groupBox_menu.Location = new System.Drawing.Point(3, 3);
+            this.groupBox_menu.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_menu.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBox_menu.Location = new System.Drawing.Point(6, 6);
+            this.groupBox_menu.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(503, 233);
+            this.groupBox_menu.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_menu.Size = new System.Drawing.Size(1006, 448);
             this.groupBox_menu.TabIndex = 0;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Text = "Importar - exportar";
             // 
             // groupBox_delete
             // 
+            this.groupBox_delete.BackColor = System.Drawing.SystemColors.Window;
             this.groupBox_delete.Controls.Add(this.groupBox_db);
             this.groupBox_delete.Controls.Add(this.groupBox_user);
-            this.groupBox_delete.Location = new System.Drawing.Point(149, 19);
+            this.groupBox_delete.ForeColor = System.Drawing.Color.Navy;
+            this.groupBox_delete.Location = new System.Drawing.Point(298, 37);
+            this.groupBox_delete.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_delete.Name = "groupBox_delete";
-            this.groupBox_delete.Size = new System.Drawing.Size(348, 208);
+            this.groupBox_delete.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_delete.Size = new System.Drawing.Size(696, 400);
             this.groupBox_delete.TabIndex = 5;
             this.groupBox_delete.TabStop = false;
             this.groupBox_delete.Text = "Eliminar";
@@ -99,18 +108,24 @@
             this.groupBox_db.Controls.Add(this.button_db_activities);
             this.groupBox_db.Controls.Add(this.button_db_users);
             this.groupBox_db.Controls.Add(this.button_delete_all);
-            this.groupBox_db.Location = new System.Drawing.Point(208, 19);
+            this.groupBox_db.Location = new System.Drawing.Point(416, 37);
+            this.groupBox_db.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_db.Name = "groupBox_db";
-            this.groupBox_db.Size = new System.Drawing.Size(134, 183);
+            this.groupBox_db.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_db.Size = new System.Drawing.Size(268, 352);
             this.groupBox_db.TabIndex = 6;
             this.groupBox_db.TabStop = false;
             this.groupBox_db.Text = "Base de datos";
             // 
             // button_db_categories
             // 
-            this.button_db_categories.Location = new System.Drawing.Point(6, 127);
+            this.button_db_categories.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_db_categories.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_db_categories.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_db_categories.Location = new System.Drawing.Point(12, 244);
+            this.button_db_categories.Margin = new System.Windows.Forms.Padding(6);
             this.button_db_categories.Name = "button_db_categories";
-            this.button_db_categories.Size = new System.Drawing.Size(122, 21);
+            this.button_db_categories.Size = new System.Drawing.Size(244, 40);
             this.button_db_categories.TabIndex = 13;
             this.button_db_categories.Text = "Categorias";
             this.button_db_categories.UseVisualStyleBackColor = true;
@@ -118,45 +133,65 @@
             // 
             // button_db_selAct
             // 
-            this.button_db_selAct.Location = new System.Drawing.Point(6, 46);
+            this.button_db_selAct.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_db_selAct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_db_selAct.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.button_db_selAct.Location = new System.Drawing.Point(12, 88);
+            this.button_db_selAct.Margin = new System.Windows.Forms.Padding(6);
             this.button_db_selAct.Name = "button_db_selAct";
-            this.button_db_selAct.Size = new System.Drawing.Size(122, 21);
+            this.button_db_selAct.Size = new System.Drawing.Size(244, 40);
             this.button_db_selAct.TabIndex = 12;
             this.button_db_selAct.Text = "Selección";
             this.button_db_selAct.UseVisualStyleBackColor = true;
             // 
             // button_db_balance
             // 
-            this.button_db_balance.Location = new System.Drawing.Point(6, 19);
+            this.button_db_balance.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_db_balance.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_db_balance.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_db_balance.Location = new System.Drawing.Point(12, 37);
+            this.button_db_balance.Margin = new System.Windows.Forms.Padding(6);
             this.button_db_balance.Name = "button_db_balance";
-            this.button_db_balance.Size = new System.Drawing.Size(122, 21);
+            this.button_db_balance.Size = new System.Drawing.Size(244, 40);
             this.button_db_balance.TabIndex = 11;
             this.button_db_balance.Text = "Balances";
             this.button_db_balance.UseVisualStyleBackColor = true;
             // 
             // button_db_activities
             // 
-            this.button_db_activities.Location = new System.Drawing.Point(6, 73);
+            this.button_db_activities.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_db_activities.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_db_activities.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_db_activities.Location = new System.Drawing.Point(12, 140);
+            this.button_db_activities.Margin = new System.Windows.Forms.Padding(6);
             this.button_db_activities.Name = "button_db_activities";
-            this.button_db_activities.Size = new System.Drawing.Size(122, 21);
+            this.button_db_activities.Size = new System.Drawing.Size(244, 40);
             this.button_db_activities.TabIndex = 10;
             this.button_db_activities.Text = "Actividades";
             this.button_db_activities.UseVisualStyleBackColor = true;
             // 
             // button_db_users
             // 
-            this.button_db_users.Location = new System.Drawing.Point(6, 100);
+            this.button_db_users.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_db_users.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_db_users.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_db_users.Location = new System.Drawing.Point(12, 192);
+            this.button_db_users.Margin = new System.Windows.Forms.Padding(6);
             this.button_db_users.Name = "button_db_users";
-            this.button_db_users.Size = new System.Drawing.Size(122, 21);
+            this.button_db_users.Size = new System.Drawing.Size(244, 40);
             this.button_db_users.TabIndex = 9;
             this.button_db_users.Text = "Usuarios";
             this.button_db_users.UseVisualStyleBackColor = true;
             // 
             // button_delete_all
             // 
-            this.button_delete_all.Location = new System.Drawing.Point(6, 154);
+            this.button_delete_all.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_delete_all.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_delete_all.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_delete_all.Location = new System.Drawing.Point(12, 296);
+            this.button_delete_all.Margin = new System.Windows.Forms.Padding(6);
             this.button_delete_all.Name = "button_delete_all";
-            this.button_delete_all.Size = new System.Drawing.Size(122, 21);
+            this.button_delete_all.Size = new System.Drawing.Size(244, 40);
             this.button_delete_all.TabIndex = 7;
             this.button_delete_all.Text = "Borrado total";
             this.button_delete_all.UseVisualStyleBackColor = true;
@@ -168,18 +203,32 @@
             this.groupBox_user.Controls.Add(this.button_delete_selAct);
             this.groupBox_user.Controls.Add(this.button_delete_user);
             this.groupBox_user.Controls.Add(this.button_delete_activities);
-            this.groupBox_user.Location = new System.Drawing.Point(6, 19);
+            this.groupBox_user.Location = new System.Drawing.Point(12, 37);
+            this.groupBox_user.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_user.Name = "groupBox_user";
-            this.groupBox_user.Size = new System.Drawing.Size(196, 183);
+            this.groupBox_user.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_user.Size = new System.Drawing.Size(392, 352);
             this.groupBox_user.TabIndex = 9;
             this.groupBox_user.TabStop = false;
             this.groupBox_user.Text = "Usuario";
             // 
+            // comboBox_users_list
+            // 
+            this.comboBox_users_list.FormattingEnabled = true;
+            this.comboBox_users_list.Location = new System.Drawing.Point(12, 48);
+            this.comboBox_users_list.Margin = new System.Windows.Forms.Padding(6);
+            this.comboBox_users_list.Name = "comboBox_users_list";
+            this.comboBox_users_list.Size = new System.Drawing.Size(364, 33);
+            this.comboBox_users_list.TabIndex = 9;
+            // 
             // button_delete_balance
             // 
-            this.button_delete_balance.Location = new System.Drawing.Point(6, 59);
+            this.button_delete_balance.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_delete_balance.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_delete_balance.Location = new System.Drawing.Point(12, 113);
+            this.button_delete_balance.Margin = new System.Windows.Forms.Padding(6);
             this.button_delete_balance.Name = "button_delete_balance";
-            this.button_delete_balance.Size = new System.Drawing.Size(184, 25);
+            this.button_delete_balance.Size = new System.Drawing.Size(368, 48);
             this.button_delete_balance.TabIndex = 5;
             this.button_delete_balance.Text = "Balance";
             this.button_delete_balance.UseVisualStyleBackColor = true;
@@ -187,9 +236,13 @@
             // 
             // button_delete_selAct
             // 
-            this.button_delete_selAct.Location = new System.Drawing.Point(6, 90);
+            this.button_delete_selAct.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_delete_selAct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_delete_selAct.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_delete_selAct.Location = new System.Drawing.Point(12, 173);
+            this.button_delete_selAct.Margin = new System.Windows.Forms.Padding(6);
             this.button_delete_selAct.Name = "button_delete_selAct";
-            this.button_delete_selAct.Size = new System.Drawing.Size(184, 25);
+            this.button_delete_selAct.Size = new System.Drawing.Size(368, 48);
             this.button_delete_selAct.TabIndex = 8;
             this.button_delete_selAct.Text = "Selección";
             this.button_delete_selAct.UseVisualStyleBackColor = true;
@@ -197,9 +250,13 @@
             // 
             // button_delete_user
             // 
-            this.button_delete_user.Location = new System.Drawing.Point(6, 152);
+            this.button_delete_user.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_delete_user.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_delete_user.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_delete_user.Location = new System.Drawing.Point(12, 292);
+            this.button_delete_user.Margin = new System.Windows.Forms.Padding(6);
             this.button_delete_user.Name = "button_delete_user";
-            this.button_delete_user.Size = new System.Drawing.Size(184, 25);
+            this.button_delete_user.Size = new System.Drawing.Size(368, 48);
             this.button_delete_user.TabIndex = 3;
             this.button_delete_user.Text = "Usuario";
             this.button_delete_user.UseVisualStyleBackColor = true;
@@ -207,9 +264,13 @@
             // 
             // button_delete_activities
             // 
-            this.button_delete_activities.Location = new System.Drawing.Point(6, 121);
+            this.button_delete_activities.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_delete_activities.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_delete_activities.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_delete_activities.Location = new System.Drawing.Point(12, 233);
+            this.button_delete_activities.Margin = new System.Windows.Forms.Padding(6);
             this.button_delete_activities.Name = "button_delete_activities";
-            this.button_delete_activities.Size = new System.Drawing.Size(184, 25);
+            this.button_delete_activities.Size = new System.Drawing.Size(368, 48);
             this.button_delete_activities.TabIndex = 4;
             this.button_delete_activities.Text = "Actividades";
             this.button_delete_activities.UseVisualStyleBackColor = true;
@@ -217,22 +278,30 @@
             // 
             // groupBox_export
             // 
+            this.groupBox_export.BackColor = System.Drawing.SystemColors.Window;
             this.groupBox_export.Controls.Add(this.button_export_users);
             this.groupBox_export.Controls.Add(this.button_export_activities);
             this.groupBox_export.Controls.Add(this.button_export_balance);
             this.groupBox_export.Controls.Add(this.button_export_categories);
-            this.groupBox_export.Location = new System.Drawing.Point(6, 19);
+            this.groupBox_export.ForeColor = System.Drawing.Color.Navy;
+            this.groupBox_export.Location = new System.Drawing.Point(12, 37);
+            this.groupBox_export.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_export.Name = "groupBox_export";
-            this.groupBox_export.Size = new System.Drawing.Size(137, 124);
+            this.groupBox_export.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_export.Size = new System.Drawing.Size(274, 238);
             this.groupBox_export.TabIndex = 5;
             this.groupBox_export.TabStop = false;
             this.groupBox_export.Text = "Exportar";
             // 
             // button_export_users
             // 
-            this.button_export_users.Location = new System.Drawing.Point(6, 97);
+            this.button_export_users.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_export_users.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_export_users.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_export_users.Location = new System.Drawing.Point(12, 187);
+            this.button_export_users.Margin = new System.Windows.Forms.Padding(6);
             this.button_export_users.Name = "button_export_users";
-            this.button_export_users.Size = new System.Drawing.Size(125, 20);
+            this.button_export_users.Size = new System.Drawing.Size(250, 38);
             this.button_export_users.TabIndex = 3;
             this.button_export_users.Text = "Usuarios";
             this.button_export_users.UseVisualStyleBackColor = true;
@@ -240,9 +309,13 @@
             // 
             // button_export_activities
             // 
-            this.button_export_activities.Location = new System.Drawing.Point(6, 19);
+            this.button_export_activities.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_export_activities.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_export_activities.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_export_activities.Location = new System.Drawing.Point(12, 37);
+            this.button_export_activities.Margin = new System.Windows.Forms.Padding(6);
             this.button_export_activities.Name = "button_export_activities";
-            this.button_export_activities.Size = new System.Drawing.Size(125, 20);
+            this.button_export_activities.Size = new System.Drawing.Size(250, 38);
             this.button_export_activities.TabIndex = 0;
             this.button_export_activities.Text = "Actividades";
             this.button_export_activities.UseVisualStyleBackColor = true;
@@ -250,9 +323,13 @@
             // 
             // button_export_balance
             // 
-            this.button_export_balance.Location = new System.Drawing.Point(6, 45);
+            this.button_export_balance.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_export_balance.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_export_balance.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_export_balance.Location = new System.Drawing.Point(12, 87);
+            this.button_export_balance.Margin = new System.Windows.Forms.Padding(6);
             this.button_export_balance.Name = "button_export_balance";
-            this.button_export_balance.Size = new System.Drawing.Size(125, 20);
+            this.button_export_balance.Size = new System.Drawing.Size(250, 38);
             this.button_export_balance.TabIndex = 1;
             this.button_export_balance.Text = "Balance";
             this.button_export_balance.UseVisualStyleBackColor = true;
@@ -260,9 +337,13 @@
             // 
             // button_export_categories
             // 
-            this.button_export_categories.Location = new System.Drawing.Point(6, 71);
+            this.button_export_categories.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_export_categories.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_export_categories.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_export_categories.Location = new System.Drawing.Point(12, 137);
+            this.button_export_categories.Margin = new System.Windows.Forms.Padding(6);
             this.button_export_categories.Name = "button_export_categories";
-            this.button_export_categories.Size = new System.Drawing.Size(125, 20);
+            this.button_export_categories.Size = new System.Drawing.Size(251, 40);
             this.button_export_categories.TabIndex = 2;
             this.button_export_categories.Text = "Categorias";
             this.button_export_categories.UseVisualStyleBackColor = true;
@@ -270,20 +351,28 @@
             // 
             // groupBox_import
             // 
+            this.groupBox_import.BackColor = System.Drawing.SystemColors.Window;
             this.groupBox_import.Controls.Add(this.button_import_users);
             this.groupBox_import.Controls.Add(this.button_import_categories);
-            this.groupBox_import.Location = new System.Drawing.Point(6, 149);
+            this.groupBox_import.ForeColor = System.Drawing.Color.Navy;
+            this.groupBox_import.Location = new System.Drawing.Point(12, 287);
+            this.groupBox_import.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_import.Name = "groupBox_import";
-            this.groupBox_import.Size = new System.Drawing.Size(137, 78);
+            this.groupBox_import.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_import.Size = new System.Drawing.Size(274, 150);
             this.groupBox_import.TabIndex = 4;
             this.groupBox_import.TabStop = false;
             this.groupBox_import.Text = "Importar";
             // 
             // button_import_users
             // 
-            this.button_import_users.Location = new System.Drawing.Point(6, 46);
+            this.button_import_users.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_import_users.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_import_users.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_import_users.Location = new System.Drawing.Point(12, 88);
+            this.button_import_users.Margin = new System.Windows.Forms.Padding(6);
             this.button_import_users.Name = "button_import_users";
-            this.button_import_users.Size = new System.Drawing.Size(125, 20);
+            this.button_import_users.Size = new System.Drawing.Size(250, 38);
             this.button_import_users.TabIndex = 4;
             this.button_import_users.Text = "Usuarios";
             this.button_import_users.UseVisualStyleBackColor = true;
@@ -291,9 +380,13 @@
             // 
             // button_import_categories
             // 
-            this.button_import_categories.Location = new System.Drawing.Point(6, 19);
+            this.button_import_categories.BackgroundImage = global::NETime_WF_EF6.Properties.Resources.boton__1_;
+            this.button_import_categories.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_import_categories.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_import_categories.Location = new System.Drawing.Point(12, 37);
+            this.button_import_categories.Margin = new System.Windows.Forms.Padding(6);
             this.button_import_categories.Name = "button_import_categories";
-            this.button_import_categories.Size = new System.Drawing.Size(125, 20);
+            this.button_import_categories.Size = new System.Drawing.Size(250, 38);
             this.button_import_categories.TabIndex = 3;
             this.button_import_categories.Text = "Categorias";
             this.button_import_categories.UseVisualStyleBackColor = true;
@@ -301,76 +394,80 @@
             // 
             // groupBox_info
             // 
+            this.groupBox_info.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.groupBox_info.Controls.Add(this.textBox1);
-            this.groupBox_info.Location = new System.Drawing.Point(3, 242);
+            this.groupBox_info.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox_info.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBox_info.Location = new System.Drawing.Point(6, 465);
+            this.groupBox_info.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox_info.Name = "groupBox_info";
-            this.groupBox_info.Size = new System.Drawing.Size(503, 141);
+            this.groupBox_info.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox_info.Size = new System.Drawing.Size(1006, 271);
             this.groupBox_info.TabIndex = 1;
             this.groupBox_info.TabStop = false;
             this.groupBox_info.Text = "Información";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 19);
+            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox1.Location = new System.Drawing.Point(12, 37);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(6);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(491, 116);
+            this.textBox1.Size = new System.Drawing.Size(978, 219);
             this.textBox1.TabIndex = 0;
             // 
             // statusStrip1
             // 
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.Window;
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel3,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 386);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 743);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(509, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1018, 42);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(238, 32);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(238, 32);
             this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(238, 32);
             this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
-            // 
-            // comboBox_users_list
-            // 
-            this.comboBox_users_list.FormattingEnabled = true;
-            this.comboBox_users_list.Location = new System.Drawing.Point(6, 25);
-            this.comboBox_users_list.Name = "comboBox_users_list";
-            this.comboBox_users_list.Size = new System.Drawing.Size(184, 21);
-            this.comboBox_users_list.TabIndex = 9;
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(200, 30);
             // 
             // appManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox_info);
             this.Controls.Add(this.groupBox_menu);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "appManager";
-            this.Size = new System.Drawing.Size(509, 408);
+            this.Size = new System.Drawing.Size(1018, 785);
             this.groupBox_menu.ResumeLayout(false);
             this.groupBox_delete.ResumeLayout(false);
             this.groupBox_db.ResumeLayout(false);

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 01/02/2022 01:44:07
--- Generated from EDMX file: D:\OneDrive\UOC\DAM\ICB0_P6_Técnicas_de_persistencia_de_datos_con_.NET\code\NETime_WF_EF6\netime.edmx
+-- Date Created: 01/02/2022 19:19:30
+-- Generated from EDMX file: C:\Users\monic\source\repos\NETime_WF_EF6\netime.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,11 +17,8 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_activitiesbalance]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[balanceSet] DROP CONSTRAINT [FK_activitiesbalance];
-GO
-IF OBJECT_ID(N'[dbo].[FK_activitiesselected_activities]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[selected_activitiesSet] DROP CONSTRAINT [FK_activitiesselected_activities];
+IF OBJECT_ID(N'[dbo].[FK_userselected_activities]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[selected_activitiesSet] DROP CONSTRAINT [FK_userselected_activities];
 GO
 IF OBJECT_ID(N'[dbo].[FK_categoriesactivities]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[activitiesSet] DROP CONSTRAINT [FK_categoriesactivities];
@@ -29,22 +26,19 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_useractivities]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[activitiesSet] DROP CONSTRAINT [FK_useractivities];
 GO
+IF OBJECT_ID(N'[dbo].[FK_activitiesselected_activities]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[selected_activitiesSet] DROP CONSTRAINT [FK_activitiesselected_activities];
+GO
 IF OBJECT_ID(N'[dbo].[FK_userbalance]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[balanceSet] DROP CONSTRAINT [FK_userbalance];
-GO
-IF OBJECT_ID(N'[dbo].[FK_userselected_activities]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[selected_activitiesSet] DROP CONSTRAINT [FK_userselected_activities];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[activitiesSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[activitiesSet];
-GO
-IF OBJECT_ID(N'[dbo].[balanceSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[balanceSet];
+IF OBJECT_ID(N'[dbo].[userSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[userSet];
 GO
 IF OBJECT_ID(N'[dbo].[categoriesSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[categoriesSet];
@@ -52,8 +46,11 @@ GO
 IF OBJECT_ID(N'[dbo].[selected_activitiesSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[selected_activitiesSet];
 GO
-IF OBJECT_ID(N'[dbo].[userSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[userSet];
+IF OBJECT_ID(N'[dbo].[balanceSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[balanceSet];
+GO
+IF OBJECT_ID(N'[dbo].[activitiesSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[activitiesSet];
 GO
 
 -- --------------------------------------------------
@@ -220,11 +217,6 @@ GO
 CREATE INDEX [IX_FK_userbalance]
 ON [dbo].[balanceSet]
     ([userId]);
-GO
-
---Creating UNIQUE constrain for user email (Isaac)
-ALTER TABLE [dbo].[userSet]
-ADD CONSTRAINT UN_email UNIQUE (email)
 GO
 
 -- --------------------------------------------------
