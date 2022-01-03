@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static NETime_WF_EF6.Form1;
 
 namespace NETime_WF_EF6
 {
