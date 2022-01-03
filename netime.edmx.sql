@@ -2,15 +2,12 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 01/02/2022 19:19:30
--- Generated from EDMX file: C:\Users\monic\source\repos\NETime_WF_EF6\netime.edmx
--- --------------------------------------------------
-
--- ----------------------------------------------------
--- Creación de la base de datos si no existe (Isaac)
+-- Date Created: 01/03/2022 14:47:05
+-- Generated from EDMX file: D:\OneDrive\UOC\DAM\ICB0_P6_TÃ©cnicas_de_persistencia_de_datos_con_.NET\code\NETime_WF_EF6\netime.edmx
 -- --------------------------------------------------
 
 
+--VERIFICAR SI EXISTE LA BASE DE DATOS Y SI NO EXISTE CREARLA (Isaac)
 USE MASTER
 GO
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'Netime')
@@ -19,9 +16,10 @@ BEGIN
 END;
 GO
 
+
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [netime];
+USE [Netime];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -231,6 +229,13 @@ CREATE INDEX [IX_FK_userbalance]
 ON [dbo].[balanceSet]
     ([userId]);
 GO
+
+--Creating UNIQUE constrain for user email (Isaac)
+ALTER TABLE [dbo].[userSet]
+ADD CONSTRAINT UN_email UNIQUE (email)
+GO
+
+
 
 -- --------------------------------------------------
 -- Script has ended

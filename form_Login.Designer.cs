@@ -48,20 +48,20 @@ namespace NETime_WF_EF6
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(740, 244);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUser.Location = new System.Drawing.Point(370, 127);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtUser.Multiline = true;
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(392, 46);
+            this.txtUser.Size = new System.Drawing.Size(198, 26);
             this.txtUser.TabIndex = 0;
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(750, 344);
-            this.txtPass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPass.Location = new System.Drawing.Point(375, 179);
+            this.txtPass.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtPass.Multiline = true;
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(380, 46);
+            this.txtPass.Size = new System.Drawing.Size(192, 26);
             this.txtPass.TabIndex = 1;
             // 
             // pictureBox1
@@ -69,10 +69,10 @@ namespace NETime_WF_EF6
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(678, 244);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(339, 127);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(56, 46);
+            this.pictureBox1.Size = new System.Drawing.Size(28, 24);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
@@ -81,10 +81,10 @@ namespace NETime_WF_EF6
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(678, 344);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Location = new System.Drawing.Point(339, 179);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(56, 46);
+            this.pictureBox2.Size = new System.Drawing.Size(28, 24);
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
@@ -94,10 +94,10 @@ namespace NETime_WF_EF6
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.Font = new System.Drawing.Font("Rockwell", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button1.Location = new System.Drawing.Point(760, 460);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(380, 239);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(334, 62);
+            this.button1.Size = new System.Drawing.Size(167, 32);
             this.button1.TabIndex = 2;
             this.button1.Text = "Iniciar Sesión";
             this.button1.UseVisualStyleBackColor = false;
@@ -106,9 +106,9 @@ namespace NETime_WF_EF6
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(0, 0);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(76, 23);
+            this.button2.Size = new System.Drawing.Size(38, 12);
             this.button2.TabIndex = 7;
             // 
             // linkLabel1
@@ -118,10 +118,10 @@ namespace NETime_WF_EF6
             this.linkLabel1.BackColor = System.Drawing.Color.White;
             this.linkLabel1.Font = new System.Drawing.Font("Rockwell Condensed", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.linkLabel1.Location = new System.Drawing.Point(698, 638);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(349, 332);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(401, 31);
+            this.linkLabel1.Size = new System.Drawing.Size(208, 16);
             this.linkLabel1.TabIndex = 3;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "¿No tienes cuenta? Registrate aquí.";
@@ -131,10 +131,9 @@ namespace NETime_WF_EF6
             // 
             this.label_response.AutoSize = true;
             this.label_response.ForeColor = System.Drawing.Color.Red;
-            this.label_response.Location = new System.Drawing.Point(698, 552);
-            this.label_response.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label_response.Location = new System.Drawing.Point(349, 287);
             this.label_response.Name = "label_response";
-            this.label_response.Size = new System.Drawing.Size(101, 25);
+            this.label_response.Size = new System.Drawing.Size(50, 13);
             this.label_response.TabIndex = 8;
             this.label_response.Text = "response";
             // 
@@ -145,12 +144,11 @@ namespace NETime_WF_EF6
             // 
             // Login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1266, 798);
+            this.ClientSize = new System.Drawing.Size(633, 415);
             this.Controls.Add(this.label_response);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button2);
@@ -160,7 +158,7 @@ namespace NETime_WF_EF6
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.txtUser);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Login";
             this.Text = "BIENVENIDO A NETIME";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

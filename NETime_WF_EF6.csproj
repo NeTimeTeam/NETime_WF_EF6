@@ -31,8 +31,8 @@
     <PublisherName>Netime</PublisherName>
     <SuiteName>Netime</SuiteName>
     <DisallowUrlActivation>true</DisallowUrlActivation>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -136,6 +136,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>netime.tt</DependentUpon>
     </Compile>
+    <Compile Include="NetimeDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NetimeDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="netime.Designer.cs">
@@ -214,6 +219,17 @@
     <EmbeddedResource Include="uc_appManager.resx">
       <DependentUpon>uc_appManager.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="NetimeDataSet.xsc">
+      <DependentUpon>NetimeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="NetimeDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>NetimeDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NetimeDataSet.xss">
+      <DependentUpon>NetimeDataSet.xsd</DependentUpon>
+    </None>
     <None Include="NETime_WF_EF6_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -242,6 +258,12 @@
     <None Include="icons\select_Activities.ico" />
     <None Include="icons\logout.ico" />
     <None Include="icons\transaction.ico" />
+    <Content Include="db\Netime.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="db\Netime_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\Arrows-Left-Arrow.ico" />
     <Content Include="img\Arrows-Right-Arrow.ico" />
     <None Include="img\backgroundImage.png" />
