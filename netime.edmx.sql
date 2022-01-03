@@ -6,6 +6,19 @@
 -- Generated from EDMX file: C:\Users\monic\source\repos\NETime_WF_EF6\netime.edmx
 -- --------------------------------------------------
 
+-- ----------------------------------------------------
+-- Creación de la base de datos si no existe (Isaac)
+-- --------------------------------------------------
+
+
+USE MASTER
+GO
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'Netime')
+BEGIN
+    CREATE DATABASE Netime;
+END;
+GO
+
 SET QUOTED_IDENTIFIER OFF;
 GO
 USE [netime];
