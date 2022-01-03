@@ -135,7 +135,8 @@ namespace NETime_WF_EF6
         {
             Color color = type ? Color.Black : Color.Red;            
             label_Msg.Text = msg;
-            label_Msg.ForeColor = color;            
+            label_Msg.ForeColor = color;
+            label_Msg.Visible = true;
         }
         
         
