@@ -17,47 +17,8 @@ namespace NETime_WF_EF6
             InitializeComponent();
             label_response.Text = string.Empty;
             setLogInFormParams();
-
-            //¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!
-
-            deleteMe(); // ESTA FUNCiÖN ES SOLO PARA PROBAR EL LOGIN. CREA UN USUARIO PARA INICIAR SESIÓN, SI ESTE NO EXISTE. COMENTAR LA LÍNEA SI NO SE VA A USAR.
-
-            //¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!//¡¡¡¡ATENCIóN!!!!
         }
-        private user user;
-        private void deleteMe()
-        {
-            using (netimeContainer context = new netimeContainer())
-            {                
-                if (!context.userSet.Any<user>(us => us.email.Equals("nrovira@uoc.com")))
-                {
-                    PasswordHash pg = new PasswordHash("a1234567890");
-                    user u = new user()
-                    {
-                        name = "Isaac",
-                        surname = "Rovira",
-                        address = "Mi dirección.",
-                        phone = "+34686970016",
-                        email = "nrovira@uoc.com",
-                        salt = pg.Salt(),
-                        password = pg.GenerateSaltedHash()
-                    };
-                    context.userSet.Add(u);
-                    int valor = context.SaveChanges();
-                    Console.WriteLine("Usuario {0} creado", u.email);                    
-                }
-                else
-                {
-                    Console.WriteLine("Existe un usuario nrovira@uoc.com");
-                    context.userSet.Remove(context.userSet.Where(u => u.email.Equals("nrovira@uoc.com")).First<user>());
-                    context.SaveChanges();
-                    deleteMe();
-                }
-                //USUARIO PREDETERMINADO PARA EL LOGIN (TESTING)
-                txtUser.Text = "iroviraro@uoc.edu";
-                txtPass.Text = "a1234567890";                
-            }
-        }
+        private user user;        
 
         //SET TEXTBOX PARAMS
         private void setLogInFormParams()

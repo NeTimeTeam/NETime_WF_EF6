@@ -183,7 +183,7 @@ namespace NETime_WF_EF6
                 }
             }
             data.MultiSelect = false;
-            data.RowHeadersVisible = false;
+            data.RowHeadersVisible = false;            
             data.Refresh();
         }
         private void SetDGVBalanceProperties(DataGridView data)
@@ -195,11 +195,12 @@ namespace NETime_WF_EF6
                 switch (col.Index)
                 {
                     default:
-                        data.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        data.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;                        
                         data.Columns[col.Index].Visible = true;
                         break;
                     case 0: //datetime                        
                         data.Columns[col.Index].HeaderText = "Fecha y hora";
+                        //data.Columns[col.Index].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                         break;
                     case 1:
                         data.Columns[col.Index].HeaderText = "Actividad";

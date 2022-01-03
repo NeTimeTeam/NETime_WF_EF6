@@ -46,6 +46,7 @@ namespace NETime_WF_EF6
             dgv.Columns.Add("description", "Descripción");
             dgv.Columns.Add("email", "Email");
             dgv.Columns.Add("userId", "userId");
+            dgv.Columns.Add("activityId", "activityId");
 
             dgv.Columns["selector"].ValueType = Type.GetType("bool");
             dgv.Columns["selector"].Visible = false;
@@ -55,6 +56,9 @@ namespace NETime_WF_EF6
 
             dgv.Columns["userId"].ValueType = Type.GetType("int");
             dgv.Columns["userId"].Visible = false;
+
+            dgv.Columns["activityId"].ValueType = Type.GetType("int");
+            dgv.Columns["activityId"].Visible = false;
         }
         private void SetDataGridViewProperties(DataGridView data)
         {
@@ -99,6 +103,7 @@ namespace NETime_WF_EF6
                             break;
                         case 1://Id                        
                         case 5://userId
+                        case 7://activityId
                             data.Columns[col.Index].Visible = false;
                             data.Columns[col.Index].ValueType = Type.GetType("int");
                             break;
@@ -155,35 +160,35 @@ namespace NETime_WF_EF6
         //EVENTS
         private async void button_Select_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("button_Select");
+            //Console.WriteLine("button_Select");
             int Id = Convert.ToInt32(dataGridView_Available.SelectedRows[0].Cells[1].Value);
             await AddActivity(Id);
         }
         private async void button_Dismiss_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("button_Dismiss");
+            //Console.WriteLine("button_Dismiss");
             int Id = Convert.ToInt32(dataGridView_Selected.SelectedRows[0].Cells[1].Value);
             await RemoveActivity(Id);
         }
         private async void dataGridView_Selected_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine("s_CellContentDoubleClick");
+            //Console.WriteLine("s_CellContentDoubleClick");
             DataGridView data = sender as DataGridView;
             int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[1].Value);
-            Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
+            //Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
             await RemoveActivity(Id);
         }
         private async void dataGridView_Available_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine("a_CellContentDoubleClick");
+            //Console.WriteLine("a_CellContentDoubleClick");
             DataGridView data = sender as DataGridView;
             int Id = Convert.ToInt32(data.Rows[e.RowIndex].Cells[1].Value);
-            Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
+            //Console.WriteLine($"RowIndex: {e.RowIndex}, Activity ID: {Id}");
             await AddActivity(Id);
         }
         private void dataGridView_Selected_SelectionChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("S__SelectionChanged");
+            //Console.WriteLine("S__SelectionChanged");
             DataGridView data = sender as DataGridView;
             if (data.SelectedRows.Count > 0)
             {
@@ -196,7 +201,7 @@ namespace NETime_WF_EF6
         }
         private void dataGridView_Available_SelectionChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("a_SelectionChanged");
+            //Console.WriteLine("a_SelectionChanged");
             DataGridView data = sender as DataGridView;
             if (data.SelectedRows.Count > 0)
             {

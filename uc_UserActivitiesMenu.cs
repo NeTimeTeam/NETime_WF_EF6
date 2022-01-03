@@ -176,6 +176,7 @@ namespace NETime_WF_EF6
                     case 1://Id
                     case 6://email
                     case 5://userId
+                    case 7: //activityId
                         dataGridView_Activities.Columns[col.Index].Visible = false;
                         break;
                 }
@@ -211,6 +212,10 @@ namespace NETime_WF_EF6
             //button_AddActivity.Enabled = this.textBox_ActivityDesc.CausesValidation & this.textBox_name.CausesValidation;
             TextBox[] textboxes = { this.textBox_name, this.textBox_ActivityDesc };
             Utilities.checkTextboxStatus(textboxes, button_AddActivity);
+            if (button_AddActivity.Enabled)
+            {
+                button_AddActivity.Enabled = comboBox_Category.Items.Count > 0;
+            }
         }
         private async Task<bool> CreateActivity()
         {
