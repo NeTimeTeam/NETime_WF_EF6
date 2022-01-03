@@ -369,7 +369,7 @@ namespace NETime_WF_EF6
             // 
             this.label_Msg.AutoSize = true;
             this.label_Msg.Font = new System.Drawing.Font("Rockwell", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Msg.Location = new System.Drawing.Point(46, 52);
+            this.label_Msg.Location = new System.Drawing.Point(7, 19);
             this.label_Msg.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label_Msg.Name = "label_Msg";
             this.label_Msg.Size = new System.Drawing.Size(55, 14);
@@ -387,7 +387,7 @@ namespace NETime_WF_EF6
             this.panel_Message.Location = new System.Drawing.Point(7, 654);
             this.panel_Message.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.panel_Message.Name = "panel_Message";
-            this.panel_Message.Size = new System.Drawing.Size(573, 58);
+            this.panel_Message.Size = new System.Drawing.Size(573, 63);
             this.panel_Message.TabIndex = 5;
             this.panel_Message.Tag = "UserMsg";
             // 
