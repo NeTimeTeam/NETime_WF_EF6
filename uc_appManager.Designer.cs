@@ -53,7 +53,7 @@
             this.button_delete_user = new System.Windows.Forms.Button();
             this.button_delete_activities = new System.Windows.Forms.Button();
             this.groupBox_info = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_info = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_user = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_activities = new System.Windows.Forms.ToolStripStatusLabel();
@@ -382,7 +382,7 @@
             // groupBox_info
             // 
             this.groupBox_info.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.groupBox_info.Controls.Add(this.textBox1);
+            this.groupBox_info.Controls.Add(this.textBox_info);
             this.groupBox_info.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_info.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox_info.Location = new System.Drawing.Point(6, 401);
@@ -392,15 +392,16 @@
             this.groupBox_info.TabStop = false;
             this.groupBox_info.Text = "Información";
             // 
-            // textBox1
+            // textBox_info
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(6, 22);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(600, 306);
-            this.textBox1.TabIndex = 0;
+            this.textBox_info.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_info.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_info.Location = new System.Drawing.Point(6, 22);
+            this.textBox_info.Multiline = true;
+            this.textBox_info.Name = "textBox_info";
+            this.textBox_info.ReadOnly = true;
+            this.textBox_info.Size = new System.Drawing.Size(600, 306);
+            this.textBox_info.TabIndex = 0;
             // 
             // statusStrip1
             // 
@@ -509,7 +510,7 @@
         private System.Windows.Forms.Button button_export_categories;
         private System.Windows.Forms.GroupBox groupBox_import;
         private System.Windows.Forms.Button button_import_categories;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_info;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_user;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_activities;

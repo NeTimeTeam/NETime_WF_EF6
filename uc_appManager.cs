@@ -17,7 +17,7 @@ namespace NETime_WF_EF6
             InitializeComponent();
             UpdateCounters().GetAwaiter();
             UpdateUserListController();            
-            this.timer_counters.Start();
+            this.timer_counters.Start();            
         }
 
         //DATA GATHERS
@@ -32,7 +32,7 @@ namespace NETime_WF_EF6
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
             }
             return users;
@@ -49,7 +49,7 @@ namespace NETime_WF_EF6
             }
             catch(Exception ex)
             {
-                Console.Write(ex.InnerException);
+                NetimeLogger(ex.InnerException.ToString());
             }
             return res;
         }
@@ -64,7 +64,7 @@ namespace NETime_WF_EF6
                 }
             }catch(Exception ex)
             {
-                Console.WriteLine(ex.InnerException);
+                NetimeLogger(ex.InnerException.ToString());
             }
             return res;
         }
@@ -79,7 +79,7 @@ namespace NETime_WF_EF6
                 }
             }catch (Exception ex)
             {
-                Console.WriteLine(ex.InnerException);
+                NetimeLogger(ex.InnerException.ToString());
             }
             return res;
         }
@@ -95,7 +95,7 @@ namespace NETime_WF_EF6
                 }
             }catch(Exception ex)
             {
-                Console.WriteLine(ex.InnerException);
+                NetimeLogger(ex.InnerException.ToString());
                 res = 0;
             }
             return res;
@@ -108,20 +108,20 @@ namespace NETime_WF_EF6
             {
                 if (!Utilities.nameValidation(entity.name))
                 {
-                    Console.WriteLine("Error importando categorías. {0} no es un nombre válido.", entity.name);
+                    NetimeLogger($"Error importando categorías. {entity.name} no es un nombre válido.");
                     return false;
                 }
                 if (!Utilities.nameValidation(entity.family))
                 {
-                    Console.WriteLine("Error importando categorías. {0} no es un nombre de famila válido.", entity.family);
+                    NetimeLogger($"Error importando categorías. {entity.family} no es un nombre de famila válido.");
                     return false;
                 }
                 if (context.categoriesSet.Where(c => c.name.Equals(entity.name)).Count() > 0)
                 {
-                    Console.WriteLine("Error importando categorías. El nombre {0} ya existe en la base de datos.", entity.name);
+                    NetimeLogger($"Error importando categorías. El nombre {entity.name} ya existe en la base de datos.");
                     return false;
                 }
-                Console.WriteLine("Categoría {0} - {1} importada.", entity.name, entity.family);
+                NetimeLogger($"Categoría {entity.name} - {entity.family} importada.");
                 return true;
             }            
         }
@@ -131,30 +131,30 @@ namespace NETime_WF_EF6
             {
                 if (!Utilities.nameValidation(entity.name))
                 {
-                    Console.WriteLine("Error importando usuarios. {0} no es un nombre válido.", entity.name);
+                    NetimeLogger($"Error importando usuarios. {entity.name} no es un nombre válido.");
                     return false;
                 }
                 if (!Utilities.descriptionValidation(entity.address))
                 {
-                    Console.WriteLine("Error importando usuarios. {0} no es una dirección válida.", entity.address);
+                    NetimeLogger($"Error importando usuarios. {entity.address} no es una dirección válida.");
                     return false;
                 }
                 if (!Utilities.emailValidation(entity.email))
                 {
-                    Console.WriteLine("Error importando usuarios. {0} no es un email válido.", entity.email);
+                    NetimeLogger($"Error importando usuarios. {entity.email} no es un email válido.");
                     return false;
                 }
                 if (!Utilities.phoneValidation(entity.phone))
                 {
-                    Console.WriteLine("Error importando usuarios. {0} no es un teléfono válido.", entity.phone);
+                    NetimeLogger($"Error importando usuarios. {entity.phone} no es un teléfono válido.");
                     return false;
                 }
                 if (context.userSet.Where(u => u.email.Equals(entity.email)).Count() > 0)
                 {
-                    Console.WriteLine("Error importando usuarios. El email {0} ya existe en la base de datos.", entity.email);
+                    NetimeLogger($"Error importando usuarios. El email {entity.email} ya existe en la base de datos.");
                     return false;
                 }
-                Console.WriteLine("Usuario {0} importado.", entity.email);
+                NetimeLogger($"Usuario {entity.email} importado.");                
                 return true;
             }            
         }
@@ -184,34 +184,58 @@ namespace NETime_WF_EF6
                     }
                 }
                 await Context.saveChanges(context,"IMPORT XML DATA");
+                UpdateUserListController();
             }            
         }
         //mode: {0} Users, {1} Activities, {2} Selection, {3} Categories, {4} Balance
         private void ExportData(int mode)
-        {
-            using(netimeContainer context = new netimeContainer())
+        {            
+            using (netimeContainer context = new netimeContainer())
             {
                 if (mode == 0) //Users
-                {
+                {                    
                     xmlTool.genXmlFromListOftEntities(context.userSet.ToList<user>());
+                    NetimeLogger($"Exportando usuarios.");
                 }
                 if (mode == 1) //Activities
                 {
-                    //MessageBox.Show("Exportar actividades", "EXPORT");
-                    xmlTool.genXmlFromListOftEntities(context.activitiesSet.ToList<activities>());                    
+                    var data = context.activitiesSet.ToList<activities>();
+                    if(data.Count > 0)
+                    {
+                        xmlTool.genXmlFromListOftEntities(data as List<activities>);
+                        NetimeLogger($"Exportando {data.Count()} actividades.");
+                        return;                        
+                    }
+                    NetimeLogger("La base de datos no contiene actividades.");
+                    return;
                 }
                 if (mode == 2) //Selection
                 {
-                    xmlTool.genXmlFromListOftEntities(context.selected_activitiesSet.ToList<selected_activities>());
+                    var data = context.selected_activitiesSet.ToList<selected_activities>();
+                    if(data.Count < 1)
+                    {
+                        NetimeLogger("No hay actividades actividades seleccionadas en la base de datos.");
+                        return;
+                    }
+                    xmlTool.genXmlFromListOftEntities(data as List<selected_activities>);
+                    NetimeLogger($"Exportando {data.Count()} actividades seleccionadas.");
+                    return;
                 }
                 if(mode == 3) //Categories
                 {
-                    //MessageBox.Show("Exportar categorías", "EXPORT");
-                    xmlTool.genXmlFromListOftEntities(context.categoriesSet.ToList<categories>());
+                    var data = context.categoriesSet.ToList<categories>();
+                    if(data.Count() < 1)
+                    {
+                        NetimeLogger("No hay difinida ninguna categoría en la base de datos.");
+                        return;
+                    }
+                    xmlTool.genXmlFromListOftEntities(data as List<categories>);
+                    NetimeLogger($"Exportando {data.Count()} categorías.");
+                    return;
                 }
                 if(mode == 4) // Balance
-                { }
-            }            
+                { NetimeLogger("Exportación del balance no disponible todavía."); return; }
+            }
         }
         private void ImportCategories()
         {
@@ -228,6 +252,14 @@ namespace NETime_WF_EF6
             {
                 InsertListOfData<user>(data).GetAwaiter();
             }            
+        }
+        //TODO: implementar un LOGGER de verdad >> un list<string> un formato y un Task.Run q actualice el txtbox con los datos del list del último al primero. Máx. 200 lineas.
+        private void NetimeLogger(string txt)
+        {
+            string newtxt = $"{DateTime.Now}: {txt}";
+            List<string> oldtxt = textBox_info.Lines.ToList<string>();
+            oldtxt.Insert(0, newtxt);
+            textBox_info.Lines = oldtxt.ToArray<string>();
         }
 
         //BUTTON EVENTS IMPORT-EXPORT        
@@ -268,9 +300,10 @@ namespace NETime_WF_EF6
                 }
                 catch(Exception ex)
                 {
-                    Console.Write(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETE USER BALANCE");
+                NetimeLogger($"Se ha borrado el balance del usuario {comboBox_users_list.Text}.");
             }
         }
         private async Task DeleteUserSelection(int Id)
@@ -284,11 +317,11 @@ namespace NETime_WF_EF6
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETE USER SELECTION");
             }
-
+            NetimeLogger($"Se han eliminado las actividades seleccionadas del usuario {comboBox_users_list.Text}.");
         }
         private async Task DeleteUserActivities(int Id)
         {
@@ -306,10 +339,11 @@ namespace NETime_WF_EF6
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETE USER ACTIVITIES");
             }
+            NetimeLogger($"Se han eliminado las actividades del usuario {comboBox_users_list.Text}.");
         }
         private async Task DeleteUser(int Id)
         {
@@ -329,7 +363,7 @@ namespace NETime_WF_EF6
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETE USER");
             }
@@ -340,6 +374,7 @@ namespace NETime_WF_EF6
             }
             else
             {
+                NetimeLogger($"Usuario {comboBox_users_list.SelectedText} eliminado.");
                 UpdateUserListController();
             }            
         }
@@ -386,10 +421,11 @@ namespace NETime_WF_EF6
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETE ALL BALANCES");
             }
+            NetimeLogger($"Se han eliminado todos los registros de tranascciones.");
         }
         private async Task DeleteAllSelections()
         {
@@ -401,10 +437,11 @@ namespace NETime_WF_EF6
                     context.selected_activitiesSet.RemoveRange(selected_Activities);
                 }catch(Exception ex)
                 {
-                    Console.WriteLine(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETE ALL SELECTION");
             }
+            NetimeLogger($"Se han deseleccionado todas las actividades.");
         }
         private async Task DeleteAllActivities()
         {
@@ -417,10 +454,11 @@ namespace NETime_WF_EF6
                     context.activitiesSet.RemoveRange(activitiesList);
                 }catch( Exception ex)
                 {
-                    Console.WriteLine(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETION ALL ACTIVITIES");
             }
+            NetimeLogger($"Se han eliminado todas las actividades.");
         }
         private async Task DeleteAllCategories() 
         {
@@ -431,9 +469,10 @@ namespace NETime_WF_EF6
                 {
                     List<categories> catList = context.categoriesSet.ToList<categories>();
                     context.categoriesSet.RemoveRange(catList);
-                }catch ( Exception ex) { Console.WriteLine(ex.InnerException); }
+                }catch ( Exception ex) { NetimeLogger(ex.InnerException.ToString()); }
                 await Context.saveChanges(context, "APP MANAGER DELETION ALL CATEGORIES");
             }
+            NetimeLogger($"Categorías eliminadas. Es necesario disponer de al menos una categoría para poder crear actividades.");
         }
         private async Task DeleteAllUsers()
         {
@@ -447,7 +486,7 @@ namespace NETime_WF_EF6
                     context.userSet.RemoveRange(users);
                 }catch(Exception ex)
                 {
-                    Console.WriteLine(ex.InnerException);
+                    NetimeLogger(ex.InnerException.ToString());
                 }
                 await Context.saveChanges(context, "APP MANAGER DELETION ALL USERS");
             }
