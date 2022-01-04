@@ -214,8 +214,7 @@ namespace NETime_WF_EF6
             this.timer1.Start();            
         }
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            Console.WriteLine(blinks);
+        {            
             blink_label(linkLabel1);
         }
               
